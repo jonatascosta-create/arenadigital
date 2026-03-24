@@ -1,0 +1,82 @@
+# Squad Registry Entry — doc-safety
+# Este arquivo e o registro do squad para descoberta pelo AIOS.
+# Configuracao operacional completa: config.yaml
+# Viability assessment: data/fase0-viability-assessment.yaml
+
+name: doc-safety
+version: 2.0.0
+tested: false
+updated_at: "2026-02-26"
+short-title: Doc Safety
+author: AIOS Team
+
+description: >-
+  Squad de roteiro documentario especializado em desastres e acidentes com base dramatica
+  e foco em Cultura de Seguranca. Combina analise tecnica (Dekker, Reason), storytelling
+  cinematografico (McKee, Bernard, Storaro, Morris), contexto historico-politico (Larson, Lord,
+  Butler), cultura de seguranca (Hopkins, Schein, Westrum) e engenharia forense (Foecke, McCarty).
+  Pipeline expandido de 12 fases com director-as-input e conclusao com licoes aprendidas.
+
+entry_agent: doc-chief
+slashPrefix: docSafety
+
+# Squad discovery metadata
+registry:
+  domain: documentary_production
+  category: creative
+  status: active
+  fase0_verdict: GO
+  fase0_score: "29/40 (72.5%)"
+  keywords:
+    - roteiro
+    - documentario
+    - seguranca do trabalho
+    - acidentes
+    - desastres
+    - cultura de seguranca
+    - safety culture
+    - narrativa dramatica
+    - cinematografia
+    - entrevistas
+    - reconstituicao
+    - contexto historico
+    - engenharia forense
+    - licoes aprendidas
+
+# Agent roster (summary — full config in config.yaml)
+agents:
+  - id: doc-chief
+    tier: 0
+    role: orquestrador + director-as-input
+  - id: roteirista
+    tier: 1
+    role: estrutura narrativa
+  - id: perito-sst
+    tier: 1
+    role: analise de seguranca
+  - id: historiador
+    tier: 1
+    role: contexto historico e politico
+  - id: especialista-cultura-seguranca
+    tier: 1
+    role: cultura de seguranca e licoes aprendidas
+  - id: entrevistador
+    tier: 2
+    role: entrevistas
+  - id: fotografo
+    tier: 2
+    role: direcao visual
+  - id: engenheiro-naval
+    tier: 2
+    role: detalhes tecnicos e mecanicos
+  - id: cenografo
+    tier: 3
+    role: cenografia e reconstituicao
+
+# Principio unificador (v2.0 expandido)
+principio: >-
+  O documentario MOSTRA (Storaro) o que o sistema ESCONDE (Reason),
+  o que a investigacao tradicional IGNORA (Dekker),
+  o que a historia EXPLICA (Larson/Lord),
+  o que a cultura NORMALIZA (Hopkins/Schein/Westrum),
+  e o que a engenharia MATERIALIZA (Foecke/McCarty).

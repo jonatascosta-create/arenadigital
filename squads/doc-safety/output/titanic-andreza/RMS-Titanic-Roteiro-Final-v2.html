@@ -1,0 +1,3544 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="pt-BR" xml:lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>RMS Titanic: A Arquitetura do Desastre — Roteiro Final v2</title>
+  <style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
+    html {
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 12px;
+      }
+      h1 {
+        font-size: 1.8em;
+      }
+    }
+    @media print {
+      html {
+        background-color: white;
+      }
+      body {
+        background-color: transparent;
+        color: black;
+        font-size: 12pt;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    svg {
+      height: auto;
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      font-family: Menlo, Monaco, Consolas, 'Lucida Console', monospace;
+      font-size: 85%;
+      margin: 0;
+      hyphens: manual;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+      overflow-wrap: normal;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      border: none;
+      border-top: 1px solid #1a1a1a;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC ul {
+      padding-left: 1.3em;
+    }
+    #TOC > ul {
+      padding-left: 0;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+  <style>
+  body { font-family: Georgia, serif; max-width: 900px; margin: 0 auto; padding: 40px; line-height: 1.6; color: #1a1a1a; }
+  h1 { font-size: 2em; border-bottom: 3px solid #1B3A5C; padding-bottom: 10px; }
+  h2 { color: #1B3A5C; border-bottom: 1px solid #ccc; padding-bottom: 5px; margin-top: 2em; }
+  h3 { color: #6B7B8D; }
+  table { border-collapse: collapse; width: 100%; margin: 1em 0; }
+  th, td { border: 1px solid #ddd; padding: 8px; text-align: left; font-size: 0.9em; }
+  th { background-color: #1B3A5C; color: white; }
+  blockquote { border-left: 4px solid #8B2500; padding-left: 1em; color: #8B2500; font-style: italic; margin: 1em 0; }
+  hr { border: none; border-top: 2px solid #C8A25C; margin: 2em 0; }
+  code { background: #f4f4f4; padding: 2px 4px; border-radius: 3px; }
+  strong { color: #1B3A5C; }
+  @media print { body { max-width: none; padding: 20px; } h2 { page-break-before: auto; } }
+  </style>
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">RMS Titanic: A Arquitetura do Desastre — Roteiro Final
+v2</h1>
+</header>
+<h1 id="roteiro-final-v2-rms-titanic-a-arquitetura-do-desastre">ROTEIRO
+FINAL v2 — RMS Titanic: A Arquitetura do Desastre</h1>
+<blockquote>
+<p>Squad doc-safety | Fase 11 — Roteiro Final Consolidado v2 | McKee (5
+beats) + Bernard (3 atos) Autor: <span class="citation"
+data-cites="roteirista">@roteirista</span> (squad doc-safety) | Data:
+2026-03-06 Apresentadora: Andreza Araujo (squad andreza-araujo) | Squad
+Creator: <span class="citation"
+data-cites="oalanicolas">@oalanicolas</span>, <span class="citation"
+data-cites="thiago-finch">@thiago-finch</span>, <span class="citation"
+data-cites="pedro-valerio">@pedro-valerio</span> Consolidacao: Fases
+6-10 + melhorias v2 (SOS Morse, historias de passageiros, locacoes
+Pigeon Forge/NYC, marcacao de erros)</p>
+</blockquote>
+<hr />
+<h2 id="metadados-do-projeto">METADADOS DO PROJETO</h2>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr>
+<th>Campo</th>
+<th>Valor</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Titulo</strong></td>
+<td>RMS Titanic: A Arquitetura do Desastre</td>
+</tr>
+<tr>
+<td><strong>Formato</strong></td>
+<td>Documentario longa-metragem (episodio unico)</td>
+</tr>
+<tr>
+<td><strong>Duracao</strong></td>
+<td>105 minutos</td>
+</tr>
+<tr>
+<td><strong>Apresentadora</strong></td>
+<td>Andreza Araujo — consultora senior em cultura de seguranca, 25+
+anos, ex-PepsiCo LatAm</td>
+</tr>
+<tr>
+<td><strong>Estilo visual</strong></td>
+<td>Inspirado em James Cameron (rigor tecnico + mergulho forense) +
+Morris (Interrotron)</td>
+</tr>
+<tr>
+<td><strong>Metodo entrevista</strong></td>
+<td>Errol Morris — Interrotron, silencio estrategico, confronto
+gentil</td>
+</tr>
+<tr>
+<td><strong>Filosofia visual</strong></td>
+<td>Vittorio Storaro — luz e cor como linguagem, nao decoracao</td>
+</tr>
+<tr>
+<td><strong>Filosofia cenografica</strong></td>
+<td>Errol Morris — espaco como linguagem, reconstituicao
+fragmentada/estilistica</td>
+</tr>
+<tr>
+<td><strong>Analise SST</strong></td>
+<td>Dekker 5 etapas + Reason 5 camadas Swiss Cheese</td>
+</tr>
+<tr>
+<td><strong>Cultura de seguranca</strong></td>
+<td>Hopkins 5 indicadores + Schein 3 niveis + Westrum tipologia + Reason
+4 subculturas + Bradley Curve (5 niveis) + Piramide de Bird</td>
+</tr>
+<tr>
+<td><strong>Analise tecnica</strong></td>
+<td>Foecke/McCarty (NIST/JHU) — metalurgia dos rebites</td>
+</tr>
+<tr>
+<td><strong>Estrutura</strong></td>
+<td>3 atos (Bernard) / 5 beats (McKee) / 19 sequencias / 4 blocos</td>
+</tr>
+<tr>
+<td><strong>Locacoes em campo</strong></td>
+<td>Museu do Titanic (Sao Paulo), Titanic Museum (Pigeon Forge, TN),
+Pier 54/Chelsea Piers (NYC)</td>
+</tr>
+<tr>
+<td><strong>Status</strong></td>
+<td>FINAL DRAFT v2</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="premissa-narrativa">PREMISSA NARRATIVA</h2>
+<p><strong>Controlling Idea (McKee):</strong> &gt; “Vidas sao destruidas
+quando uma civilizacao inteira normaliza a arrogancia tecnologica, e o
+lucro — disfarcado de progresso — silencia sistematicamente cada voz que
+alerta sobre o perigo.”</p>
+<p><strong>Questao Dramatica (Bernard):</strong> &gt; “Como uma
+civilizacao inteira — seus engenheiros, seus reguladores, seus capitaes,
+seus magnatas — construiu, certificou, tripulou e lotou um navio que nao
+podia salvar metade das pessoas a bordo, e como cada um deles acreditou
+estar fazendo a coisa certa?”</p>
+<p><strong>Valor em jogo:</strong> Vida humana / Seguranca / Verdade</p>
+<p><strong>Arco cromatico:</strong> Ouro Edwardiano (#C8A25C) –&gt;
+Sepia Belfast (#8B7355) –&gt; Azul Atlantico (#1B3A5C) –&gt; Cinza Aco
+(#6B7B8D) –&gt; Verde Laboratorio (#4A6B5A) –&gt; Branco Analitico
+(#E8E8E8) –&gt; Preto Abissal (#0A0A0F)</p>
+<hr />
+<h2 id="elenco-de-entrevistados">ELENCO DE ENTREVISTADOS</h2>
+<table>
+<colgroup>
+<col style="width: 6%" />
+<col style="width: 12%" />
+<col style="width: 16%" />
+<col style="width: 22%" />
+<col style="width: 42%" />
+</colgroup>
+<thead>
+<tr>
+<th>#</th>
+<th>Nome</th>
+<th>Funcao</th>
+<th>Sequencias</th>
+<th>Setup de Entrevista</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Dr. Tim Foecke (NIST)</td>
+<td>Metalurgista forense — o DNA do desastre</td>
+<td>SEQ 02, 06, 12</td>
+<td>Interrotron. Laboratorio NIST. Key light lateral 4800K. Bancada com
+rebites ao fundo. Ratio 4:1</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Parks Stephenson</td>
+<td>Historiador naval — sistema Marconi</td>
+<td>SEQ 08, 11</td>
+<td>Interrotron. Equipamento de comunicacao ao fundo. Key
+frontal-lateral 3800K. Telas com ambar Marconi</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Dr. Jennifer Hooper McCarty (JHU)</td>
+<td>Historiadora da metalurgia — arquivos H&amp;W</td>
+<td>SEQ 12</td>
+<td>Interrotron. Mesa academica. Documentos H&amp;W. Iluminacao quente
+de biblioteca</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Daniel Allen Butler</td>
+<td>Historiador — psicologia de Smith, cultura edwardiana</td>
+<td>SEQ 02, 04, 06, 10</td>
+<td>Entrevista longa. Rembrandt lighting 3200K. Escritorio com mapas e
+livros</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Andreza Araujo (squad andreza-araujo)</td>
+<td>Consultora senior em cultura de seguranca — 25+ anos, ex-PepsiCo
+LatAm, ponte passado-presente</td>
+<td>APRESENTADORA em todas as SEQ + campo (Pigeon Forge, NYC, Sao
+Paulo)</td>
+<td>Interrotron. Escritorio moderno. Key lateral 5600K. Tambem em campo
+(museus, locacoes industriais, Pier 54)</td>
+</tr>
+<tr>
+<td>6</td>
+<td>Don Lynch / Ken Marschall</td>
+<td>Visual history — expedicoes ao wreck</td>
+<td>SEQ 01, 19</td>
+<td>Marschall: pinturas ao fundo. Lynch: artefatos THS. Soft box
+3800K</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="personagens-historicos-reconstituicao">PERSONAGENS HISTORICOS
+(RECONSTITUICAO)</h2>
+<table>
+<colgroup>
+<col style="width: 19%" />
+<col style="width: 29%" />
+<col style="width: 33%" />
+<col style="width: 17%" />
+</colgroup>
+<thead>
+<tr>
+<th>Personagem</th>
+<th>Funcao narrativa</th>
+<th>Tipo reconstituicao</th>
+<th>Sequencias</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Thomas Andrews</td>
+<td>Protagonista tragico — sabia e nao podia mudar</td>
+<td>N2 (fragmentado)</td>
+<td>SEQ 04, 07, 13</td>
+</tr>
+<tr>
+<td>Alexander Carlisle</td>
+<td>Whistleblower silenciado — Cassandra do Titanic</td>
+<td>N2 (fragmentado)</td>
+<td>SEQ 04, 05, 09, 13</td>
+</tr>
+<tr>
+<td>J. Bruce Ismay</td>
+<td>Antagonista sistemico — pressao comercial</td>
+<td>N2 (fragmentado)</td>
+<td>SEQ 04, 06, 10</td>
+</tr>
+<tr>
+<td>Capitao Edward Smith</td>
+<td>Local Rationality encarnada — 40 anos de experiencia como
+armadilha</td>
+<td>N3 (estilistico)</td>
+<td>SEQ 06, 10</td>
+</tr>
+<tr>
+<td>Jack Phillips</td>
+<td>Vitima do sistema duplo — Marconi vs White Star</td>
+<td>N3 (estilistico)</td>
+<td>SEQ 01, 08, 13</td>
+</tr>
+<tr>
+<td>Frederick Fleet</td>
+<td>Ultima defesa num sistema quebrado</td>
+<td>N3 (estilistico)</td>
+<td>SEQ 06</td>
+</tr>
+<tr>
+<td>Board of Trade</td>
+<td>Regulacao capturada — camada organizacional Reason</td>
+<td>N1 (simbolico)</td>
+<td>SEQ 09, 15</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="passageiros-historias-humanas">PASSAGEIROS — HISTORIAS
+HUMANAS</h2>
+<table style="width:100%;">
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 17%" />
+<col style="width: 21%" />
+<col style="width: 12%" />
+<col style="width: 23%" />
+</colgroup>
+<thead>
+<tr>
+<th>Personagem</th>
+<th>Classe</th>
+<th>Historia</th>
+<th>Tipo</th>
+<th>Sequencia</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>John Jacob Astor IV</td>
+<td>1a</td>
+<td>Homem mais rico a bordo ($87M). Ajudou esposa gravida ao bote.
+Perguntou se podia acompanha-la. “Nenhum homem antes que todas as
+mulheres.” Ficou.</td>
+<td>Arquivo + VO</td>
+<td>SEQ 03</td>
+</tr>
+<tr>
+<td>Benjamin Guggenheim</td>
+<td>1a</td>
+<td>Trocou o colete salva-vidas por smoking. “Nos vestimos com nossas
+melhores roupas e estamos preparados para afundar como
+cavalheiros.”</td>
+<td>Arquivo + VO</td>
+<td>SEQ 03</td>
+</tr>
+<tr>
+<td>Isidor &amp; Ida Straus</td>
+<td>1a</td>
+<td>Donos da Macy’s. Ida recusou o bote: “Vivi com meu marido 40 anos.
+Nao vou deixa-lo agora.” Sentaram juntos no deck.</td>
+<td>Arquivo + VO</td>
+<td>SEQ 03</td>
+</tr>
+<tr>
+<td>Margaret “Molly” Brown</td>
+<td>1a</td>
+<td>Forcou o remador do bote 6 a voltar para resgatar. Chamada
+“insubmissa.” A voz que NAO foi silenciada.</td>
+<td>Arquivo + VO</td>
+<td>SEQ 03</td>
+</tr>
+<tr>
+<td>Wallace Hartley (banda)</td>
+<td>Tripulacao</td>
+<td>8 musicos tocaram ate o final. Nenhum sobreviveu. “Nearer, My God,
+to Thee” ou “Autumn”? O dever alem do contrato.</td>
+<td>Arquivo + VO</td>
+<td>SEQ 03</td>
+</tr>
+<tr>
+<td>Familias da 3a classe</td>
+<td>3a</td>
+<td>Imigrantes — irlandeses, suecos, libaneses, italianos. Muitos sem
+falar ingles. Corredores sem sinalizacao. Grades trancadas. 75% de
+mortalidade.</td>
+<td>Grafismo + reconstituicao</td>
+<td>SEQ 10</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="paleta-cromatica-7-cores-fundadoras">PALETA CROMATICA — 7 CORES
+FUNDADORAS</h2>
+<table>
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 17%" />
+<col style="width: 14%" />
+<col style="width: 35%" />
+<col style="width: 23%" />
+</colgroup>
+<thead>
+<tr>
+<th>#</th>
+<th>Nome</th>
+<th>Hex</th>
+<th>Significado</th>
+<th>Ato(s)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Ouro Edwardiano</td>
+<td>#C8A25C</td>
+<td>Brilho do progresso, riqueza que cega</td>
+<td>I</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Sepia Belfast</td>
+<td>#8B7355</td>
+<td>Passado como materia, trabalho e ferrugem</td>
+<td>I</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Azul Atlantico</td>
+<td>#1B3A5C</td>
+<td>Oceano como entidade ameacadora</td>
+<td>I, III</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Cinza Aco Frio</td>
+<td>#6B7B8D</td>
+<td>Drenagem da esperanca, navio como evidencia</td>
+<td>II</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Verde Laboratorio</td>
+<td>#4A6B5A</td>
+<td>Analise forense, autopsial</td>
+<td>II</td>
+</tr>
+<tr>
+<td>6</td>
+<td>Branco Analitico</td>
+<td>#E8E8E8</td>
+<td>Compreensao pura, sistema revelado</td>
+<td>III</td>
+</tr>
+<tr>
+<td>7</td>
+<td>Preto Abissal</td>
+<td>#0A0A0F</td>
+<td>Fundo do oceano, o desconhecido</td>
+<td>III</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Cores auxiliares:</strong> Vermelho Alerta (#8B2500) —
+foguetes, Swiss Cheese, overlays de erro. Ambar Marconi (#D4A017) — sala
+de radio. Branco Flash (#FFFFFF) — instante da colisao.</p>
+<hr />
+<h2 id="dispositivo-visual-recorrente-marcacao-de-erros">DISPOSITIVO
+VISUAL RECORRENTE: MARCACAO DE ERROS</h2>
+<p>Ao longo do documentario, quando cada erro e revelado, um OVERLAY
+discreto aparece no canto inferior esquerdo:</p>
+<table>
+<colgroup>
+<col style="width: 19%" />
+<col style="width: 22%" />
+<col style="width: 16%" />
+<col style="width: 41%" />
+</colgroup>
+<thead>
+<tr>
+<th>Tipo</th>
+<th>Icone</th>
+<th>Cor</th>
+<th>Significado</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ERRO DE PROCESSO</td>
+<td>Engrenagem</td>
+<td>Vermelho Alerta #8B2500</td>
+<td>Falha de procedimento, design, regra</td>
+</tr>
+<tr>
+<td>ERRO HUMANO</td>
+<td>Silhueta</td>
+<td>Vermelho Alerta #8B2500</td>
+<td>Decisao individual no momento</td>
+</tr>
+<tr>
+<td>FALHA SISTEMICA</td>
+<td>Rede/malha</td>
+<td>Vermelho Alerta #8B2500</td>
+<td>Arquitetura organizacional que permite/incentiva o erro</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Comportamento:</strong> Aparece por 3 segundos com som de
+clique seco (carimbo). Discreto — nao interrompe o fluxo. No CLIMAX (SEQ
+14), todos os overlays reaparecem simultaneamente, empilham-se, e se
+reorganizam no Swiss Cheese.</p>
+<p><strong>Mapa completo de overlays:</strong></p>
+<table>
+<colgroup>
+<col style="width: 16%" />
+<col style="width: 20%" />
+<col style="width: 63%" />
+</colgroup>
+<thead>
+<tr>
+<th>SEQ</th>
+<th>Tipo</th>
+<th>Descricao do erro</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>04</td>
+<td>PROCESSO</td>
+<td>Anteparas rebaixadas — comercial &gt; seguranca</td>
+</tr>
+<tr>
+<td>04</td>
+<td>PROCESSO</td>
+<td>48 botes reduzidos a 16 — estetica &gt; sobrevivencia</td>
+</tr>
+<tr>
+<td>06</td>
+<td>HUMANO</td>
+<td>Velocidade mantida apesar de 7 avisos de gelo</td>
+</tr>
+<tr>
+<td>06</td>
+<td>PROCESSO</td>
+<td>Binoculos trancados — chave saiu com Blair em Southampton</td>
+</tr>
+<tr>
+<td>08</td>
+<td>SISTEMICO</td>
+<td>Operador Marconi = funcionario comercial, nao de seguranca</td>
+</tr>
+<tr>
+<td>08</td>
+<td>HUMANO</td>
+<td>Phillips ignora aviso do Mesaba — prioriza telegramas pagos</td>
+</tr>
+<tr>
+<td>09</td>
+<td>SISTEMICO</td>
+<td>Merchant Shipping Act de 1894 — 18 anos sem atualizacao</td>
+</tr>
+<tr>
+<td>10</td>
+<td>PROCESSO</td>
+<td>Botes arriados parcialmente — sem treinamento de evacuacao</td>
+</tr>
+<tr>
+<td>10</td>
+<td>SISTEMICO</td>
+<td>Grades de classe = barreiras de evacuacao</td>
+</tr>
+<tr>
+<td>11</td>
+<td>HUMANO</td>
+<td>Lord interpreta foguetes como “fogos festivos”</td>
+</tr>
+<tr>
+<td>11</td>
+<td>PROCESSO</td>
+<td>Operador Marconi do Californian autorizado a dormir</td>
+</tr>
+<tr>
+<td>12</td>
+<td>PROCESSO</td>
+<td>Rebites de ferro na proa — custo &lt; 0.3% a mais para aco</td>
+</tr>
+<tr>
+<td>13</td>
+<td>SISTEMICO</td>
+<td>3 alarmes dados (Carlisle, Andrews, Phillips), 0 ouvidos</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<hr />
+<h1 id="bloco-1-abertura-hook-setup">BLOCO 1 — ABERTURA: HOOK +
+SETUP</h1>
+<p><strong>ATO I | ~28 minutos | Beat 1 (Vida Normal) + inicio Beat 2
+(Inciting Incident)</strong> <strong>Value-Charge: POSITIVO –&gt;
+NEGATIVO</strong> <strong>Arco cromatico: PRETO –&gt; Azul Abissal –&gt;
+Ouro Edwardiano –&gt; Sepia Belfast –&gt; FLASH BRANCO –&gt;
+Escuridao</strong></p>
+<hr />
+<h2 id="seq-01-prologo-sos-o-crime-scene">SEQ 01 — PROLOGO: SOS + O
+CRIME SCENE</h2>
+<table>
+<colgroup>
+<col style="width: 43%" />
+<col style="width: 56%" />
+</colgroup>
+<thead>
+<tr>
+<th>Campo</th>
+<th>Detalhe</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Duracao</strong></td>
+<td>4 minutos</td>
+</tr>
+<tr>
+<td><strong>Tipo de material</strong></td>
+<td>Som Morse (reconstruido) + arquivo submarino (acervo Cameron, 33
+mergulhos) + VO</td>
+</tr>
+<tr>
+<td><strong>Paleta</strong></td>
+<td>Preto Abissal #0A0A0F –&gt; Azul Atlantico #1B3A5C</td>
+</tr>
+<tr>
+<td><strong>Entrevistados</strong></td>
+<td>Nenhum (VO). Ken Marschall como fonte visual complementar</td>
+</tr>
+<tr>
+<td><strong>Props/cenografia</strong></td>
+<td>Nenhuma construcao — som Morse + imagens reais do wreck</td>
+</tr>
+<tr>
+<td><strong>Value-charge</strong></td>
+<td>Ambiguo –&gt; Positivo</td>
+</tr>
+<tr>
+<td><strong>Beat McKee</strong></td>
+<td>Beat 1 — abertura</td>
+</tr>
+<tr>
+<td><strong>GAP plantado</strong></td>
+<td>O que vemos no fundo foi construido com orgulho</td>
+</tr>
+</tbody>
+</table>
+<p><strong>IMAGEM:</strong></p>
+<p>Tela preta. Silencio total — tres segundos.</p>
+<p>Depois: um clique. Metalico, seco. O manipulador Morse.</p>
+<p>··· ——— ···</p>
+<p>SOS.</p>
+<p>O ritmo e lento no inicio — quase cerimonial. Cada ponto e traco
+aparece como TEXTO branco sobre preto, sincronizado com o som:</p>
+<p><strong>TEXTO (letra por letra, branco sobre preto):</strong> “CQD
+CQD SOS SOS de MGY”</p>
+<p>Pausa. O Morse recomeça — mais rapido agora. Mais urgente. As maos de
+Phillips (reconstituicao N3 — close extremo, apenas as maos e o
+manipulador) batem o codigo com crescente desespero.</p>
+<p><strong>TEXTO:</strong> “We are sinking fast. Passengers being put
+into boats.” — Jack Phillips, operador Marconi do RMS Titanic 15 de
+abril de 1912, 00:45</p>
+<p>O Morse continua — mas agora o som se DEFORMA. O clique metalico vai
+se misturando com pressao de agua. O codigo vira eco. O eco vira abismo.
+A transicao e gradual: estamos descendo ao fundo do mar.</p>
+<p><strong>TRANSICAO SONORA:</strong> Morse –&gt; eco submarino –&gt;
+silencio abissal.</p>
+<p>A luz dos ROVs (veiculos subaquaticos de Cameron) recorta a proa do
+Titanic como um bisturi. O metal esta coberto de rusticles — formacoes
+biologicas ferrosas que parecem estalactites de ferrugem. A escala e
+revelada lentamente: a camera recua, recua, e o navio emerge do escuro
+como uma catedral submarina.</p>
+<p><strong>APRESENTADORA (Andreza Araujo):</strong> “Eu trabalho com
+seguranca ha mais de 25 anos. Ja entrei em fabricas, plataformas,
+canteiros de obra em 19 paises. E em cada lugar, encontrei a mesma
+coisa: nao um defeito, nao uma negligencia — uma pergunta. A mesma
+pergunta, em qualquer lingua, em qualquer continente: como foi possivel?
+O Titanic esta a 3.800 metros de profundidade no Atlantico Norte. Mas a
+resposta nao esta la embaixo. Esta aqui em cima — nas decisoes que
+tomamos todo dia.”</p>
+<p>A camera continua a recuar. Os sapatos enfileirados no leito oceanico
+— marca de corpos que se desfizeram ha mais de um seculo. As luminarias
+art deco cobertas de vida marinha. O silencio absoluto do fundo do
+Atlantico Norte.</p>
+<p><strong>APRESENTADORA (Andreza Araujo):</strong> “Este nao e um navio
+naufragado. E uma cena de crime. E como toda investigacao, a gente nao
+procura culpados — procura causas.”</p>
+<p><strong>CORTE SECO.</strong></p>
+<p><strong>SOM:</strong> O estrondo de um martelo sobre metal. Aco
+brilhante. Belfast, 1909.</p>
+<p><strong>NOTA DE DIRECAO VISUAL:</strong> O episodio abre no PRETO
+TOTAL — nao no azul. O primeiro estimulo e SONORO: o Morse. O espectador
+ouve antes de ver. Quando a imagem aparece (ROVs no wreck), o codigo
+Morse ja plantou a urgencia. A transicao Morse –&gt; abismo e o primeiro
+arco sonoro do documentario: comunicacao humana dissolve-se em silencio
+oceanico. Quando Cameron diz “crime scene,” a palavra redefine o que o
+azul significa. O contraste entre SEQ 01 e SEQ 02 e o MAIOR do episodio
+— do azul abissal para o dourado industrial. Corte SECO, nao fade.</p>
+<p><strong>SOM/MUSICA:</strong> Codigo Morse (reconstruido com
+equipamento de epoca). Transicao para sons subaquaticos naturais
+(gravados em mergulho). Nenhuma musica. O Morse E a musica do desespero.
+O silencio do fundo do mar E a musica da consequencia. O corte para
+Belfast traz o metalico industrial como ruptura sonora.</p>
+<hr />
+<h2 id="seq-02-a-era-dos-titans">SEQ 02 — A ERA DOS TITANS</h2>
+<table>
+<colgroup>
+<col style="width: 43%" />
+<col style="width: 56%" />
+</colgroup>
+<thead>
+<tr>
+<th>Campo</th>
+<th>Detalhe</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Duracao</strong></td>
+<td>6 minutos</td>
+</tr>
+<tr>
+<td><strong>Tipo de material</strong></td>
+<td>Arquivo historico + reconstituicao N2 (estaleiro) + grafismo +
+entrevista (Foecke — semente)</td>
+</tr>
+<tr>
+<td><strong>Paleta</strong></td>
+<td>Ouro Edwardiano #C8A25C dominante + Sepia Belfast #8B7355</td>
+</tr>
+<tr>
+<td><strong>Entrevistados</strong></td>
+<td>Dr. Tim Foecke (semente plantada — nao revelada), Daniel Allen
+Butler (contexto edwardiano)</td>
+</tr>
+<tr>
+<td><strong>Props/cenografia</strong></td>
+<td>Reconstituicao parcial estaleiro Belfast: fornalha + rebites sendo
+martelados. Operarios como SILHUETAS contra fogo e metal. Iluminacao
+chiaroscuro (Caravaggio industrial)</td>
+</tr>
+<tr>
+<td><strong>Value-charge</strong></td>
+<td>Positivo (progresso, grandiosidade)</td>
+</tr>
+<tr>
+<td><strong>Beat McKee</strong></td>
+<td>Beat 1 — vida normal</td>
+</tr>
+</tbody>
+</table>
+<p><strong>IMAGEM:</strong></p>
+<p>A Era Edwardiana em todo seu esplendor industrial. O Imperio
+Britanico no zenite. A corrida transatlantica: White Star Line contra
+Cunard. A Cunard tem o Lusitania (1907) e o Mauretania — rapidos,
+elegantes, vencedores do Blue Riband. A White Star responde com uma
+aposta diferente: nao o mais rapido, mas o MAIOR. O mais luxuoso. O mais
+impressionante.</p>
+<p>Belfast, estaleiro Harland &amp; Wolff. Rio Lagan. Guindastes Arrol —
+os maiores da epoca — recortam o ceu irlandes. 15.000 operarios. A maior
+estrutura movel ja construida pelo homem comeca a tomar forma.</p>
+<p><strong>RECONSTITUICAO (N2 — fragmentada):</strong> Close em rebites
+sendo martelados na proa por equipes de rebitadores manuais. Quatro
+homens por equipe: um aquece o rebite na fornalha (laranja
+incandescente), passa com tenazes ao segundo, que o posiciona no furo, o
+terceiro segura a contra-cavilha, o quarto martela. Silhuetas contra o
+fogo da fornalha. As maos sao a unica parte visivel — maos de operarios,
+maos que constroem, maos que sem saber plantam a semente do
+desastre.</p>
+<p><strong>GRAFISMO:</strong> O crescimento do navio em cross-section
+animada — quilha, cavernas, chapas, rebites. 3 milhoes de rebites. O
+numero aparece e permanece na tela.</p>
+<p><strong>ENTREVISTA (Foecke — SEMENTE):</strong> Close no rosto de
+Foecke, Interrotron, luz lateral fria do laboratorio NIST.</p>
+<p><strong>Foecke:</strong> “Quando analisamos esses rebites em 1998, o
+que encontramos no microscopio foi…”</p>
+<p>CORTE. A frase fica suspensa. Nao revelamos. O espectador recebe a
+semente do conflito — sera cultivada por 50 minutos antes de florescer
+na SEQ 12.</p>
+<p><strong>ENTREVISTA (Butler — CONTEXTO):</strong> Rembrandt lighting.
+Escritorio com livros ao fundo.</p>
+<p><strong>Butler:</strong> “Para entender o Titanic, voce precisa
+entender a era. Nao era apenas um navio. Era a prova de que a tecnologia
+havia vencido a natureza. E se a tecnologia venceu a natureza — para que
+se preocupar com botes salva-vidas?”</p>
+<p><strong>SOM/MUSICA:</strong> Metal sendo martelado — ritmo industrial
+como percussao. Fornalha rugindo. O som do progresso e identico ao som
+da construcao do desastre. Sem musica composta — o estaleiro E a
+musica.</p>
+<p><strong>NOTA DE DIRECAO VISUAL:</strong> O choque cromatico com SEQ
+01 e deliberado. O espectador e arrancado do fundo do mar e jogado num
+mundo de ouro. Belfast brilha. Os dourados sao quentes mas nao
+acolhedores — sao o brilho do METAL, nao do sol. Elegancia como fachada
+(Storaro). A reconstituicao e IMPRESSIONISTA: operarios como formas
+contra o fogo. Nao tentamos recriar Belfast — evocamos.</p>
+<hr />
+<h2 id="seq-03-as-vidas-a-bordo">SEQ 03 — AS VIDAS A BORDO</h2>
+<table>
+<colgroup>
+<col style="width: 43%" />
+<col style="width: 56%" />
+</colgroup>
+<thead>
+<tr>
+<th>Campo</th>
+<th>Detalhe</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Duracao</strong></td>
+<td>6 minutos</td>
+</tr>
+<tr>
+<td><strong>Tipo de material</strong></td>
+<td>Arquivo fotografico + grafismo + VO + locacao Pigeon Forge
+(Andreza)</td>
+</tr>
+<tr>
+<td><strong>Paleta</strong></td>
+<td>Ouro Edwardiano #C8A25C (1a classe) degradando para Sepia #8B7355
+(3a classe). Quente mas melancolico — o espectador ja sabe o que
+vem</td>
+</tr>
+<tr>
+<td><strong>Entrevistados</strong></td>
+<td>Andreza Araujo (em campo — Titanic Museum, Pigeon Forge)</td>
+</tr>
+<tr>
+<td><strong>Props/cenografia</strong></td>
+<td>Locacao real: Titanic Museum, Pigeon Forge, TN. Replicas de cabines,
+corredores, artefatos. Bloco de gelo (-2C)</td>
+</tr>
+<tr>
+<td><strong>Value-charge</strong></td>
+<td>Positivo –&gt; melancolico (ironia dramatica — o espectador sabe, os
+personagens nao)</td>
+</tr>
+<tr>
+<td><strong>Beat McKee</strong></td>
+<td>Beat 1 — complicacao emocional / investimento no elenco</td>
+</tr>
+<tr>
+<td><strong>Funcao Bernard</strong></td>
+<td>O publico PRECISA se importar com as pessoas antes de conhecer os
+erros</td>
+</tr>
+</tbody>
+</table>
+<p><strong>IMAGEM:</strong></p>
+<p>10 de abril de 1912. Southampton. O Titanic zarpa com 2.224
+almas.</p>
+<p><strong>ANDREZA EM CAMPO (Pigeon Forge, Titanic Museum):</strong>
+Andreza caminha por uma replica do corredor de primeira classe. Lustres.
+Mogno. Carpete. O luxo e tangivel.</p>
+<p><strong>APRESENTADORA (Andreza Araujo):</strong> “Quando a gente fala
+de seguranca, a gente fala de numeros. Taxa de acidentalidade.
+Frequencia. Gravidade. Mas seguranca nao e sobre numeros. E sobre gente.
+Cada numero e uma pessoa. Uma historia. Uma familia esperando em
+casa.”</p>
+<p><strong>TRANSICAO:</strong> Andreza para diante de um painel com
+fotografias de passageiros. Close nas fotos.</p>
+<p><strong>VO (narrador — registro documental, sobre fotografias de
+arquivo):</strong></p>
+<p><strong>HISTORIA 1 — John Jacob Astor IV:</strong> Fotografia de
+arquivo: Astor com esposa Madeleine, gravida de 5 meses. O homem mais
+rico a bordo — fortuna estimada em 87 milhoes de dolares (equivalente a
+2.5 bilhoes hoje). Quando os botes comecaram a ser arriados, Astor
+ajudou Madeleine a entrar no bote 4. Perguntou ao oficial Lightoller se
+podia acompanha-la — “dada a condicao dela.” Lightoller respondeu:
+“Nenhum homem antes que todas as mulheres e criancas.” Astor recuou.
+Acendeu um cigarro. Ficou.</p>
+<p><strong>HISTORIA 2 — Benjamin Guggenheim:</strong> Fotografia de
+arquivo: Guggenheim em traje formal. Magnata do minerio. Quando percebeu
+que o navio afundava, desceu ao camarote com seu valete Victor Giglio.
+Tiraram os coletes salva-vidas. Vestiram smokings. Voltaram ao
+salao.</p>
+<p><strong>VO:</strong> “Nos vestimos com nossas melhores roupas e
+estamos preparados para afundar como cavalheiros. Diga a minha esposa
+que fiz o meu melhor no cumprimento do meu dever.”</p>
+<p><strong>HISTORIA 3 — Isidor e Ida Straus:</strong> Fotografia de
+arquivo: o casal Straus. Fundadores da Macy’s. 67 e 63 anos. Casados ha
+41 anos. Um oficial ofereceu lugar a Ida no bote 8. Ida comecou a entrar
+— parou. Voltou. Tomou o braco do marido.</p>
+<p><strong>VO:</strong> “Vivi com meu marido por 40 anos. Nao vou
+deixa-lo agora.”</p>
+<p>Isidor recusou entrar em qualquer bote enquanto houvesse mulheres e
+criancas a bordo. Foram vistos pela ultima vez sentados juntos em
+cadeiras de deck, de maos dadas, enquanto a agua subia.</p>
+<p><strong>HISTORIA 4 — Margaret “Molly” Brown:</strong> Fotografia de
+arquivo: Brown com expressao determinada. Herdeira de mineracao. No bote
+6, com apenas 28 pessoas para 65 vagas, Brown exigiu que o remador
+Quartermaster Hichens voltasse para resgatar mais pessoas. Hichens
+recusou — “o bote sera sugado.” Brown ameacou joga-lo ao mar. Assumiu os
+remos. O bote voltou.</p>
+<p><strong>APRESENTADORA (Andreza Araujo):</strong> “Molly Brown fez o
+que Carlisle tentou fazer cinco anos antes. Levantou a voz. A diferenca?
+No bote, nao havia sistema para silencia-la. Na sala de reunioes de
+1907, havia.”</p>
+<p><strong>HISTORIA 5 — Wallace Hartley e a Banda:</strong> Fotografia
+de arquivo: os 8 musicos. Contratados pela agencia C.W. &amp; F.N. Black
+— nao eram tripulantes da White Star. Tocaram no salao enquanto os botes
+eram arriados. Quando a inclinacao tornou impossivel ficar de pe,
+moveram-se para o deck externo. Tocaram ate que as ondas os levaram.
+Nenhum sobreviveu.</p>
+<p><strong>VO:</strong> “A ultima musica ouvida no Titanic permanece
+debatida — ‘Nearer, My God, to Thee’ ou ‘Autumn.’ O que nao se debate:
+oito homens escolheram a musica quando o silencio teria sido mais
+facil.”</p>
+<p><strong>ANDREZA EM CAMPO (Pigeon Forge — bloco de gelo):</strong>
+Andreza coloca a mao no bloco de gelo do museu (replica a -2C, a
+temperatura da agua do Atlantico naquela noite). Segura por alguns
+segundos. Retira. Olha para a camera.</p>
+<p><strong>APRESENTADORA (Andreza Araujo):</strong> “A agua do Atlantico
+estava a menos dois graus naquela noite. Voce consegue segurar a mao
+aqui por 15 segundos. Quem caiu na agua tinha 15 minutos ate a
+hipotermia. 30 minutos ate a inconsciencia. A maioria dos 1.517 nao
+morreu afogada. Morreu de frio. No escuro. Esperando um bote que nao
+voltou.”</p>
+<p>[SILENCIO — 5 segundos]</p>
+<p><strong>APRESENTADORA (Andreza Araujo):</strong> “2.224 pessoas. Cada
+uma com uma historia, uma familia, um motivo para estar naquele navio.
+Quando eu falo de cultura de seguranca, nao estou falando de normas —
+estou falando de gente como Ida Straus, como os musicos, como as
+criancas da terceira classe que nunca tiveram nome nos jornais.”</p>
+<p><strong>SOM/MUSICA:</strong> Nenhuma musica composta. Sons de porto
+(apitos, vento, multidao) nas transicoes entre historias. Nas historias
+em si: silencio respeitoso com VO sobre ele. No momento do bloco de
+gelo: APENAS o som do museu — passos, respiracao de Andreza, o zumbido
+do refrigerador do bloco. Realidade nua.</p>
+<p><strong>NOTA DE DIRECAO VISUAL:</strong> A sequencia oscila entre
+ARQUIVO (sepia, grao, textura de epoca) e CAMPO (Pigeon Forge, cor
+moderna mas desaturada — presente olhando para o passado). A alternancia
+diz: estas historias sao reais E estao aqui, preservadas. As fotos de
+arquivo sao apresentadas em CLOSE LENTO (Ken Burns effect contido, sem
+exagero). O bloco de gelo e filmado em close EXTREMO — cristais de gelo,
+pele da mao de Andreza, a umidade condensando. O frio e VISIVEL.</p>
+<hr />
+<h2 id="seq-04-tres-homens-e-um-navio">SEQ 04 — TRES HOMENS E UM
+NAVIO</h2>
+<table>
+<colgroup>
+<col style="width: 43%" />
+<col style="width: 56%" />
+</colgroup>
+<thead>
+<tr>
+<th>Campo</th>
+<th>Detalhe</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Duracao</strong></td>
+<td>8 minutos</td>
+</tr>
+<tr>
+<td><strong>Tipo de material</strong></td>
+<td>Reconstituicao N2 (sala projetos H&amp;W, reuniao 1907) + arquivo +
+entrevistas</td>
+</tr>
+<tr>
+<td><strong>Paleta</strong></td>
+<td>Ouro Edwardiano #C8A25C + Sepia Belfast #8B7355. Cinza Aco #6B7B8D
+comeca a aparecer nas sombras</td>
+</tr>
+<tr>
+<td><strong>Entrevistados</strong></td>
+<td>Butler (psicologia dos tres), possivelmente Foecke (contexto tecnico
+Andrews)</td>
+</tr>
+<tr>
+<td><strong>Props/cenografia</strong></td>
+<td>Mesa de projetos de madeira escura (mogno). Blueprints do Titanic.
+Lampada de mesa com abajur verde. Compasso, lapis, borracha. Mesa de
+conferencia longa para reuniao de 1907. Cadeiras de couro. Relogio de
+parede</td>
+</tr>
+<tr>
+<td><strong>Value-charge</strong></td>
+<td>Positivo com sombras</td>
+</tr>
+<tr>
+<td><strong>Beat McKee</strong></td>
+<td>Beat 1 — complicacao inicial</td>
+</tr>
+<tr>
+<td><strong>OVERLAYS</strong></td>
+<td>PROCESSO: Anteparas rebaixadas / PROCESSO: 48 botes reduzidos a
+16</td>
+</tr>
+</tbody>
+</table>
+<p><strong>IMAGEM:</strong></p>
+<p>Tres homens. Tres visoes. Um navio.</p>
+<p><strong>Thomas Andrews</strong> — o genio tecnico. Projetista-chefe
+de Harland &amp; Wolff. Sobrinho de Lord Pirrie. O homem que conhecia
+cada rebite, cada antepara, cada centimetro do Titanic. Propôs anteparas
+mais altas — ate o conves E (o “deck de botes”) — para garantir
+estanqueidade real. Foram construidas ate o conves F (um deck abaixo).
+Motivo: espaco interno para areas comerciais.</p>
+<p><strong>RECONSTITUICAO R1 (N2 — fragmentada):</strong> Mesa de
+projetos coberta de blueprints. Close nas maos de Andrews desenhando a
+linha das anteparas. Outra mao (Ismay? Pirrie?) traca uma linha MAIS
+BAIXA por cima. Close no lapis apagando a linha de Andrews. Dessaturacao
+65%. Grain moderado. Camera lenta sutil nos dedos que apagam. Som: lapis
+no papel. Respiracao. Relogio de parede (tic-tac constante — o tempo
+passando enquanto a seguranca e apagada).</p>
+<blockquote>
+<p><strong>[OVERLAY: ERRO DE PROCESSO]</strong> Anteparas rebaixadas de
+conves E para conves F — espaco comercial priorizado sobre
+estanqueidade</p>
+</blockquote>
+<p><strong>Alexander Carlisle</strong> — o whistleblower.
+Projetista-chefe anterior a Andrews, cunhado de Lord Pirrie. Em 1907,
+propôs 48 botes salva-vidas usando os novos davits Welin — que JA
+estavam sendo instalados com capacidade para suporta-los. Lord Pirrie
+vetou: botes no deck de passeio obstruiriam a vista dos passageiros de
+primeira classe.</p>
+<p><strong>RECONSTITUICAO R2 (N2 — fragmentada):</strong> Mesa de
+reuniao longa. Planta do deck de botes com 48 marcas. Uma mao risca
+marcas com lapis vermelho ate sobrar 16. Relogio na parede mostra cinco
+minutos passando. Cadeira empurrada para tras — Carlisle saindo.
+Dessaturacao 60%. Camera lenta quando a mao risca as marcas — cada risco
+e uma vida futura. Som: silencio quase total. Relogio. Lapis riscando.
+Cadeira arrastada. A porta que se fecha.</p>
+<blockquote>
+<p><strong>[OVERLAY: ERRO DE PROCESSO]</strong> 48 botes reduzidos a 16
+em reuniao de 5 minutos — estetica de 1a classe prevalece sobre
+capacidade de resgate</p>
+</blockquote>
+<p><strong>J. Bruce Ismay</strong> — presidente da White Star Line. Nao
+vilao, mas produto do sistema. Pressao comercial personificada. Responde
+aos acionistas, nao aos engenheiros. O tamanho do navio e o argumento de
+venda. O luxo e a evidencia de seguranca.</p>
+<p><strong>ENTREVISTA (Butler):</strong> “Andrews via o navio como
+engenharia. Carlisle via como risco. Ismay via como produto. Nenhum dos
+tres estava errado — e exatamente isso que torna a historia
+terrificante.”</p>
+<p><strong>NOTA DE DIRECAO VISUAL:</strong> Andrews e filmado em
+reconstituicao com luz mais quente (criador). Carlisle com sombras mais
+pronunciadas (silenciado). Ismay com highlights mais duros (ambicao). A
+iluminacao DIFERENCIA os tres ANTES que o texto o faca. O Cinza Aco
+comeca a infiltrar as sombras — presagio cromatico.</p>
+<p><strong>SOM/MUSICA:</strong> Relogio de parede como leitmotiv. Lapis
+e papel. O som da decisao — banal, quotidiano, letal.</p>
+<hr />
+<h2 id="seq-05-a-voz-que-ninguem-ouviu">SEQ 05 — A VOZ QUE NINGUEM
+OUVIU</h2>
+<table>
+<colgroup>
+<col style="width: 43%" />
+<col style="width: 56%" />
+</colgroup>
+<thead>
+<tr>
+<th>Campo</th>
+<th>Detalhe</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Duracao</strong></td>
+<td>2 minutos</td>
+</tr>
+<tr>
+<td><strong>Tipo de material</strong></td>
+<td>Arquivo inquerito + reconstituicao N1 (simbolica) + VO</td>
+</tr>
+<tr>
+<td><strong>Paleta</strong></td>
+<td>Sepia Belfast #8B7355 dominante. O Ouro SOME. Tons terrosos, papeis
+envelhecidos</td>
+</tr>
+<tr>
+<td><strong>Entrevistados</strong></td>
+<td>Nenhum (arquivo sonoro + VO)</td>
+</tr>
+<tr>
+<td><strong>Props/cenografia</strong></td>
+<td>Reconstituicao simbolica: cadeira vazia num espaco grande demais.
+Luz de tribunal — direcional de cima, sombras duras. Transcricao do
+inquerito como prop-evidencia</td>
+</tr>
+<tr>
+<td><strong>Value-charge</strong></td>
+<td>Negativo emergente</td>
+</tr>
+<tr>
+<td><strong>Beat McKee</strong></td>
+<td>Beat 1 — semente dramatica</td>
+</tr>
+<tr>
+<td><strong>Funcao Bernard</strong></td>
+<td>O publico PRECISA saber mais. O trem arrancou</td>
+</tr>
+</tbody>
+</table>
+<p><strong>IMAGEM:</strong></p>
+<ol start="1912" type="1">
+<li>Inquerito britanico pos-desastre. Alexander Carlisle na cadeira de
+testemunhas.</li>
+</ol>
+<p><strong>ARQUIVO/RECONSTITUICAO (N1):</strong> A transcricao do
+inquerito, pergunta 21370. Close no documento. Luz rasante revela a
+textura do papel — dobras, tinta de epoca, carimbos oficiais.
+Temperatura 2800K (sepia-quente).</p>
+<p><strong>VO (narrador, Tom em registro de leitura
+documental):</strong> “I suggested 48 boats. The meeting lasted five
+minutes. My proposals were not discussed.”</p>
+<p>Silencio. Tres segundos.</p>
+<p><strong>APRESENTADORA (Andreza Araujo):</strong> “Cinco anos antes do
+naufragio, Alexander Carlisle sentou-se numa sala e disse o que era
+preciso fazer. A sala nao ouviu. Eu vi isso acontecer em dezenas de
+empresas — o tecnico que reporta o risco e encontra o olhar de ‘voce de
+novo?’ A pergunta nao e por que Carlisle falou. A pergunta e por que
+ninguem ouviu. E essa pergunta eu faco todo dia no meu trabalho.”</p>
+<p>A Questao Dramatica esta plantada. O espectador foi fisgado. De agora
+em diante, quer entender COMO foi possivel.</p>
+<p><strong>SOM/MUSICA:</strong> O eco de uma sala vazia. Passos
+afastando-se. Silencio.</p>
+<p><strong>NOTA DE DIRECAO VISUAL:</strong> Reducao cromatica radical:
+de tres tons quentes para um. O ouro do progresso evaporou. Estamos no
+terroso do documento, do registro. A cor diz: “isto e prova, nao
+celebracao.” Luz de tribunal — dura, de cima, sem misericordia.</p>
+<hr />
+<h2 id="seq-06-inciting-incident-37-segundos">SEQ 06 — INCITING
+INCIDENT: 37 SEGUNDOS</h2>
+<table>
+<colgroup>
+<col style="width: 43%" />
+<col style="width: 56%" />
+</colgroup>
+<thead>
+<tr>
+<th>Campo</th>
+<th>Detalhe</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Duracao</strong></td>
+<td>3 minutos</td>
+</tr>
+<tr>
+<td><strong>Tipo de material</strong></td>
+<td>Reconstituicao N3 (estilistico — ninho-de-corvo, ponte de comando) +
+CGI</td>
+</tr>
+<tr>
+<td><strong>Paleta</strong></td>
+<td>Azul Atlantico #1B3A5C + Branco Flash #FFFFFF (instante colisao) +
+Preto Abissal #0A0A0F</td>
+</tr>
+<tr>
+<td><strong>Entrevistados</strong></td>
+<td>Butler (contexto psicologico de Smith, posicionado antes ou apos a
+sequencia)</td>
+</tr>
+<tr>
+<td><strong>Props/cenografia</strong></td>
+<td><strong>Ninho-de-corvo (construcao completa):</strong> Plataforma
+circular (~1.2m diametro). Parapeito metalico. Sino de bronze com corda.
+Armario de binoculos TRANCADO (cadeado visivel, sem chave — a chave saiu
+com o segundo oficial Blair em Southampton). Telefone de comunicacao com
+a ponte. Ceu preto (fundo infinito). <strong>Ponte de comando
+(parcial):</strong> Silhueta de Smith contra vidro</td>
+</tr>
+<tr>
+<td><strong>Value-charge</strong></td>
+<td>NEGATIVO (ruptura total)</td>
+</tr>
+<tr>
+<td><strong>Beat McKee</strong></td>
+<td>Beat 2 — Inciting Incident</td>
+</tr>
+<tr>
+<td><strong>TURNING POINT</strong></td>
+<td>ATO I –&gt; ATO II</td>
+</tr>
+<tr>
+<td><strong>OVERLAYS</strong></td>
+<td>HUMANO: Velocidade mantida / PROCESSO: Binoculos trancados</td>
+</tr>
+</tbody>
+</table>
+<p><strong>IMAGEM:</strong></p>
+<p>14 de abril de 1912. 23:39.</p>
+<p><strong>RECONSTITUICAO R4 (N3 — estilistico):</strong> POV do
+ninho-de-corvo. Escuridao quase total. Noite sem lua. Mar como espelho
+negro — “mar de vidro,” relataram sobreviventes. Frederick Fleet no
+parapeito, maos vazias. Sem binoculos.</p>
+<p><strong>DISPOSITIVO VISUAL (contrafactual):</strong> Alternancia —
+SEM binoculos (escuridao total, o iceberg e invisivel) / COM binoculos
+(o iceberg aparece a 2 milhas, fantasmatico, branco contra preto). O
+espectador VE o que Fleet nao pode ver. Cada alternancia e uma faca: a
+diferenca entre ver e nao ver e a diferenca entre um cadeado e uma chave
+que nao esta la.</p>
+<p>Close na FECHADURA do armario de binoculos. Um reflexo estelar minimo
+a ilumina — o espectador a ve e entende. O cadeado E o sistema.</p>
+<blockquote>
+<p><strong>[OVERLAY: ERRO DE PROCESSO]</strong> Binoculos trancados no
+armario — chave saiu com 2o oficial Blair em Southampton, nunca
+transferida</p>
+</blockquote>
+<p>Sino. Tres batidas. Metalico, reverberante. “Iceberg, right
+ahead!”</p>
+<p>37 segundos. Contagem em tempo dilatado (camera lenta). “Hard
+a-starboard.” “Full astern.”</p>
+<blockquote>
+<p><strong>[OVERLAY: ERRO HUMANO]</strong> Velocidade mantida a 22.5 nos
+apesar de 7 avisos de gelo em 24h — procedimento padrao da epoca</p>
+</blockquote>
+<p><strong>CGI:</strong> Metal range contra gelo. Nao perfuracao —
+SEPARACAO de placas. Os rebites estourando nas costuras. Seis
+compartimentos abertos ao mar. A proa comeca a inclinar.</p>
+<p>Silhueta de Smith na ponte. Azul-preto. Forma humana contra o
+infinito. Ele ja pertence ao oceano — a luz e a mesma cor do mar.</p>
+<p>Andrews com bloco de notas. Calculando. “Uma hora. Duas no maximo.”
+Numero na tela: 2.224 a bordo. 1.178 lugares nos botes. A aritmetica e
+implacavel.</p>
+<p><strong>FLASH BRANCO</strong> — 1 frame, no instante exato do impacto
+metal-gelo. Depois: ESCURIDAO. Depois: azul da agua entrando.</p>
+<p><strong>SOM/MUSICA:</strong> Vento leve e constante no
+ninho-de-corvo. Mar distante. Respiracao de Fleet. SILENCIO crescente.
+Sino: tres batidas. Depois: o som do metal sob pressao — estalar de
+rebites, gemido do casco, rugido da agua. Nenhuma musica composta. O som
+do desastre e toda a musica necessaria.</p>
+<p><strong>NOTA DE DIRECAO VISUAL:</strong> O flash branco e o marco
+cromatico do episodio inteiro. Ate aqui, cores quentes dominaram. A
+partir daqui, cores frias dominam. O sistema cromatico COLAPSA no
+Inciting Incident: flash (claridade violenta) –&gt; escuridao –&gt; azul
+(agua entrando). A temperatura de cor cai ~2000K em 3 minutos de tela. O
+espectador sente frio — literal e metaforicamente.</p>
+<blockquote>
+<p><strong>&gt;&gt;&gt; TURNING POINT ATO I –&gt; ATO II
+&lt;&lt;&lt;</strong> O mundo do progresso se despedacou. A investigacao
+comeca.</p>
+</blockquote>
+<hr />
+<hr />
+<h1 id="bloco-2-desenvolvimento-confrontacao">BLOCO 2 — DESENVOLVIMENTO:
+CONFRONTACAO</h1>
+<p><strong>ATO II | ~48 minutos | Beat 2 (continuacao) + Beat 3
+(Progressive Complications)</strong> <strong>Value-Charge: NEGATIVO
+–&gt; NEGATIVO CRESCENTE –&gt; PICO NEGATIVO</strong> <strong>Arco
+cromatico: Cinza Aco + Azul –&gt; Verde Laboratorio –&gt; Quase
+P&amp;B</strong></p>
+<hr />
+<h2 id="seq-07-anatomia-da-colisao">SEQ 07 — ANATOMIA DA COLISAO</h2>
+<table>
+<colgroup>
+<col style="width: 43%" />
+<col style="width: 56%" />
+</colgroup>
+<thead>
+<tr>
+<th>Campo</th>
+<th>Detalhe</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Duracao</strong></td>
+<td>7 minutos</td>
+</tr>
+<tr>
+<td><strong>Tipo de material</strong></td>
+<td>CGI forense (modelo 3D Cameron) + reconstituicao N1 (inserts
+rebites) + entrevistas Foecke/McCarty</td>
+</tr>
+<tr>
+<td><strong>Paleta</strong></td>
+<td>Cinza Aco #6B7B8D + Azul Atlantico #1B3A5C. Verde Laboratorio
+#4A6B5A comeca a infiltrar-se</td>
+</tr>
+<tr>
+<td><strong>Entrevistados</strong></td>
+<td>Dr. Tim Foecke (NIST), Daniel Allen Butler</td>
+</tr>
+<tr>
+<td><strong>Props/cenografia</strong></td>
+<td>Props: rebites reais de ferro forjado (replicas metalurgicamente
+precisas) filmados em macro sobre fundo preto. Mao de Foecke segurando
+rebite como transicao para CGI</td>
+</tr>
+<tr>
+<td><strong>Value-charge</strong></td>
+<td>Negativo (a verdade fisica do desastre)</td>
+</tr>
+<tr>
+<td><strong>Beat McKee</strong></td>
+<td>Beat 2 continuacao</td>
+</tr>
+</tbody>
+</table>
+<p><strong>IMAGEM:</strong></p>
+<p>O impacto como a ciencia o mostra. Nao como Hollywood o conta.</p>
+<p><strong>CGI FORENSE (modelo 3D Cameron):</strong> O casco do Titanic
+em corte transversal. Cinza metalico para o casco, azul para a agua.
+Iluminacao fria (3200K simulado). O modelo nao e bonito — e AUTOPSIAL.
+Cameron o usa como ferramenta forense.</p>
+<p>A colisao em slow motion extremo: o iceberg nao “rasga” o casco. Os
+rebites de ferro forjado na zona da proa, sob pressao lateral,
+ESTOURARAM — suas cabecas saltaram e as placas de aco se SEPARARAM nas
+costuras. A agua do Atlantico Norte (temperatura: -2C) entrou pelas
+fendas com pressao hidraulica.</p>
+<p><strong>RECONSTITUICAO R5 (N1 — simbolica + CGI):</strong> Close
+microscopico em CGI de rebite sob stress. Animacao: verde (estavel)
+–&gt; amarelo (stress) –&gt; vermelho (falha) –&gt; azul (agua). Cada
+rebite que estoura e nomeado no CGI (numero, posicao, material). Slow
+motion extremo — o que aconteceu em milissegundos dura 8 segundos de
+animacao.</p>
+<p><strong>ENTREVISTA (Foecke):</strong> Interrotron. Luz lateral fria
+4800K. Laboratorio NIST.</p>
+<p><strong>Foecke:</strong> “O iceberg nao perfurou o casco do Titanic.
+Isso e um mito. O que aconteceu foi separacao de placas — os rebites
+cederam, e as costuras se abriram. E se abriram porque os rebites na
+proa e na popa eram de FERRO FORJADO, nao de aco. Ferro com teores de
+escoria muito acima do aceitavel.”</p>
+<p><strong>Pergunta do entrevistador:</strong> “Por que ferro na proa e
+aco no meio?”</p>
+<p>[SILENCIO — 5 segundos]</p>
+<p><strong>Foecke:</strong> “Custo. Logistica. Harland &amp; Wolff nao
+tinha rebitadores hidraulicos suficientes para as secoes curvas da proa
+e da popa. A rebitagem manual exigia rebites menores e mais macios.
+Ferro era mais barato e mais facil de trabalhar. Funcionava — em TODOS
+os navios anteriores.”</p>
+<p><strong>CGI (grafismo distribuicao):</strong> Planta lateral do
+Titanic. Aco em Azul Atlantico (resistente) no centro. Ferro em Vermelho
+Alerta (fragil) na proa e popa. A zona de impacto COINCIDE com a zona
+vermelha. O espectador ve: o ponto mais fraco foi o primeiro a ser
+atingido.</p>
+<p><strong>SOM/MUSICA:</strong> Metalico. Estalo seco de rebite
+estourando. Rugido da agua. Repetitivo, ritmico, IMPLACAVEL — como um
+relogio contando mortes. Nenhuma musica.</p>
+<p><strong>NOTA DE DIRECAO VISUAL:</strong> A temperatura de cor caiu
+drasticamente desde o Ato I. O casco 3D nao e dourado como o estaleiro —
+e cinza como um cadaver. O CGI e impiedoso em sua clareza: a beleza e
+forense, nao estetica.</p>
+<hr />
+<h2 id="seq-08-complicacao-1-os-avisos-silenciados">SEQ 08 — COMPLICACAO
+1: OS AVISOS SILENCIADOS</h2>
+<table>
+<colgroup>
+<col style="width: 43%" />
+<col style="width: 56%" />
+</colgroup>
+<thead>
+<tr>
+<th>Campo</th>
+<th>Detalhe</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Duracao</strong></td>
+<td>7 minutos</td>
+</tr>
+<tr>
+<td><strong>Tipo de material</strong></td>
+<td>Grafismo animado (mapa Atlantico) + reconstituicao N3 (sala Marconi)
++ entrevista Stephenson</td>
+</tr>
+<tr>
+<td><strong>Paleta</strong></td>
+<td>Cinza Aco #6B7B8D dominante. Ambar Marconi #D4A017 APENAS na sala de
+radio — unico ponto de calor no Ato II</td>
+</tr>
+<tr>
+<td><strong>Entrevistados</strong></td>
+<td>Parks Stephenson (Interrotron, 3800K, telas de equipamento ao
+fundo)</td>
+</tr>
+<tr>
+<td><strong>Props/cenografia</strong></td>
+<td><strong>Sala de Radio Marconi (construcao completa):</strong> ~3m x
+2.5m. Paredes de madeira com isolamento. Transmissor/receptor Marconi
+(replica). Fones metalicos. Manipulador Morse. Lampada fraca. Pilha de
+telegramas de passageiros. Aviso de gelo com “ICE” visivel. Logbook.
+Copo de agua VAZIO</td>
+</tr>
+<tr>
+<td><strong>Value-charge</strong></td>
+<td>Negativo crescente (de “negligencia” a “design do sistema”)</td>
+</tr>
+<tr>
+<td><strong>Beat McKee</strong></td>
+<td>Beat 3 — Progressive Complication 1</td>
+</tr>
+<tr>
+<td><strong>GAP 3</strong></td>
+<td>Nao foi negligencia consciente — foi arquitetura organizacional</td>
+</tr>
+<tr>
+<td><strong>OVERLAYS</strong></td>
+<td>SISTEMICO: Operador Marconi = funcionario comercial / HUMANO:
+Phillips ignora aviso do Mesaba</td>
+</tr>
+</tbody>
+</table>
+<p><strong>IMAGEM:</strong></p>
+<p>Sete avisos de gelo em 24 horas. Sete vezes o sistema foi alertado.
+Sete vezes o alerta se perdeu.</p>
+<p><strong>GRAFISMO (Mapa Atlantico Norte):</strong> Fundo em Azul
+Atlantico escuro. Navios como pontos luminosos. Avisos de gelo como
+pulsos brancos que se acendem um a um com timestamps. A rota do Titanic
+em ambar — uma flecha que nao desvia. O espectador ve o tempo ENCURTAR
+enquanto os avisos se acumulam. A rota ambar e uma sentenca.</p>
+<p>O aviso do Baltic — Ismay o recebe e GUARDA no bolso. Exibe para
+passageiras como curiosidade de salao. O aviso de gelo como objeto
+social, nao como alerta de seguranca.</p>
+<p>O aviso do Mesaba — o mais critico, o mais urgente, o que descrevia
+gelo EXATAMENTE na rota do Titanic. NUNCA chegou a ponte.</p>
+<p><strong>RECONSTITUICAO R3 (N3 — estilistico):</strong> Sala Marconi
+construida. Phillips de costas, fones, mao no manipulador Morse. Source
+UNICA: brilho dos equipamentos (ambar, de baixo para cima — sombras
+ascendentes no rosto). Ratio extremo 8:1. A pilha de telegramas de
+passageiros cresce. Cada telegrama e receita para a Marconi Company. O
+aviso de gelo chega. Phillips o coloca de LADO sem ler — a mao com o
+aviso fica a tres palmos da mao no manipulador. Camera lenta nesse
+gesto. O aviso em COR FRIA (azulado — perigo). Os telegramas em COR
+QUENTE (ambar — dinheiro).</p>
+<blockquote>
+<p><strong>[OVERLAY: FALHA SISTEMICA]</strong> Operador Marconi =
+funcionario comercial — avisos de gelo nao geram receita, telegramas de
+passageiros sim</p>
+</blockquote>
+<blockquote>
+<p><strong>[OVERLAY: ERRO HUMANO]</strong> Phillips ignora aviso do
+Mesaba — o mais critico — prioriza telegramas pagos. “Keep out! Shut
+up!”</p>
+</blockquote>
+<p><strong>ENTREVISTA (Stephenson):</strong> Interrotron. Equipamento de
+comunicacao ao fundo.</p>
+<p><strong>Stephenson:</strong> “Phillips nao era tripulante do Titanic.
+Era empregado da Marconi Company. A Marconi cobrava por telegrama de
+passageiro transmitido. Os avisos de gelo nao geravam receita. Phillips
+nao IGNOROU o aviso — o sistema nao permitia que ele o PRIORIZASSE.”</p>
+<p><strong>Pergunta:</strong> “O sistema Marconi no Titanic era um
+sistema de seguranca ou comercial?”</p>
+<p>[SILENCIO — 7 segundos]</p>
+<p><strong>Stephenson:</strong> “Comercial. Absolutamente comercial. Com
+uma funcao de seguranca acidental.”</p>
+<p><strong>APRESENTADORA (Andreza Araujo):</strong> “Jack Phillips nao
+era negligente. Era um trabalhador de 25 anos seguindo as regras do
+sistema que o empregava. A Marconi Company pagava por telegrama — o
+aviso de gelo nao valia nada. Eu digo sempre: erro e inerente ao ser
+humano. O que nao pode ser inerente e um sistema que impede o humano de
+fazer a coisa certa. Phillips nao PODIA priorizar seguranca. O sistema
+nao permitia.”</p>
+<p><strong>SOM/MUSICA:</strong> Clique-clique do Morse — ritmo nervoso,
+incessante. Estatica constante (sisssss). Som distante do mar contra o
+casco. NENHUMA musica. A sala Marconi tem sua propria sinfonia —
+monotona, claustrofobica, letal.</p>
+<p><strong>NOTA DE DIRECAO VISUAL:</strong> O ambar da sala Marconi e
+uma ARMADILHA cromatica. E o unico ponto de calor em todo o Ato II — e
+essa luz quente nao e conforto, e a pressao de um homem encurralado. O
+dutch angle de 5 graus no enquadramento diz: o mundo de Phillips esta
+desalinhado.</p>
+<hr />
+<h2 id="seq-09-complicacao-2-os-botes-fantasma">SEQ 09 — COMPLICACAO 2:
+OS BOTES FANTASMA</h2>
+<table>
+<colgroup>
+<col style="width: 43%" />
+<col style="width: 56%" />
+</colgroup>
+<thead>
+<tr>
+<th>Campo</th>
+<th>Detalhe</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Duracao</strong></td>
+<td>8 minutos</td>
+</tr>
+<tr>
+<td><strong>Tipo de material</strong></td>
+<td>Grafismo animado + reconstituicao N1 (Board of Trade) + arquivo +
+entrevista</td>
+</tr>
+<tr>
+<td><strong>Paleta</strong></td>
+<td>Cinza Aco #6B7B8D + Sepia documental dessaturado</td>
+</tr>
+<tr>
+<td><strong>Entrevistados</strong></td>
+<td>Butler (contexto), possivelmente Stephenson (regulacao
+maritima)</td>
+</tr>
+<tr>
+<td><strong>Props/cenografia</strong></td>
+<td><strong>Board of Trade (N1 — simbolico):</strong> Apenas superficie
+de mesa visivel. Feltro verde escuro. Replica Merchant Shipping Act
+1894. Caneta tinteiro. Mata-borroes. Carimbo Board of Trade</td>
+</tr>
+<tr>
+<td><strong>Value-charge</strong></td>
+<td>Negativo crescente (indignacao — foi DECISAO, nao esquecimento)</td>
+</tr>
+<tr>
+<td><strong>Beat McKee</strong></td>
+<td>Beat 3 — Progressive Complication 2</td>
+</tr>
+<tr>
+<td><strong>GAP 4</strong></td>
+<td>Os davits tinham capacidade para 48 botes. Foram colocados 20</td>
+</tr>
+<tr>
+<td><strong>OVERLAY</strong></td>
+<td>SISTEMICO: Merchant Shipping Act de 1894 — 18 anos sem
+atualizacao</td>
+</tr>
+</tbody>
+</table>
+<p><strong>IMAGEM:</strong></p>
+<p>A aritmetica que matou.</p>
+<p><strong>RECONSTITUICAO R6 (N1 — simbolico):</strong> Close extremo no
+Merchant Shipping Act de 1894. Maos virando paginas. Dedo para na tabela
+de botes salva-vidas. Outra mao escreve “46.328 tons.” A tabela nao tem
+coluna para esse numero. Pausa. Documento fechado. Dessaturacao 80%
+(quase P&amp;B — burocracia e incolor). Camera absolutamente ESTATICA —
+como a regra. Se a regra nao se move, a camera nao se move. Som: papel.
+Caneta tinteiro riscando. O silencio de quem nao questiona uma
+regra.</p>
+<blockquote>
+<p><strong>[OVERLAY: FALHA SISTEMICA]</strong> Merchant Shipping Act de
+1894 — 18 anos sem atualizacao. Regra para navios de 10.000 tons
+aplicada a um de 46.000</p>
+</blockquote>
+<p><strong>GRAFISMO ANIMADO (DRIFT VISUALIZADO — Dekker):</strong> Navio
+crescendo, regra parada. Uma regua fixa na tela — a regra de 1894,
+10.000 toneladas, imovel. Debaixo, navios CRESCEM:</p>
+<p>10.000 tons (1894) — cabe na regra. 14.000 tons (Kaiser Wilhelm,
+1897) — aperta. 20.000 tons (Celtic, 1901) — transborda. 31.500 tons
+(Lusitania, 1907) — a regra e minuscula. 46.000 tons (Titanic, 1912) —
+quatro vezes MAIOR que a regra.</p>
+<p>A regua nao se move. O gap alarga como uma fissura. Estetica
+monocromatica: navios em cinza claro, regra como fio branco sobre fundo
+preto.</p>
+<p>20 botes para 2.224 pessoas. “Faca a conta.”</p>
+<p><strong>ENTREVISTA (Butler):</strong> “Os davits Welin foram
+instalados com capacidade para 48 botes. Os davits estavam la. A
+engenharia estava la. A decisao NAO estava la.”</p>
+<p><strong>APRESENTADORA (Andreza Araujo):</strong> “O Board of Trade
+nao errou por incompetencia. Errou por coerencia — foi coerente com uma
+regra que ninguem questionava. Eu chamo isso de Indicador Melancia:
+verde por fora, vermelho por dentro. A regra era verde — certificada,
+legal, conforme. Por dentro, era vermelha — desatualizada, capturada,
+letal. Funcionou por 18 anos. Funcionou ate a noite de 14 de abril.”</p>
+<p><strong>SOM/MUSICA:</strong> O som do grafismo e MECANICO —
+engrenagens de um sistema relojoeiro. Cada ano que passa sem atualizacao
+da regra e um clique a mais no mecanismo. O som e o drift.</p>
+<hr />
+<h2 id="seq-10-complicacao-3-a-aritmetica-da-classe">SEQ 10 —
+COMPLICACAO 3: A ARITMETICA DA CLASSE</h2>
+<table>
+<colgroup>
+<col style="width: 43%" />
+<col style="width: 56%" />
+</colgroup>
+<thead>
+<tr>
+<th>Campo</th>
+<th>Detalhe</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Duracao</strong></td>
+<td>8 minutos</td>
+</tr>
+<tr>
+<td><strong>Tipo de material</strong></td>
+<td>Reconstituicao N3 (grades entre decks — CRITICA) + grafismo
+mortalidade + arquivo + entrevista + locacao Pigeon Forge</td>
+</tr>
+<tr>
+<td><strong>Paleta</strong></td>
+<td>Cinza Aco #6B7B8D BIFURCADO: cinza-quente (1a classe, ultimo suspiro
+do ouro) vs cinza-frio (3a classe, prenuncio do fundo do mar). Azul frio
+para 3a classe. Vermelho Alerta para lampadas de emergencia</td>
+</tr>
+<tr>
+<td><strong>Entrevistados</strong></td>
+<td>Butler (contexto de classe edwardiana, Interrotron), Andreza em
+campo (Pigeon Forge)</td>
+</tr>
+<tr>
+<td><strong>Props/cenografia</strong></td>
+<td><strong>Grades entre decks (construcao completa):</strong> Grade de
+ferro com barras verticais e horizontais. Corredor 1a classe (mais
+largo, iluminado). Corredor 3a classe (estreito, sombrio, labirintico).
+Tranca/cadeado na grade. Mao de comissario na tranca. Lampadas de
+corredor fracas. Sinalizacao minima ou ausente para 3a classe</td>
+</tr>
+<tr>
+<td><strong>Value-charge</strong></td>
+<td>Negativo crescente (furia — “galanteria” era privilegio)</td>
+</tr>
+<tr>
+<td><strong>Beat McKee</strong></td>
+<td>Beat 3 — Progressive Complication 3</td>
+</tr>
+<tr>
+<td><strong>GAP 5</strong></td>
+<td>A segregacao nao era falha do sistema — ERA o sistema</td>
+</tr>
+<tr>
+<td><strong>OVERLAYS</strong></td>
+<td>PROCESSO: Botes arriados parcialmente / SISTEMICO: Grades de classe
+= barreiras de evacuacao</td>
+</tr>
+</tbody>
+</table>
+<p><strong>IMAGEM:</strong></p>
+<p>00:45. Os botes comecam a ser arriados.</p>
+<p><strong>GRAFISMO:</strong> Bote 7: sai com 28 de 65 lugares. Bote 1:
+sai com 12 pessoas para 40 vagas — incluindo Sir Cosmo Duff-Gordon, que
+depois seria acusado de subornar remadores para nao voltar. Bote 6: sai
+com 28 de 65. Os numeros aparecem um a um. A capacidade nao utilizada
+ACUMULA-SE na tela como uma divida.</p>
+<blockquote>
+<p><strong>[OVERLAY: ERRO DE PROCESSO]</strong> Botes arriados
+parcialmente — exercicio de evacuacao do domingo cancelado pelo Cap.
+Smith. Tripulacao sem treinamento nos davits</p>
+</blockquote>
+<p><strong>RECONSTITUICAO (grades entre decks — N3
+estilistico):</strong> A imagem mais poderosa do documentario. Grade de
+ferro em primeiro plano, DESFOCADA. Figuras humanas atras, NITIDAS — o
+metal esta entre nos e eles. Sombras das grades projetadas nos rostos —
+padrao de prisao. De um lado: corredor iluminado, espaco aberto, direcao
+dos botes. Do outro: corredor estreito, escuro, sem sinalizacao, sem
+saida visivel. Close na tranca. Close na mao do comissario. Close nos
+olhos de uma crianca — os olhos sao a unica parte totalmente visivel do
+rosto, e NAO olham para a camera; olham para a grade.</p>
+<blockquote>
+<p><strong>[OVERLAY: FALHA SISTEMICA]</strong> Grades de classe entre
+decks = barreiras de evacuacao. Regulamentacao de imigracao transformada
+em sentenca de morte</p>
+</blockquote>
+<p><strong>ANDREZA EM CAMPO (Pigeon Forge — replica dos
+corredores):</strong> Andreza caminha por uma replica do corredor de
+terceira classe no museu. Estreito. Sinalizacao minima. Compara com o
+corredor de primeira classe que visitou na SEQ 03.</p>
+<p><strong>APRESENTADORA (Andreza Araujo):</strong> “Olha a diferenca. O
+corredor de primeira classe: largo, iluminado, sinalizacao clara, acesso
+direto ao deck de botes. Aqui na terceira classe: estreito, escuro, sem
+indicacao de saida. Em 1912, a justificativa era regulamentacao de
+imigracao — separar passageiros para inspecao sanitaria em Ellis Island.
+Na noite de 14 de abril, essas grades viraram barreiras de
+evacuacao.”</p>
+<p><strong>GRAFISMO MORTALIDADE:</strong> Infografico limpo, cirurgico.
+Tres circulos representando as tres classes, tamanho proporcional a
+mortalidade. Barras em escala de cinza — nenhuma cor emocional. Os
+numeros falam sozinhos:</p>
+<ul>
+<li>Primeira classe: 37% mortalidade (62% sobreviveram)</li>
+<li>Segunda classe: 58% mortalidade (42% sobreviveram)</li>
+<li>Terceira classe: 75% mortalidade (25% sobreviveram)</li>
+</ul>
+<p>“Uma crianca de terceira classe tinha mais chance de morrer do que um
+homem adulto de primeira classe.”</p>
+<p>Dentro de cada circulo: silhuetas humanas que DESAPARECEM uma a uma,
+mais rapido no circulo maior. Som: agua subindo. Nenhum narrador durante
+o grafismo.</p>
+<p><strong>ENTREVISTA (Butler):</strong> “As grades entre decks tinham
+uma justificativa legal: regulamentacao americana de imigracao exigia
+separacao sanitaria para inspecao em Ellis Island. Mas na noite de 14 de
+abril, essas grades se tornaram barreiras de evacuacao. O design que
+separava por higiene matou por classe.”</p>
+<p>[SILENCIO — 7 segundos]</p>
+<p><strong>Butler:</strong> “O navio foi PROJETADO para que uns
+morressem mais que outros. Nao por maldade. Por arquitetura.”</p>
+<p><strong>SOM/MUSICA:</strong> Som de agua subindo — lento, inexoravel.
+Metal da grade vibrando. Nenhuma musica. A aritmetica nao precisa de
+trilha sonora.</p>
+<p><strong>NOTA DE DIRECAO VISUAL:</strong> Split cromatico: o MESMO
+navio filmado em DUAS temperaturas de cor. 1a classe com cinza levemente
+ambar. 3a classe com cinza azulado (prenuncio da agua que vira). A cor
+SEPARA antes que a narrativa separe.</p>
+<hr />
+<h2 id="seq-11-complicacao-4-o-navio-que-viu-e-nao-agiu">SEQ 11 —
+COMPLICACAO 4: O NAVIO QUE VIU E NAO AGIU</h2>
+<table>
+<colgroup>
+<col style="width: 43%" />
+<col style="width: 56%" />
+</colgroup>
+<thead>
+<tr>
+<th>Campo</th>
+<th>Detalhe</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Duracao</strong></td>
+<td>4 minutos</td>
+</tr>
+<tr>
+<td><strong>Tipo de material</strong></td>
+<td>Reconstituicao N3 (ponte Californian — construcao completa) +
+grafismo distancia + entrevista</td>
+</tr>
+<tr>
+<td><strong>Paleta</strong></td>
+<td>Azul Atlantico #1B3A5C (noturno). Vermelho Alerta #8B2500 (foguetes
+— unica cor saturada)</td>
+</tr>
+<tr>
+<td><strong>Entrevistados</strong></td>
+<td>Stephenson (contexto tecnico/regulamentar)</td>
+</tr>
+<tr>
+<td><strong>Props/cenografia</strong></td>
+<td><strong>Ponte do Californian (construcao completa):</strong> Janelas
+de vidro. Instrumentos de navegacao minimos. Binoculos. Mapa de
+navegacao. Iluminacao noturna azul frio. Foguetes visiveis pela janela
+(efeito pratico + CGI)</td>
+</tr>
+<tr>
+<td><strong>Value-charge</strong></td>
+<td>Negativo (o sistema falha em MULTIPLOS pontos simultaneamente)</td>
+</tr>
+<tr>
+<td><strong>Beat McKee</strong></td>
+<td>Beat 3 — Progressive Complication 4</td>
+</tr>
+<tr>
+<td><strong>OVERLAYS</strong></td>
+<td>HUMANO: Lord interpreta foguetes como festivos / PROCESSO: Operador
+Marconi autorizado a dormir</td>
+</tr>
+</tbody>
+</table>
+<p><strong>IMAGEM:</strong></p>
+<p>Dez milhas nauticas. O SS Californian esta parado — seu capitao,
+Stanley Lord, parou por gelo. Decisao prudente. O operador Marconi do
+Californian, Cyril Evans, tenta avisar o Titanic sobre o campo de gelo.
+Phillips responde: “Keep out! Shut up! I’m working Cape Race!”</p>
+<p>35 minutos depois, o Titanic bate no iceberg.</p>
+<p>Evans vai dormir as 23:30 — permitido pela regulamentacao. Dez
+minutos antes da colisao.</p>
+<blockquote>
+<p><strong>[OVERLAY: ERRO DE PROCESSO]</strong> Regulamentacao permite
+operador Marconi unico dormir a noite — Californian fica surdo no
+momento critico</p>
+</blockquote>
+<p><strong>RECONSTITUICAO (ponte Californian — N3):</strong> Lord na
+ponte. Azul noturno frio — quase identico a temperatura da agua.
+Foguetes do Titanic visiveis pela janela — a UNICA cor saturada na
+sequencia. Vermelhos contra o azul-preto da noite. Pontos de cor que
+ninguem interpreta. Lord: “Fogos festivos.” Ou: “Nao sao foguetes de
+socorro.” Ou: “Nao e comigo.” Local Rationality — foguetes nao eram
+exclusivos de emergencia na epoca.</p>
+<blockquote>
+<p><strong>[OVERLAY: ERRO HUMANO]</strong> Cap. Lord interpreta foguetes
+do Titanic como “fogos festivos” — nao exclusivos de emergencia pela
+regulamentacao vigente</p>
+</blockquote>
+<p><strong>ENTREVISTA (Stephenson):</strong> “Lord parou por gelo. Isso
+e prudencia. Evans avisou o Titanic — e foi mandado calar. Quem e
+culpado? O capitao que parou? O operador que dormiu? Ou o sistema que
+permitia que o operador dormisse?”</p>
+<p>[SILENCIO — 5 segundos]</p>
+<p><strong>Stephenson:</strong> “Stanley Lord foi condenado pela
+historia. Viveu o resto da vida tentando limpar seu nome. Morreu sem
+conseguir. O sistema precisava de um culpado individual. Lord serviu. E
+enquanto todos olhavam para Lord, ninguem olhava para o sistema.”</p>
+<p><strong>SOM/MUSICA:</strong> Silencio noturno. Vento. Um foguete: o
+assobio da subida, o estalo da detonacao, a chuva das faiscas. Depois:
+silencio de novo. Ninguem responde.</p>
+<hr />
+<h2 id="seq-12-complicacao-5-o-dna-do-desastre">SEQ 12 — COMPLICACAO 5:
+O DNA DO DESASTRE</h2>
+<table>
+<colgroup>
+<col style="width: 43%" />
+<col style="width: 56%" />
+</colgroup>
+<thead>
+<tr>
+<th>Campo</th>
+<th>Detalhe</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Duracao</strong></td>
+<td>5 minutos</td>
+</tr>
+<tr>
+<td><strong>Tipo de material</strong></td>
+<td>Filmagem in situ (laboratorio NIST) + microscopia real + modelo 3D +
+entrevistas Foecke/McCarty</td>
+</tr>
+<tr>
+<td><strong>Paleta</strong></td>
+<td>Verde Laboratorio #4A6B5A dominante + Branco Analitico #E8E8E8
+(microscopia)</td>
+</tr>
+<tr>
+<td><strong>Entrevistados</strong></td>
+<td>Dr. Tim Foecke (momento-chave da entrevista), Dr. Jennifer Hooper
+McCarty</td>
+</tr>
+<tr>
+<td><strong>Props/cenografia</strong></td>
+<td>Laboratorio real NIST — nao construido. Bancada com amostras de
+rebites recuperados do fundo do mar. Microscopio eletronico. Imagens de
+microscopia projetadas. Documentos H&amp;W (McCarty)</td>
+</tr>
+<tr>
+<td><strong>Value-charge</strong></td>
+<td>Negativo crescente (o “DNA” era economico)</td>
+</tr>
+<tr>
+<td><strong>Beat McKee</strong></td>
+<td>Beat 3 — Progressive Complication 5</td>
+</tr>
+<tr>
+<td><strong>GAPs 1+2</strong></td>
+<td>O inimigo estava DENTRO do navio desde o primeiro dia</td>
+</tr>
+<tr>
+<td><strong>OVERLAY</strong></td>
+<td>PROCESSO: Rebites de ferro na proa — custo &lt; 0.3% a mais para
+aco</td>
+</tr>
+</tbody>
+</table>
+<p><strong>IMAGEM:</strong></p>
+<p>A semente plantada na SEQ 02 finalmente floresce.</p>
+<p><strong>LOCACAO (NIST, Gaithersburg, Maryland):</strong> O
+laboratorio real de Foecke. Sem cenario construido — o cenario E a
+locacao. Paredes institucionais. Bancada metalica. Microscopios. A
+verdade sobre o Titanic esta nesta sala.</p>
+<p><strong>ENTREVISTA (Foecke — MOMENTO-CHAVE):</strong> Interrotron.
+Close extremo nas maos de Foecke quando descreve os rebites. Camera
+lenta no rosto quando diz a palavra “centavos.”</p>
+<p><strong>Foecke:</strong> “Recuperamos rebites das expedicoes de
+Cameron ao wreck. Colocamos sob o microscopio. O teor de escoria nos
+rebites de ferro forjado da proa excedia 3% — em alguns casos, 9%. Isso
+e… muito. Um rebite com 9% de escoria e fragil. Quebradico. Quando o
+gelo empurrou as placas, esses rebites nao resistiram.”</p>
+<p><strong>MICROSCOPIA REAL:</strong> Imagem de microscopio eletronico.
+A estrutura cristalina do ferro forjado. As inclusoes de escoria —
+manchas escuras no metal. A imagem e clinica, impiedosa. E autopsial: o
+navio e o paciente, o diagnostico e terminal — e foi dado 86 anos depois
+da morte.</p>
+<p><strong>Pergunta:</strong> “Quanto custaria ter usado rebites de aco
+em todo o navio?”</p>
+<p>[SILENCIO — 7 segundos]</p>
+<p><strong>Foecke:</strong> “Menos de 0.3% do custo total do navio.”</p>
+<blockquote>
+<p><strong>[OVERLAY: ERRO DE PROCESSO]</strong> Rebites de ferro forjado
+na proa e popa — economia de menos de 0.3% do custo total. H&amp;W sabia
+da qualidade inferior (reclamacoes documentadas ao fornecedor)</p>
+</blockquote>
+<p><strong>Pergunta:</strong> “Quando voce faz essa conta — centavos por
+passageiro — o que acontece dentro de voce?”</p>
+<p>[SILENCIO — 10 segundos. Este e o momento-chave da entrevista
+inteira. Nao preencher. A camera fica no rosto de Foecke. O espectador
+ve o cientista processar a emocao do dado.]</p>
+<p><strong>ENTREVISTA (McCarty):</strong> Interrotron. Mesa academica.
+Documentos de arquivo.</p>
+<p><strong>McCarty:</strong> “Fui aos arquivos de Harland &amp; Wolff em
+Belfast. Encontrei as reclamacoes sobre a qualidade dos rebites. Eles
+SABIAM. Harland &amp; Wolff reclamou ao fornecedor. O fornecedor
+respondeu. E nada mudou. Os rebites foram instalados.”</p>
+<p><strong>MODELO 3D:</strong> Distribuicao aco vs ferro no navio. Aco
+no centro (azul). Ferro na proa e na popa (vermelho). A zona de impacto
+coincide com a zona vermelha. O mapa fala: economia matou.</p>
+<p><strong>SOM/MUSICA:</strong> Laboratorio: silencio clinico. O zumbido
+dos equipamentos. O clique da lente do microscopio mudando de aumento. O
+som da VERDADE sendo extraida — paciente, metodico, irreversivel.</p>
+<p><strong>NOTA DE DIRECAO VISUAL:</strong> Transicao COMPLETA para
+ambiente cientifico. O verde institucional domina. Nao ha calor nesta
+imagem. A luz e clinica, impiedosa. O modelo 3D mostrando ferro vs aco
+usa Vermelho (fragil = perigo) e Azul (resistente).</p>
+<hr />
+<h2 id="seq-13-reversal-as-tres-vozes-silenciadas">SEQ 13 — REVERSAL: AS
+TRES VOZES SILENCIADAS</h2>
+<table>
+<colgroup>
+<col style="width: 43%" />
+<col style="width: 56%" />
+</colgroup>
+<thead>
+<tr>
+<th>Campo</th>
+<th>Detalhe</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Duracao</strong></td>
+<td>5 minutos</td>
+</tr>
+<tr>
+<td><strong>Tipo de material</strong></td>
+<td>Montagem ritmica + reconstituicao N2 (triptico) + entrevista +
+VO</td>
+</tr>
+<tr>
+<td><strong>Paleta</strong></td>
+<td>Monocromatico: Cinza Aco #6B7B8D drenando para quase P&amp;B.
+Vermelho Alerta #8B2500 sutil nos rostos — o humano resistindo a
+drenagem</td>
+</tr>
+<tr>
+<td><strong>Entrevistados</strong></td>
+<td>Nenhum novo (montagem de material ja captado + VO)</td>
+</tr>
+<tr>
+<td><strong>Props/cenografia</strong></td>
+<td>Triptico de tres espacos: (1) Carlisle — perfil, mao sobre planta de
+botes, marcas sendo apagadas; (2) Andrews — de costas, olhando
+anteparas, mao apontando para linha que deveria ser mais alta; (3)
+Phillips — fones, manipulador Morse, papel com “ICE” a centimetros da
+mao</td>
+</tr>
+<tr>
+<td><strong>Value-charge</strong></td>
+<td>PICO NEGATIVO (o sistema funciona — contra a seguranca)</td>
+</tr>
+<tr>
+<td><strong>Beat McKee</strong></td>
+<td>Beat 3 — climax das complicacoes</td>
+</tr>
+<tr>
+<td><strong>GAP 6</strong></td>
+<td>Nao ha um culpado. Ha algo PIOR: um sistema onde todos estao
+certos</td>
+</tr>
+<tr>
+<td><strong>OVERLAY</strong></td>
+<td>SISTEMICO: 3 alarmes dados, 0 ouvidos — o sistema funciona para
+silenciar</td>
+</tr>
+</tbody>
+</table>
+<p><strong>IMAGEM:</strong></p>
+<p>As complicacoes convergem. O Reversal de McKee.</p>
+<p><strong>MONTAGEM RITMICA — O TRIPTICO DAS VOZES
+SILENCIADAS:</strong></p>
+<p>Tres telas verticais (ou tres momentos montados em sequencia). Cada
+rosto progressivamente mais desaturado. O sistema drena cor das pessoas
+como drena a voz.</p>
+<p><strong>TELA 1 — Carlisle (1907):</strong> Perfil. Cabelo grisalho.
+Mao sobre planta de botes. As 48 marcas dos botes vao sendo APAGADAS uma
+a uma, como se uma borracha invisivel as removesse. “48 botes.”
+Silencio. “16 botes.” Silencio.</p>
+<p><strong>TELA 2 — Andrews:</strong> De costas, olhando para quadro de
+anteparas. Mao apontando para a linha que deveria ser MAIS ALTA. A linha
+permanece baixa. A mao cai.</p>
+<p><strong>TELA 3 — Phillips:</strong> De costas, fones de ouvido, mao
+no manipulador Morse. Papel com “ICE” visivel a centimetros da mao. A
+mao nao o alcanca — esta ocupada com outro telegrama. Clique do Morse
+nao para.</p>
+<blockquote>
+<p><strong>[OVERLAY: FALHA SISTEMICA]</strong> 3 alarmes dados (Carlisle
+1907, Andrews 1911, Phillips 1912). 0 ouvidos. O sistema funciona — para
+silenciar</p>
+</blockquote>
+<p><strong>SOM:</strong> Silencio. Depois, um a um, tres sons: o lapis
+riscando (Carlisle), a regua batendo na mesa (Andrews), o Morse clicando
+(Phillips). Tres alarmes dados. Zero alarmes ouvidos.</p>
+<p><strong>APRESENTADORA (Andreza Araujo):</strong> “Carlisle propôs 48
+botes. Andrews propôs anteparas mais altas. Evans avisou sobre o gelo.
+Tres homens. Tres alarmes. Tres vezes o sistema fez o que sistemas
+patologicos fazem: silenciou. Na Bradley Curve, o nivel mais baixo e o
+patologico — ‘quem se importa enquanto nao somos pegos?’ O Titanic nao
+falhou em comunicar. Funcionou como desenhado — para silenciar. E o
+oposto disso tem nome: celebrar o vermelho. Valorizar quem reporta o
+problema.”</p>
+<p>[SILENCIO — 5 segundos]</p>
+<p><strong>APRESENTADORA (Andreza Araujo):</strong> “Nenhum desses
+decisores planejou matar 1.517 pessoas. Cada um fez o que parecia certo.
+Na Piramide de Bird, para cada acidente grave existem 600
+quase-acidentes e 30.000 desvios. Todos esses desvios pareciam normais.
+E foi EXATAMENTE por isso que tantos morreram. Investigacao busca
+causas, nao culpados.”</p>
+<p><strong>NOTA DE DIRECAO VISUAL:</strong> A sequencia mais desaturada
+do Ato II. Quase P&amp;B. A cor esta sendo eliminada — como as vozes. A
+narrativa drena cor e drena voz ao mesmo tempo. O Vermelho Alerta
+sobrevive apenas nos rostos — nos labios, nos olhos — o humano resiste a
+drenagem cromatica, mesmo quando o sistema o cala.</p>
+<blockquote>
+<p><strong>&gt;&gt;&gt; TURNING POINT ATO II –&gt; ATO III
+&lt;&lt;&lt;</strong> A evidencia nao e UMA peca — e o PADRAO. Camera
+recua. Swiss Cheese aparece. 5 camadas. Os buracos se alinham.</p>
+</blockquote>
+<hr />
+<hr />
+<h1 id="bloco-3-climax-revelacao-sistemica">BLOCO 3 — CLIMAX: REVELACAO
+SISTEMICA</h1>
+<p><strong>ATO III (parte 1) | ~7 minutos | Beat 4 (Climax)</strong>
+<strong>Value-Charge: NEGACAO DA NEGACAO</strong> <strong>Arco
+cromatico: PRETO E BRANCO PURO — a cor morreu</strong></p>
+<hr />
+<h2 id="seq-14-climax-o-sistema">SEQ 14 — CLIMAX: O SISTEMA</h2>
+<table>
+<colgroup>
+<col style="width: 43%" />
+<col style="width: 56%" />
+</colgroup>
+<thead>
+<tr>
+<th>Campo</th>
+<th>Detalhe</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Duracao</strong></td>
+<td>7 minutos</td>
+</tr>
+<tr>
+<td><strong>Tipo de material</strong></td>
+<td>CGI Swiss Cheese animado + time-lapse drift + entrevista (montagem)
++ VO</td>
+</tr>
+<tr>
+<td><strong>Paleta</strong></td>
+<td><strong>P&amp;B TOTAL.</strong> Preto Abissal + Branco Analitico.
+Unica excecao: Vermelho Alerta #8B2500 para os “buracos” do Swiss Cheese
+acendendo + TODOS os overlays de erro reaparecem</td>
+</tr>
+<tr>
+<td><strong>Entrevistados</strong></td>
+<td>Montagem de Foecke, Stephenson, Butler — nenhuma entrevista nova,
+montagem de material ja captado convergindo para a revelacao</td>
+</tr>
+<tr>
+<td><strong>Props/cenografia</strong></td>
+<td>Nenhum cenario fisico — inteiramente CGI/animacao. P&amp;B e a
+linguagem da analise</td>
+</tr>
+<tr>
+<td><strong>Value-charge</strong></td>
+<td>NEGACAO DA NEGACAO</td>
+</tr>
+<tr>
+<td><strong>Beat McKee</strong></td>
+<td>Beat 4 — Climax</td>
+</tr>
+<tr>
+<td><strong>Integracao SST</strong></td>
+<td>Swiss Cheese de Reason (5 camadas), Dekker (drift, local
+rationality), Schein (pressupostos basicos), Westrum (score 6/25,
+cultura patologica)</td>
+</tr>
+<tr>
+<td>***** CLIMAX DO ARCO McKEE ***</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p><strong>IMAGEM:</strong></p>
+<p>Tudo converge. O sistema se revela.</p>
+<p><strong>DISPOSITIVO — REAPARECEM TODOS OS OVERLAYS:</strong> Antes do
+Swiss Cheese, todos os 13 overlays de erro marcados ao longo do
+documentario reaparecem na tela, um a um, empilhando-se no canto
+inferior. Engrenagens, silhuetas, redes — acumulam-se como evidencia num
+tribunal. Quando todos estao visiveis (5 segundos), eles se REORGANIZAM
+— voam para suas posicoes nas 5 camadas do Swiss Cheese. Os erros de
+processo viram buracos nas camadas. O espectador VE a anatomia do
+desastre montada diante dos seus olhos.</p>
+<p><strong>CGI — SWISS CHEESE DE REASON (animacao):</strong> Fundo
+preto. Cinco camadas em branco translucido, suspensas verticalmente como
+fatias de queijo. Cada camada representa um nivel do modelo de
+Reason:</p>
+<p><strong>Camada 1 — Regulacao (Board of Trade):</strong> Regra de
+1894. 18 anos sem atualizacao. Um buraco ACENDE em vermelho quando a
+regra e nomeada.</p>
+<p><strong>Camada 2 — Organizacao (White Star Line):</strong> Pressao
+comercial. Custo sobre seguranca. Carlisle vetado. Um buraco acende.</p>
+<p><strong>Camada 3 — Supervisao (Capitao Smith, Ponte):</strong>
+Velocidade mantida. Avisos ignorados. Procedimento padrao. Um buraco
+acende.</p>
+<p><strong>Camada 4 — Precondicoes (Phillips/Marconi,
+tripulacao):</strong> Operador comercial, nao de seguranca. Exercicio de
+botes cancelado. Tripulacao sem treinamento. Um buraco acende.</p>
+<p><strong>Camada 5 — Atos no Momento (Fleet, Murdoch):</strong> Sem
+binoculos. 37 segundos. Botes lancados parcialmente. Grades trancadas.
+Um buraco acende.</p>
+<p>Os cinco buracos PULAM em vermelho. A camera RECUA. Os buracos se
+alinham — um unico feixe vermelho atravessa as cinco camadas. O vermelho
+e a unica cor no frame. E a cor do alerta que ninguem ouviu.</p>
+<p><strong>TIME-LAPSE DRIFT (1894 –&gt; 1912):</strong> P&amp;B. Linha
+temporal em branco. Eventos como nodos. 18 anos comprimidos em 30
+segundos. Cada decisao alimenta a seguinte. O drift nao e inercia — e
+aceleracao. Quanto mais tempo sem acidente, mais rapido o drift. A
+visualizacao mostra o que Dekker descreve: normalizacao do desvio.</p>
+<p><strong>MONTAGEM DE ENTREVISTAS (fragmentos):</strong></p>
+<p><strong>Foecke:</strong> “Os rebites eram o que sempre usaram.”
+<strong>Stephenson:</strong> “Phillips fazia o que a Marconi pagava para
+fazer.” <strong>Butler:</strong> “Smith seguia o procedimento de 40
+anos.”</p>
+<p><strong>APRESENTADORA (Andreza Araujo):</strong> “Dekker chamou de
+Local Rationality. Cada decisor agia racionalmente dentro do seu
+contexto. Na PepsiCo, quando comecei o trabalho de transformacao
+cultural, encontrei a mesma coisa: ninguem fazia nada ‘errado’ — cada um
+seguia seu procedimento, sua meta, sua rotina. E as pessoas se
+machucavam. Porque o sistema estava errado, nao as pessoas.”</p>
+<p>[SILENCIO — 3 segundos]</p>
+<p><strong>APRESENTADORA (Andreza Araujo):</strong> “Schein disse: o
+pressuposto mais perigoso e o que nunca precisa ser articulado. E a
+Cebola da Cultura que eu uso nos meus diagnosticos — o comportamento e a
+camada de fora, a que voce ve. Mas o pressuposto esta no nucleo,
+invisivel. O pressuposto do Titanic era: ‘Somos grandes demais para
+falhar.’ Ninguem o dizia porque todos o respiravam.”</p>
+<p><strong>GRAFISMO:</strong> Score Westrum: 6 de 25 — cultura
+PATOLOGICA. O numero aparece em branco sobre preto.</p>
+<p><strong>APRESENTADORA (Andreza Araujo):</strong> “O Titanic NUNCA foi
+seguro. O sistema existia para afirmar que era. E eu digo sempre: a
+ausencia de acidentes nao significa cultura forte de seguranca. As vezes
+significa que ninguem esta reportando.”</p>
+<p><strong>SOM/MUSICA:</strong> Silencio quase total. O som do Swiss
+Cheese e geometrico — cliques suaves quando os buracos acendem, como um
+mecanismo de relogio. Quando os buracos se alinham: um tom grave,
+continuo, ressonante — o som de uma estrutura que cede. Depois: agua. O
+rugido da agua entrando. Mesmo som da SEQ 07 — mas agora o espectador
+entende o que ELE significa.</p>
+<p><strong>NOTA DE DIRECAO VISUAL:</strong> O P&amp;B total e a decisao
+cromatica mais radical do documentario. A cor MORREU. O que resta e
+ESTRUTURA: camadas, buracos, alinhamento. Storaro em Reds: “When you
+remove color, you remove emotion — and you see the SYSTEM.” A ausencia
+de cor diz ao espectador: aqui nao ha emocao — ha compreensao.</p>
+<hr />
+<hr />
+<h1 id="bloco-4-resolucao-legado-licoes">BLOCO 4 — RESOLUCAO: LEGADO +
+LICOES</h1>
+<p><strong>ATO III (parte 2) | ~22 minutos | Beat 5
+(Resolution/Legado)</strong> <strong>Value-Charge: AMBIGUO –&gt;
+URGENCIA –&gt; RESPONSABILIDADE</strong> <strong>Arco cromatico: Retorno
+parcial de cor (Sepia dessaturado) –&gt; Cinza editorial –&gt; Azul
+Atlantico –&gt; Preto Abissal</strong> <strong>LICOES APRENDIDAS
+integradas organicamente (nao como lista)</strong></p>
+<hr />
+<h2 id="seq-15-consequencias-o-que-o-mundo-fez">SEQ 15 — CONSEQUENCIAS:
+O QUE O MUNDO FEZ</h2>
+<table>
+<colgroup>
+<col style="width: 43%" />
+<col style="width: 56%" />
+</colgroup>
+<thead>
+<tr>
+<th>Campo</th>
+<th>Detalhe</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Duracao</strong></td>
+<td>5 minutos</td>
+</tr>
+<tr>
+<td><strong>Tipo de material</strong></td>
+<td>Arquivo + grafismo + reconstituicao N1 (inqueritos) + VO</td>
+</tr>
+<tr>
+<td><strong>Paleta</strong></td>
+<td>Retorno PARCIAL de cor: Sepia documental + Cinza Aco. Ouro
+Edwardiano em flashbacks dos inqueritos — mas 2 stops subexposto, opaco.
+O ouro voltou como NOSTALGIA, nao como progresso</td>
+</tr>
+<tr>
+<td><strong>Entrevistados</strong></td>
+<td>Andreza Araujo (ponte para hoje)</td>
+</tr>
+<tr>
+<td><strong>Props/cenografia</strong></td>
+<td>Reconstituicao inqueritos (N1 — simbolica): cadeira, mesa,
+documentos. Paleta do Ato I mas envergonhada</td>
+</tr>
+<tr>
+<td><strong>Value-charge</strong></td>
+<td>Ambiguo positivo (mudancas reais, mas justica parcial)</td>
+</tr>
+<tr>
+<td><strong>Beat McKee</strong></td>
+<td>Beat 5 — Resolucao (inicio)</td>
+</tr>
+<tr>
+<td><strong>Licoes integradas</strong></td>
+<td>Licao 1 (“A Regra Que Protegia Era a Que Matava”) como CONTEXTO.
+Licao 2 (“O Luxo Como Anestesia”) como IRONIA</td>
+</tr>
+</tbody>
+</table>
+<p><strong>IMAGEM:</strong></p>
+<p>O mundo reagiu. Mas como?</p>
+<p><strong>ARQUIVO + GRAFISMO:</strong> SOLAS 1914 — Safety of Life at
+Sea. A primeira convencao internacional de seguranca maritima. Botes
+salva-vidas para TODOS. Radio telegrafia 24 horas com operador dedicado.
+International Ice Patrol (US Coast Guard, ativa ate hoje — 2026).
+Exercicios de evacuacao obrigatorios. Reformas reais. Vidas salvas.</p>
+<p><strong>RECONSTITUICAO (inqueritos — N1):</strong> O inquerito
+americano do senador Smith — direto, agressivo, sem reverencia pela
+hierarquia britanica. “Laxity of regulation, indifference to danger,
+overconfidence, inadequate equipment.”</p>
+<p>O inquerito britanico de Lord Mersey — cauteloso, deferente ao
+establishment. Absolve o Board of Trade. Sobre Smith: “He was doing what
+other skilled men would have done.” A instituicao que regulava julgou
+que a instituicao que regulava nao havia errado.</p>
+<p><strong>APRESENTADORA (Andreza Araujo):</strong> “A ironia do
+inquerito britanico e que ele praticou EXATAMENTE o mecanismo que
+deveria condenar. O juiz fez o que juizes fazem — protegeu a
+instituicao. Na linguagem de Hopkins, e o indicador #2 em FALHA:
+compromisso da alta gestao com seguranca. Mas que compromisso pode
+existir quando a ‘alta gestao’ INCLUI o regulador? Quando eu faco
+diagnostico cultural numa empresa, a primeira coisa que pergunto e: quem
+audita quem? Se a resposta for ‘nos mesmos’ — ja sei onde esta o
+problema.”</p>
+<p>A Licao 1 emerge NAO como titulo, mas como COMPREENSAO. O espectador
+entende: a regra que protegia — a Merchant Shipping Act de 1894 — era a
+regra que matava. E o inquerito que deveria expor essa falha a
+reproduziu.</p>
+<p>A Licao 2 se insinua visualmente — nao como texto, mas como IRONIA
+cromatica. O ouro do Ato I retorna nos flashbacks dos inqueritos, mas
+esta opaco, subexposto. O luxo do Titanic — os lustres, os saloes, a
+grandiosidade que anestesiava a percepcao de risco — ecoa na pompa dos
+inqueritos. A mesma fachada, a mesma funcao: parecer que o sistema esta
+sendo consertado.</p>
+<p><strong>SOM/MUSICA:</strong> Som de tribunal — murmurio, martelo do
+juiz. Depois: silencio. O silencio de uma conclusao insuficiente.</p>
+<hr />
+<h2 id="seq-16-a-fix-que-mata-eastland-boeing-max">SEQ 16 — A FIX QUE
+MATA: EASTLAND + BOEING MAX</h2>
+<table>
+<colgroup>
+<col style="width: 43%" />
+<col style="width: 56%" />
+</colgroup>
+<thead>
+<tr>
+<th>Campo</th>
+<th>Detalhe</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Duracao</strong></td>
+<td>4 minutos</td>
+</tr>
+<tr>
+<td><strong>Tipo de material</strong></td>
+<td>Arquivo fotografico (Eastland 1915 — sepia, NAO colorizado) +
+grafismo comparativo + entrevista</td>
+</tr>
+<tr>
+<td><strong>Paleta</strong></td>
+<td>Sepia fotografico (arquivo 1915) + Cinza Aco. Progressao temporal:
+sepia 1912 –&gt; P&amp;B 1915 –&gt; cor desaturada 2018. A ESTRUTURA do
+frame permanece identica: destrocos, agua, consequencias</td>
+</tr>
+<tr>
+<td><strong>Entrevistados</strong></td>
+<td>Andreza Araujo (momento-chave)</td>
+</tr>
+<tr>
+<td><strong>Props/cenografia</strong></td>
+<td>Nenhuma construcao — arquivo e grafismo</td>
+</tr>
+<tr>
+<td><strong>Value-charge</strong></td>
+<td>Negativo (a licao NAO foi aprendida)</td>
+</tr>
+<tr>
+<td><strong>Beat McKee</strong></td>
+<td>Beat 5 — complicacao na resolucao</td>
+</tr>
+<tr>
+<td><strong>GAP 7</strong></td>
+<td>A “cura” pos-Titanic matou mais num unico evento</td>
+</tr>
+<tr>
+<td><strong>Licao integrada</strong></td>
+<td>Licao 6 (“A Cura Que Mata”) como REVELACAO DO PARADOXO</td>
+</tr>
+</tbody>
+</table>
+<p><strong>IMAGEM:</strong></p>
+<p><strong>TEMPO 1 — PROGRESSO:</strong> Montagem rapida das reformas
+SOLAS. Botes sendo instalados em navios. Operadores de radio
+permanentes. Ice Patrol. Sensacao de PROGRESSO. Musica ascendente (a
+unica musica composta do documentario — breve, esperancosa). Paleta
+recuperando tons dourados.</p>
+<p><strong>CORTE SECO.</strong></p>
+<p><strong>TEMPO 2 — PARADOXO:</strong></p>
+<ol start="1915" type="1">
+<li>Rio Chicago. 24 de julho. O SS Eastland — um navio de passageiros
+que JA ERA conhecido por problemas de estabilidade — recebe botes
+salva-vidas adicionais como parte das novas exigencias pos-Titanic. O
+peso extra, adicionado ao conves superior, agrava a instabilidade.</li>
+</ol>
+<p>2.572 passageiros a bordo — trabalhadores da Western Electric e suas
+familias, a caminho de um piquenique de empresa. O Eastland adernou no
+cais. Tombou. 848 mortos.</p>
+<p><strong>ARQUIVO:</strong> Fotografia do Eastland tombado no rio
+Chicago. Corpos sendo retirados da agua. A foto e mantida em SEPIA REAL
+— decisao moral: nao colorizar. Manter em sepia e ato de respeito.</p>
+<p>Texto sobreposto, letra por letra: “24 julho 1915. 848 mortos. A
+‘cura’ para o Titanic.”</p>
+<p><strong>SILENCIO TOTAL — 5 segundos.</strong> Sem som, sem narrador,
+sem musica. O espectador SENTE o paradoxo antes de processa-lo
+intelectualmente.</p>
+<p><strong>APRESENTADORA (Andreza Araujo):</strong> “Dekker disse: a fix
+que ataca o sintoma sem entender o sistema cria NOVO desastre. O SOLAS
+exigiu botes para todos. Ninguem perguntou: e se o peso dos botes matar
+antes do naufragio? E a Cebola da Cultura ao contrario — mudaram a casca
+sem tocar no nucleo. Na minha experiencia, licoes aprendidas representam
+25% dos acidentes evitaveis. Mas so quando a licao muda crenca, nao
+formulario.”</p>
+<p><strong>TRANSICAO — Boeing 737 MAX:</strong> A mesma anatomia, 106
+anos depois.</p>
+<p><strong>APRESENTADORA (Andreza Araujo):</strong> “Em 2018, a FAA
+delegou ao proprio fabricante — a Boeing — a certificacao do sistema
+MCAS. A Boeing classificou como ‘nao critico.’ Dois avioes cairam. Lion
+Air 610, outubro de 2018: 189 mortos. Ethiopian Airlines 302, marco de
+2019: 157 mortos. 346 vidas.”</p>
+<p><strong>Pergunta (off):</strong> “A FAA aprendeu O QUE aconteceu ou
+POR QUE aconteceu?”</p>
+<p>[SILENCIO — 7 segundos]</p>
+<p><strong>APRESENTADORA (Andreza Araujo):</strong> “Reformaram o
+processo de certificacao. Mais supervisores da FAA. Revisao do ODA.
+Reformas reais. Mas o modelo fundamental — onde o fabricante desenvolve
+E certifica — permanece. Os incentivos estruturais permanecem. Se
+aprenderam apenas ‘o que,’ o proximo ‘Eastland’ pode ser o proximo aviao
+com um sistema que a reforma nao previu.”</p>
+<p><strong>GRAFISMO COMPARATIVO:</strong> Split-screen triplo. ESQUERDA:
+Merchant Shipping Act 1894, close na Rule 12. CENTRO: Titanic em perfil,
+transbordando a regra. DIREITA: documento FAA com selo “DELEGATED.” Uma
+LINHA VERMELHA continua conecta as tres imagens — a mesma falha, 106
+anos de distancia. A linha pulsa como batimento cardiaco. Quando as tres
+imagens se alinham, o pulso PARA.</p>
+<p><strong>SOM/MUSICA:</strong> Musica ascendente breve (Tempo 1 —
+esperanca). Corte seco para silencio (Eastland). Estatica de comunicacao
+(transicao para MAX). Depois: silencio de novo. O padrao.</p>
+<hr />
+<h2 id="seq-17-ponte-os-titanics-de-hoje">SEQ 17 — PONTE: OS TITANICS DE
+HOJE</h2>
+<table>
+<colgroup>
+<col style="width: 43%" />
+<col style="width: 56%" />
+</colgroup>
+<thead>
+<tr>
+<th>Campo</th>
+<th>Detalhe</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Duracao</strong></td>
+<td>4 minutos</td>
+</tr>
+<tr>
+<td><strong>Tipo de material</strong></td>
+<td>Montagem paralela (arquivo + grafismo editorial). VISUAL, nao
+discursivo</td>
+</tr>
+<tr>
+<td><strong>Paleta</strong></td>
+<td>Cor moderna DESATURADA: cinza-azulado com pontos de Vermelho Alerta.
+Nao e P&amp;B historico — e presente drenado. O mundo de HOJE tem cor,
+mas cor sem vida</td>
+</tr>
+<tr>
+<td><strong>Entrevistados</strong></td>
+<td>Andreza Araujo (provocacao final)</td>
+</tr>
+<tr>
+<td><strong>Props/cenografia</strong></td>
+<td>Nenhuma construcao — montagem editorial. Andreza em campo (locacao
+industrial moderna)</td>
+</tr>
+<tr>
+<td><strong>Value-charge</strong></td>
+<td>Negativo –&gt; urgencia presente</td>
+</tr>
+<tr>
+<td><strong>Beat McKee</strong></td>
+<td>Beat 5 — ponte para o publico</td>
+</tr>
+<tr>
+<td><strong>Licoes integradas</strong></td>
+<td>Licoes 3, 4, 5, 7, 8 como TECIDO NARRATIVO (nao como lista)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>IMAGEM:</strong></p>
+<p>A montagem mais provocativa do documentario. VISUAL — as imagens
+falam. Lado a lado, MESMA composicao, MESMA escala, so a epoca muda:</p>
+<p><strong>Proa do Titanic (azul) / Fuselagem do 737 MAX
+(cinza).</strong> O mesmo perfil aerodinamico. A mesma aposta na
+velocidade. A mesma confianca no tamanho.</p>
+<p><strong>Rebites de ferro do Titanic (sepia) / Revestimento ACM da
+Grenfell Tower (cinza).</strong> O mesmo material barato. A mesma
+decisao economica. A mesma fatalidade.</p>
+<p><strong>Carlisle em silencio no inquerito (monocromatico) /
+Engenheiro da Boeing em mensagem interna: “This airplane is designed by
+clowns” (cor desaturada).</strong> O mesmo silenciamento. 106 anos de
+distancia.</p>
+<p><strong>Board of Trade 1894 (sepia) / FAA 2018 (cor):</strong>
+“Conforme.” “Delegated.” O mesmo carimbo. A mesma captura.</p>
+<p>As imagens RIMAM visualmente. A composicao e identica; so a epoca
+muda. A cor diz: “diferente epoca, mesmo silencio.”</p>
+<p><strong>APRESENTADORA (Andreza Araujo):</strong> Nao narra. Cede a
+voz ao SILENCIO da montagem. As perguntas emergem dos paralelos visuais
+— nao precisam ser articuladas. A apresentadora aparece BREVEMENTE em
+campo — numa fabrica moderna, capacete, olhando para a camera — sem
+falar. O olhar diz: voce reconhece isso?</p>
+<p><strong>APRESENTADORA (Andreza Araujo — provocacao
+final):</strong></p>
+<p>“A TSMC produz 90% dos chips avancados do mundo. Uma fabrica. Uma
+ilha. Um ponto de falha. O mercado de derivativos excede 600 trilhoes de
+dolares em valor nocional — nenhum regulador individual compreende o
+sistema inteiro. A inteligencia artificial esta sendo integrada em
+sistemas criticos com processos de certificacao que estao sendo escritos
+ENQUANTO a tecnologia e implantada.”</p>
+<p>[SILENCIO — 5 segundos]</p>
+<p>“Estamos em 1907. Os davits estao instalados. Os botes ainda nao
+foram colocados. E ninguem esta prestando atencao porque o navio e lindo
+e o mar esta calmo.”</p>
+<p><strong>SOM/MUSICA:</strong> Nenhuma musica. Os paralelos visuais se
+sucedem em silencio. A normalidade sonora AMPLIFICA o horror do
+conteudo. O ordinario e o terrificante.</p>
+<p><strong>NOTA DE DIRECAO VISUAL:</strong> A estetica e de COR
+EDITORIAL: desaturada mas reconhecivel. O mundo de HOJE tem cor — mas
+cor sem vida. Quando a composicao e identica entre Titanic e Boeing,
+entre Carlisle e o engenheiro, a cor diz: “diferente epoca, mesmo
+silencio.”</p>
+<hr />
+<h2 id="seq-18-o-pier-onde-a-historia-terminou">SEQ 18 — O PIER: ONDE A
+HISTORIA TERMINOU</h2>
+<table>
+<colgroup>
+<col style="width: 43%" />
+<col style="width: 56%" />
+</colgroup>
+<thead>
+<tr>
+<th>Campo</th>
+<th>Detalhe</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Duracao</strong></td>
+<td>4 minutos</td>
+</tr>
+<tr>
+<td><strong>Tipo de material</strong></td>
+<td>Locacao real (Pier 54/Chelsea Piers, NYC) + arquivo fotografico +
+VO</td>
+</tr>
+<tr>
+<td><strong>Paleta</strong></td>
+<td>Cor moderna com sobreposicao sepia (passado e presente no mesmo
+frame). Azul do rio Hudson. Cinza do concreto de Manhattan</td>
+</tr>
+<tr>
+<td><strong>Entrevistados</strong></td>
+<td>Andreza Araujo (em campo — NYC)</td>
+</tr>
+<tr>
+<td><strong>Props/cenografia</strong></td>
+<td>Locacao real: Pier 54, Chelsea, Manhattan. O pier onde o RMS
+Carpathia atracou com 710 sobreviventes em 18 de abril de 1912</td>
+</tr>
+<tr>
+<td><strong>Value-charge</strong></td>
+<td>Melancolico –&gt; esperanca fragil</td>
+</tr>
+<tr>
+<td><strong>Beat McKee</strong></td>
+<td>Beat 5 — transicao para fechamento</td>
+</tr>
+<tr>
+<td><strong>Funcao narrativa</strong></td>
+<td>Localizar a historia no ESPACO real — nao e mito, aconteceu
+AQUI</td>
+</tr>
+</tbody>
+</table>
+<p><strong>IMAGEM:</strong></p>
+<p><strong>ANDREZA EM CAMPO (Pier 54, NYC):</strong> Andreza caminha
+pelo pier — hoje um parque publico sobre o Hudson River. Atras dela,
+Manhattan. O pier esta transformado — onde antes atracavam
+transatlanticos, hoje ha pessoas correndo, andando de bicicleta, tomando
+cafe. A normalidade do presente sobre o trauma do passado.</p>
+<p><strong>APRESENTADORA (Andreza Araujo):</strong> “Aqui. Neste pier.
+Na madrugada de 18 de abril de 1912, o RMS Carpathia atracou com 710
+sobreviventes. Trinta mil pessoas esperavam no cais. Familias com
+cartazes. Nomes escritos em papel. E a cada passageiro que descia, um
+nome era chamado. E para cada nome chamado, dezenas nao eram.”</p>
+<p><strong>ARQUIVO:</strong> Fotografias de 1912 — o Carpathia atracado,
+multidoes no pier, rostos na espera. As fotos se sobrepõem levemente a
+imagem moderna do pier — transparencia a 30%. Passado e presente
+coexistem no mesmo frame. As silhuetas de 1912 caminham onde hoje correm
+joggers.</p>
+<p><strong>APRESENTADORA (Andreza Araujo):</strong> “Os sobreviventes
+desciam em silencio. Muitos ainda em roupas de dormir. Alguns enrolados
+em cobertores do Carpathia. As mulheres procuravam maridos. As criancas
+procuravam pais. A banda do Salvation Army tocava hinos. E a chuva
+comecou.”</p>
+<p>[SILENCIO — 5 segundos. Andreza olha para o rio.]</p>
+<p><strong>APRESENTADORA (Andreza Araujo):</strong> “Ida Straus nao
+desceu. Benjamin Guggenheim nao desceu. John Jacob Astor nao desceu.
+Wallace Hartley e seus musicos nao desceram. E 1.517 familias comecaram
+a entender que ninguem mais ia descer.”</p>
+<p><strong>ARQUIVO:</strong> Close numa fotografia: lista manuscrita de
+sobreviventes afixada no escritorio da White Star Line em Nova York.
+Fila de pessoas consultando a lista. A mesma fila — em foto ao lado —
+consultando lista de mortos.</p>
+<p><strong>APRESENTADORA (Andreza Araujo):</strong> “Eu comeco todo
+diagnostico de cultura de seguranca com uma pergunta: quem pagou o
+preco? Nao o preco financeiro — o preco humano. Porque quando a gente
+esquece quem pagou, a gente comeca a normalizar de novo.”</p>
+<p><strong>SOM/MUSICA:</strong> Som ambiente do pier moderno — vento do
+Hudson, passos, bicicletas, vozes distantes. Sobre ele, em volume MUITO
+baixo, quase subliminar: o som do Morse da SEQ 01. O espectador talvez
+nao o perceba conscientemente — mas o corpo reconhece. Circularidade
+sonora.</p>
+<p><strong>NOTA DE DIRECAO VISUAL:</strong> A sobreposicao sepia/cor e o
+dispositivo-chave: o passado nao “esta la” — esta AQUI. As mesmas
+pedras, o mesmo rio, o mesmo ceu. Quando Andreza caminha sobre o pier,
+ela caminha sobre historia. A camera alterna entre planos abertos (o
+pier hoje, luminoso) e closes nas fotos de 1912 (escuras, granuladas,
+intimas). A tensao visual e entre ESPACO (o mesmo) e TEMPO
+(diferente).</p>
+<hr />
+<h2 id="seq-19-epilogo-o-mar">SEQ 19 — EPILOGO: O MAR</h2>
+<table>
+<colgroup>
+<col style="width: 43%" />
+<col style="width: 56%" />
+</colgroup>
+<thead>
+<tr>
+<th>Campo</th>
+<th>Detalhe</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Duracao</strong></td>
+<td>3 minutos</td>
+</tr>
+<tr>
+<td><strong>Tipo de material</strong></td>
+<td>Arquivo submarino (acervo Cameron) + texto + silencio + VO</td>
+</tr>
+<tr>
+<td><strong>Paleta</strong></td>
+<td>Azul Atlantico #1B3A5C –&gt; Preto Abissal #0A0A0F. Circularidade
+cromatica COMPLETA: azul-abissal abre (SEQ 01), azul-abissal fecha (SEQ
+19). Mas a funcao mudou: na abertura era convite, no fechamento e
+despedida</td>
+</tr>
+<tr>
+<td><strong>Entrevistados</strong></td>
+<td>Nenhum. Andreza fecha sozinha</td>
+</tr>
+<tr>
+<td><strong>Props/cenografia</strong></td>
+<td>Nenhuma construcao — o cenario e o oceano real</td>
+</tr>
+<tr>
+<td><strong>Value-charge</strong></td>
+<td>Ambiguo –&gt; responsabilidade transferida ao publico</td>
+</tr>
+<tr>
+<td><strong>Beat McKee</strong></td>
+<td>Beat 5 — fechamento</td>
+</tr>
+<tr>
+<td><strong>Licao integrada</strong></td>
+<td>Licao 8 (“Voce Esta Dentro de um Drift Agora”) + Call to Action (“E
+Voce?”) como FECHAMENTO</td>
+</tr>
+</tbody>
+</table>
+<p><strong>IMAGEM:</strong></p>
+<p>Retorno ao fundo do mar. A mesma luz dos ROVs do prologo. Os mesmos
+azuis. O mesmo silencio. Mas agora o espectador SABE o que o azul
+contem.</p>
+<p>Os sapatos enfileirados no leito oceanico — marca de corpos que se
+desfizeram. As luminarias art deco cobertas de rusticles. Elementos de
+mogno preservados pelo frio e pela pressao. O silencio absoluto de 3.800
+metros.</p>
+<p><strong>TELA PRETA — 3 segundos.</strong></p>
+<p>Depois: o som do Morse — ··· ——— ··· — uma ultima vez. Fraco.
+Distante. Como eco de algo que nunca deveria ter sido necessario.</p>
+<p>Depois: ESPELHO. A camera filma uma superficie reflexiva — agua?
+metal polido? — que devolve o olhar. O conceito de reflexo. O espectador
+e olhado de volta.</p>
+<p><strong>APRESENTADORA (Andreza Araujo):</strong> “Este navio conta
+uma historia. Nao a historia de um iceberg. A historia de um sistema. De
+decisoes que pareciam razoaveis. De vozes que foram silenciadas. De uma
+civilizacao tao apaixonada pelo seu progresso que esqueceu de perguntar:
+‘e se estivermos errados?’ Eu comecei como engenheira civil. Descobri
+seguranca pela porta dos fundos. E aprendi que seguranca nao e sobre
+normas. E sobre gente. E sobre cuidar de gente.”</p>
+<p>[SILENCIO — 5 segundos]</p>
+<p><strong>APRESENTADORA (Andreza Araujo):</strong> “Voce nao e
+Carlisle. Provavelmente nao esta projetando navios nem certificando
+avioes. Mas voce ESTA dentro de um sistema. Eu atendi 33 mil
+funcionarios em 19 paises na PepsiCo. Cada fabrica, cada pais, cada
+cultura — e em TODOS encontrei a mesma coisa: regras que ‘funcionam’
+porque nunca foram testadas. Sinais de alarme que ninguem ouve. Drifts
+lentos e invisiveis movendo o baseline do ‘normal’ para mais perto do
+iceberg. Em 180 dias, mudando a cultura — nao o formulario —, reduzimos
+a acidentalidade em 52%. Em cinco anos, 94%. Nao porque as pessoas
+passaram a seguir regras. Porque passaram a CUIDAR umas das outras.”</p>
+<p>Fade lento para imagens submarinas do wreck — os sapatos, as
+luminarias, o silencio.</p>
+<p><strong>APRESENTADORA (Andreza Araujo):</strong> “Na proxima reuniao
+em que alguem disser ‘acho que isso pode dar errado’ — observe o que
+acontece. Observe os rostos. Observe o silencio. Celebre o vermelho.
+Valorize quem reporta o problema. Pergunte todo dia: o que pode me matar
+hoje? Como evitar isso? Seguranca e um valor, nao uma prioridade que
+muda conforme a situacao. Valores sao transcircunstanciais — estao acima
+das circunstancias. Temos uma pagina em branco para escrever. Tenha
+coragem para fazer a diferenca. O mar nao mudou. A pergunta e: e
+voce?”</p>
+<p><strong>TEXTO (branco sobre preto — as duas cores mais
+honestas):</strong></p>
+<p>“1.517 mortos.”</p>
+<p>“Alexander Carlisle propôs 48 botes em 1907.”</p>
+<p>“Foram instalados 20.”</p>
+<p>“A regra que permitiu tinha 18 anos.”</p>
+<p>[PAUSA — 5 segundos]</p>
+<p>“Na sua industria, quantas regras estao esperando seu iceberg?”</p>
+<p><strong>Tela preta.</strong></p>
+<p><strong>O mar nao mudou. A pergunta e: e voce?</strong></p>
+<p><strong>FIM.</strong></p>
+<p><strong>SOM/MUSICA:</strong> Codigo Morse — ··· ——— ··· — fraco, como
+eco distante. Depois sons subaquaticos naturais — identicos ao prologo.
+Circularidade sonora completa. O mesmo murmúrio abissal. Calma, precisa,
+respeitosa com o que esta no fundo do mar. Absolutamente determinada a
+que a verdade suba a superficie. Nenhuma musica. O silencio final e
+total — dura ate o espectador sair da sala.</p>
+<hr />
+<hr />
+<h1 id="validacoes">VALIDACOES</h1>
+<h2 id="step-1-checklist-de-integracao-sst-narrativa">Step 1: Checklist
+de Integracao SST-Narrativa</h2>
+<table>
+<colgroup>
+<col style="width: 34%" />
+<col style="width: 27%" />
+<col style="width: 37%" />
+</colgroup>
+<thead>
+<tr>
+<th>Criterio</th>
+<th>Status</th>
+<th>Evidencia</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Dekker (5 etapas) integrado como MOTOR narrativo, nao como
+citacao</td>
+<td>OK</td>
+<td>Etapa 4 (drift) e o arco do Ato II inteiro. Local Rationality e a
+logica de cada personagem. Etapa 5 (mudancas sistemicas) e SEQ
+15-16</td>
+</tr>
+<tr>
+<td>Reason (Swiss Cheese) e o CLIMAX visual</td>
+<td>OK</td>
+<td>SEQ 14 e inteiramente construida sobre o modelo. 5 camadas animadas.
+Buracos acendendo em vermelho. Overlays reorganizados no queijo</td>
+</tr>
+<tr>
+<td>Schein (3 niveis) integrado no arco cromatico</td>
+<td>OK</td>
+<td>Nivel 1 (artefatos/luxo) = ouro Ato I. Nivel 3 (pressupostos) =
+P&amp;B Ato III. A transicao cromatica E a transicao de Schein</td>
+</tr>
+<tr>
+<td>Westrum (tipologia) usada para diagnostico, nao para rotulo</td>
+<td>OK</td>
+<td>Score 6/25 aparece no climax. A cultura patologica e DEMONSTRADA
+pelo silenciamento (SEQ 13), nao apenas mencionada</td>
+</tr>
+<tr>
+<td>Hopkins (5 indicadores) mapeados nos personagens</td>
+<td>OK</td>
+<td>Indicador #1 (reportabilidade) = Carlisle/Andrews. #2 (compromisso
+gestao) = Board of Trade. #4 (prioridade seguranca) = luxo vs botes. #5
+(comunicacao) = grades 3a classe</td>
+</tr>
+<tr>
+<td>Reason (4 subculturas) presentes nas complicacoes</td>
+<td>OK</td>
+<td>Reporting = SEQ 08/13. Just = Carlisle silenciado. Learning =
+Eastland/SEQ 16. Flexible = Phillips/sistema Marconi</td>
+</tr>
+<tr>
+<td>Paralelos contemporaneos VERIFICAVEIS (fontes reais)</td>
+<td>OK</td>
+<td>Boeing MAX: Transportation Committee Report 2020. Grenfell: Inquiry
+2019-2024. Eastland: historico verificado</td>
+</tr>
+<tr>
+<td>SST serve a NARRATIVA, nao o contrario</td>
+<td>OK</td>
+<td>Nenhum framework e mencionado por nome ao espectador (exceto Swiss
+Cheese no climax). Os mecanismos sao MOSTRADOS, nao explicados</td>
+</tr>
+<tr>
+<td>Historias de passageiros humanizam ANTES dos erros</td>
+<td>OK</td>
+<td>SEQ 03 inteira dedicada a Astor, Guggenheim, Straus, Molly Brown,
+banda — antes de entrar nos erros (SEQ 04+)</td>
+</tr>
+<tr>
+<td>Locacoes em campo enriquecem a narrativa</td>
+<td>OK</td>
+<td>Pigeon Forge (SEQ 03, 10), NYC Pier 54 (SEQ 18) — conexao fisica com
+a historia</td>
+</tr>
+<tr>
+<td>Abertura com SOS Morse cria urgencia imediata</td>
+<td>OK</td>
+<td>SEQ 01 abre com Morse antes do mergulho — circularidade com SEQ 19
+(Morse final)</td>
+</tr>
+<tr>
+<td>Marcacao de erros visivel ao longo do documentario</td>
+<td>OK</td>
+<td>13 overlays marcados, reorganizados no Swiss Cheese do climax (SEQ
+14)</td>
+</tr>
+</tbody>
+</table>
+<h2 id="step-2-validacao-proporcoes-bernard">Step 2: Validacao
+Proporcoes Bernard</h2>
+<table>
+<colgroup>
+<col style="width: 37%" />
+<col style="width: 18%" />
+<col style="width: 18%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr>
+<th>Componente</th>
+<th>Meta</th>
+<th>Real</th>
+<th>Status</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Setup (Ato I)</strong></td>
+<td>~25% (~26 min)</td>
+<td>29 min (SEQ 01-06)</td>
+<td>27.6% — OK</td>
+</tr>
+<tr>
+<td><strong>Confrontacao (Ato II)</strong></td>
+<td>~50% (~52 min)</td>
+<td>44 min (SEQ 07-13)</td>
+<td>41.9% — ACEITAVEL (comprimido pelas novas SEQ no Ato I e III)</td>
+</tr>
+<tr>
+<td><strong>Resolucao (Ato III)</strong></td>
+<td>~25% (~26 min)</td>
+<td>32 min (SEQ 14-19)</td>
+<td>30.5% — OK (expandido por SEQ 18 NYC)</td>
+</tr>
+<tr>
+<td><strong>TOTAL</strong></td>
+<td>105 min</td>
+<td>105 min</td>
+<td>OK</td>
+</tr>
+</tbody>
+</table>
+<h3 id="proporcao-de-vo-voice-over">Proporcao de VO (Voice-Over)</h3>
+<table>
+<thead>
+<tr>
+<th>Tipo</th>
+<th>Duracao estimada</th>
+<th>% do total</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Apresentadora (Andreza)</td>
+<td>~25 min</td>
+<td>23.8%</td>
+</tr>
+<tr>
+<td>Entrevistas (som direto)</td>
+<td>~25 min</td>
+<td>23.8%</td>
+</tr>
+<tr>
+<td>VO narrador</td>
+<td>~5 min</td>
+<td>4.8%</td>
+</tr>
+<tr>
+<td>Arquivo/grafismo/reconst. (sem voz)</td>
+<td>~20 min</td>
+<td>19.0%</td>
+</tr>
+<tr>
+<td>Silencio + som ambiente</td>
+<td>~12 min</td>
+<td>11.4%</td>
+</tr>
+<tr>
+<td>CGI/animacao com VO</td>
+<td>~10 min</td>
+<td>9.5%</td>
+</tr>
+<tr>
+<td>Locacao campo (Andreza)</td>
+<td>~6 min</td>
+<td>5.7%</td>
+</tr>
+<tr>
+<td>Musica composta</td>
+<td>~2 min</td>
+<td>1.9%</td>
+</tr>
+<tr>
+<td><strong>VO total (Andreza + narrador)</strong></td>
+<td><strong>~30 min</strong></td>
+<td><strong>~28.6%</strong></td>
+</tr>
+</tbody>
+</table>
+<h2 id="step-3-checklist-final-de-qualidade">Step 3: Checklist Final de
+Qualidade</h2>
+<table style="width:100%;">
+<colgroup>
+<col style="width: 11%" />
+<col style="width: 37%" />
+<col style="width: 29%" />
+<col style="width: 22%" />
+</colgroup>
+<thead>
+<tr>
+<th>#</th>
+<th>Criterio</th>
+<th>Status</th>
+<th>Nota</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Controlling Idea testavel em cada sequencia</td>
+<td>OK</td>
+<td>Cada SEQ reforca ou complica “arrogancia tecnologica + silenciamento
+= destruicao”</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Questao Dramatica nunca respondida com sim/nao</td>
+<td>OK</td>
+<td>Resposta emerge em camadas ao longo dos 3 atos — nunca
+redutivel</td>
+</tr>
+<tr>
+<td>3</td>
+<td>5 Beats McKee claramente identificaveis</td>
+<td>OK</td>
+<td>Beat 1 (SEQ 01-05), Beat 2 (SEQ 06-07), Beat 3 (SEQ 08-13), Beat 4
+(SEQ 14), Beat 5 (SEQ 15-19)</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Turning Points bem marcados (visual + narrativo)</td>
+<td>OK</td>
+<td>TP1: flash branco SEQ 06 / TP2: Swiss Cheese SEQ 13-14</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Progressive Complications em ordem crescente</td>
+<td>OK</td>
+<td>Avisos &lt; Botes &lt; Classe &lt; Californian &lt; DNA &lt; Vozes
+Silenciadas — cada complicacao pior</td>
+</tr>
+<tr>
+<td>6</td>
+<td>Climax e revelacao SISTEMICA, nao espetacular</td>
+<td>OK</td>
+<td>SEQ 14: P&amp;B puro, geometria forense, overlays reorganizados —
+compreensao</td>
+</tr>
+<tr>
+<td>7</td>
+<td>Resolucao nao e “moral da historia” — e PERGUNTA</td>
+<td>OK</td>
+<td>SEQ 19 termina com pergunta ao espectador, nao com conclusao</td>
+</tr>
+<tr>
+<td>8</td>
+<td>Licoes Aprendidas integradas organicamente</td>
+<td>OK</td>
+<td>8 licoes distribuidas em SEQ 15-19 como tecido narrativo, nao como
+lista</td>
+</tr>
+<tr>
+<td>9</td>
+<td>Arco cromatico coerente</td>
+<td>OK</td>
+<td>Preto (Morse) –&gt; Ouro –&gt; Cinza –&gt; Verde –&gt; P&amp;B –&gt;
+Azul-Preto. Circularidade SEQ 01/19</td>
+</tr>
+<tr>
+<td>10</td>
+<td>Reconstituicoes FRAGMENTADAS, nunca naturalistas</td>
+<td>OK</td>
+<td>N1, N2, N3 aplicados. Nenhuma cena completa. Espectador sabe que e
+reconstituicao</td>
+</tr>
+<tr>
+<td>11</td>
+<td>Entrevistas com pontos de [SILENCIO]</td>
+<td>OK</td>
+<td>Silencios de 3, 5, 7, 10 segundos marcados em cada entrevista</td>
+</tr>
+<tr>
+<td>12</td>
+<td>Props-evidencia presentes</td>
+<td>OK</td>
+<td>Rebites, cadeado binoculos, blueprints, telegrama, Merchant Shipping
+Act, relogio, grade, bloco de gelo</td>
+</tr>
+<tr>
+<td>13</td>
+<td>VO &lt;= 40%</td>
+<td>OK</td>
+<td>~28.6% estimado</td>
+</tr>
+<tr>
+<td>14</td>
+<td>Proporcoes Bernard respeitadas</td>
+<td>OK</td>
+<td>27.6% / 41.9% / 30.5%</td>
+</tr>
+<tr>
+<td>15</td>
+<td>Teste do Trem funcional</td>
+<td>OK</td>
+<td>Cada estacao narrativa tem funcao — nenhuma removivel sem colapso do
+arco</td>
+</tr>
+<tr>
+<td>16</td>
+<td>Negacao da Negacao alcancada no climax</td>
+<td>OK</td>
+<td>SEQ 14: nao negligencia, nao incompetencia — negligencia NORMALIZADA
+como paradigma</td>
+</tr>
+<tr>
+<td>17</td>
+<td>Call to Action nao e moralizante — e convite</td>
+<td>OK</td>
+<td>“Observe o que acontece” — nao “mude o mundo”</td>
+</tr>
+<tr>
+<td>18</td>
+<td>Paralelos contemporaneos verificaveis</td>
+<td>OK</td>
+<td>Fontes primarias citadas: Transportation Committee, Grenfell
+Inquiry</td>
+</tr>
+<tr>
+<td>19</td>
+<td>Circularidade narrativa (abertura/fechamento)</td>
+<td>OK</td>
+<td>Morse abre (SOS), Morse fecha (eco). Mar abre, mar fecha. Preto
+abre, preto fecha</td>
+</tr>
+<tr>
+<td>20</td>
+<td>Historias humanas investem o espectador ANTES dos erros</td>
+<td>OK</td>
+<td>SEQ 03 humaniza. SEQ 18 (NYC) localiza. Os erros (SEQ 04+) doem
+MAIS</td>
+</tr>
+<tr>
+<td>21</td>
+<td>Overlays de erro acumulam e convergem no climax</td>
+<td>OK</td>
+<td>13 overlays marcados ao longo do doc reorganizam-se no Swiss
+Cheese</td>
+</tr>
+<tr>
+<td>22</td>
+<td>Locacoes em campo (Pigeon Forge, NYC) integradas</td>
+<td>OK</td>
+<td>Pigeon Forge (SEQ 03 bloco gelo, SEQ 10 corredores), NYC (SEQ 18
+pier)</td>
+</tr>
+<tr>
+<td>23</td>
+<td>SOS Morse como moldura sonora</td>
+<td>OK</td>
+<td>Abre (urgencia), fecha (eco/memoria). Circularidade</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="mapa-de-integracao-licoes-nas-sequencias">MAPA DE INTEGRACAO —
+LICOES NAS SEQUENCIAS</h2>
+<table style="width:100%;">
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 38%" />
+<col style="width: 41%" />
+</colgroup>
+<thead>
+<tr>
+<th>Licao</th>
+<th>Onde aparece</th>
+<th>Como aparece</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>L1 — A Regra Que Protegia Era a Que Matava</td>
+<td>SEQ 09 (setup), SEQ 15 (contexto)</td>
+<td>Grafismo drift + VO sobre captura regulatoria</td>
+</tr>
+<tr>
+<td>L2 — O Luxo Como Anestesia</td>
+<td>SEQ 02-03 (implicita), SEQ 15 (ironia cromatica)</td>
+<td>Ouro Ato I como fachada; retorno opaco nos inqueritos</td>
+</tr>
+<tr>
+<td>L3 — Ninguem Acorda Planejando Matar 1.517 Pessoas</td>
+<td>SEQ 13 (reversal), SEQ 14 (climax)</td>
+<td>Swiss Cheese + “Todos estavam certos. 1.517 morreram.”</td>
+</tr>
+<tr>
+<td>L4 — O Sistema Que Silencia o Alarme</td>
+<td>SEQ 05, 08, 13 (arco do silenciamento)</td>
+<td>Carlisle/Andrews/Phillips — triptico progressivo</td>
+</tr>
+<tr>
+<td>L5 — 18 Anos de Decisoes Razoaveis</td>
+<td>SEQ 09 (grafismo drift), SEQ 14 (time-lapse)</td>
+<td>Regra imovel, navio crescendo — o drift visualizado</td>
+</tr>
+<tr>
+<td>L6 — A Cura Que Mata</td>
+<td>SEQ 16 (revelacao central da sequencia)</td>
+<td>Eastland como paradoxo visceral + transicao para Boeing MAX</td>
+</tr>
+<tr>
+<td>L7 — O Preco da Classe</td>
+<td>SEQ 10 (centro da sequencia)</td>
+<td>Grades entre decks + grafismo mortalidade + Pigeon Forge</td>
+</tr>
+<tr>
+<td>L8 — Voce Esta Dentro de um Drift Agora</td>
+<td>SEQ 17-19 (ponte + pier + epilogo)</td>
+<td>Montagem paralela + NYC pier + espelho + call to action</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="mapa-de-frameworks-sst-por-sequencia">MAPA DE FRAMEWORKS SST POR
+SEQUENCIA</h2>
+<table>
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 17%" />
+<col style="width: 17%" />
+<col style="width: 17%" />
+<col style="width: 19%" />
+<col style="width: 19%" />
+</colgroup>
+<thead>
+<tr>
+<th>SEQ</th>
+<th>Dekker</th>
+<th>Reason</th>
+<th>Schein</th>
+<th>Westrum</th>
+<th>Hopkins</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>01</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td>02</td>
+<td>Etapa 1 (contexto)</td>
+<td>—</td>
+<td>Nivel 1 (artefatos)</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td>03</td>
+<td>—</td>
+<td>—</td>
+<td>Nivel 1 (luxo como crenca)</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td>04</td>
+<td>Etapa 2 (Andrews SABIA)</td>
+<td>—</td>
+<td>Nivel 2 vs 3</td>
+<td>—</td>
+<td>Ind. #4</td>
+</tr>
+<tr>
+<td>05</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>Mensageiro punido</td>
+<td>Ind. #1</td>
+</tr>
+<tr>
+<td>06</td>
+<td>Local Rationality</td>
+<td>Camada 5 (atos)</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td>07</td>
+<td>Etapa 2</td>
+<td>Camada 4 (precondicoes)</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td>08</td>
+<td>Local Rationality</td>
+<td>Camada 3 (supervisao) + Reporting FALHA</td>
+<td>—</td>
+<td>—</td>
+<td>Ind. #1</td>
+</tr>
+<tr>
+<td>09</td>
+<td>Etapa 4 (drift)</td>
+<td>Camada 1 (regulacao)</td>
+<td>—</td>
+<td>—</td>
+<td>Ind. #2</td>
+</tr>
+<tr>
+<td>10</td>
+<td>—</td>
+<td>Camada 2 (organizacao)</td>
+<td>Nivel 3 (pressupostos)</td>
+<td>—</td>
+<td>Ind. #5</td>
+</tr>
+<tr>
+<td>11</td>
+<td>Local Rationality + Second Victim</td>
+<td>Camada 3 + Flexible FALHA</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td>12</td>
+<td>Etapa 3 (evidencia)</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td>13</td>
+<td>—</td>
+<td>Reporting + Just FALHA</td>
+<td>—</td>
+<td>PATOLOGICA</td>
+<td>Ind. #1</td>
+</tr>
+<tr>
+<td>14</td>
+<td>Drift + Local Rationality</td>
+<td>Swiss Cheese COMPLETO</td>
+<td>Nivel 3</td>
+<td>Score 6/25</td>
+<td>—</td>
+</tr>
+<tr>
+<td>15</td>
+<td>Etapa 5 (mudancas)</td>
+<td>Learning FALHA</td>
+<td>Nivel 2 vs 3</td>
+<td>—</td>
+<td>Ind. #2</td>
+</tr>
+<tr>
+<td>16</td>
+<td>Etapa 5 (paradoxo)</td>
+<td>Learning FALHA</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td>17</td>
+<td>Drift PRESENTE</td>
+<td>—</td>
+<td>—</td>
+<td>PATOLOGICA (hoje)</td>
+<td>Todos</td>
+</tr>
+<tr>
+<td>18</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td>19</td>
+<td>—</td>
+<td>—</td>
+<td>Nivel 3 (inconsciente)</td>
+<td>—</td>
+<td>—</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="ficha-tecnica-resumida">FICHA TECNICA RESUMIDA</h2>
+<table>
+<colgroup>
+<col style="width: 30%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr>
+<th>Item</th>
+<th>Especificacao</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Cenarios a construir (completos)</td>
+<td>4: Sala Marconi, grades entre decks, ninho-de-corvo, ponte
+Californian</td>
+</tr>
+<tr>
+<td>Cenarios parciais</td>
+<td>3: sala projetos H&amp;W, estaleiro Belfast (fornalha), sala
+inquerito</td>
+</tr>
+<tr>
+<td>Locacoes reais</td>
+<td>3: laboratorio NIST (Gaithersburg, MD), Titanic Museum (Pigeon
+Forge, TN), Pier 54/Chelsea Piers (NYC)</td>
+</tr>
+<tr>
+<td>Locacoes gravadas anteriormente</td>
+<td>1: Museu do Titanic (Sao Paulo) — acervo de gravacoes com
+Andreza</td>
+</tr>
+<tr>
+<td>Props-evidencia</td>
+<td>18+: rebites, cadeado, blueprints, Merchant Shipping Act, telegrama,
+manipulador Morse, sino, relogio, bloco de gelo, fotos de passageiros,
+lista de sobreviventes, etc.</td>
+</tr>
+<tr>
+<td>Visualizacoes tecnicas (CGI)</td>
+<td>15: modelo 3D Titanic, Swiss Cheese, rebites microscopio,
+distribuicao aco/ferro, drift time-lapse, mapa Atlantico, grafismo
+mortalidade, crescimento navios vs regra, overlays de erro, etc.</td>
+</tr>
+<tr>
+<td>Entrevistas a filmar</td>
+<td>5 sessoes (Foecke, Stephenson, McCarty, Butler, Lynch/Marschall) +
+Andreza em campo (3 locacoes)</td>
+</tr>
+<tr>
+<td>Horas brutas estimadas</td>
+<td>22-28 horas</td>
+</tr>
+<tr>
+<td>Reconstituicoes</td>
+<td>7 momentos (R1-R6 + grades entre decks) em 3 niveis (N1 simbolico,
+N2 fragmentado, N3 estilistico)</td>
+</tr>
+<tr>
+<td>Arquivo submarino</td>
+<td>Acervo Cameron (33 mergulhos)</td>
+</tr>
+<tr>
+<td>Musica composta</td>
+<td>~2 minutos (apenas na transicao SOLAS/Eastland — esperanca
+breve)</td>
+</tr>
+<tr>
+<td><strong>Novidades v2</strong></td>
+<td>SOS Morse (abertura/fechamento), SEQ 03 (passageiros), SEQ 18 (NYC
+pier), 13 overlays de erro, locacoes Pigeon Forge e NYC</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="changelog-v1-v2">CHANGELOG v1 –&gt; v2</h2>
+<table>
+<colgroup>
+<col style="width: 35%" />
+<col style="width: 35%" />
+<col style="width: 29%" />
+</colgroup>
+<thead>
+<tr>
+<th>Alteracao</th>
+<th>Descricao</th>
+<th>Impacto</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>SEQ 01 reescrita</td>
+<td>Abertura com SOS em codigo Morse antes do mergulho</td>
+<td>+1 min. Circularidade Morse inicio/fim</td>
+</tr>
+<tr>
+<td>SEQ 03 nova</td>
+<td>“As Vidas a Bordo” — historias de Astor, Guggenheim, Straus, Molly
+Brown, banda + Andreza em Pigeon Forge (bloco de gelo)</td>
+<td>+6 min. Humanizacao ANTES dos erros</td>
+</tr>
+<tr>
+<td>SEQ 10 expandida</td>
+<td>Andreza em campo no Titanic Museum Pigeon Forge (corredores 3a
+classe)</td>
+<td>+1 min. Locacao real enriquece</td>
+</tr>
+<tr>
+<td>SEQ 18 nova</td>
+<td>“O Pier” — Andreza no Pier 54, NYC, onde o Carpathia atracou</td>
+<td>+4 min. Localiza a historia no espaco real</td>
+</tr>
+<tr>
+<td>SEQ 19 modificada</td>
+<td>Retorno do Morse (eco) no epilogo. Circularidade sonora
+completa</td>
+<td>Neutral. Fechamento mais potente</td>
+</tr>
+<tr>
+<td>Overlays de erro</td>
+<td>13 marcacoes visuais ao longo do doc
+(PROCESSO/HUMANO/SISTEMICO)</td>
+<td>Neutral. Dispositivo recorrente que converge no climax</td>
+</tr>
+<tr>
+<td>Numeracao</td>
+<td>17 SEQ –&gt; 19 SEQ. Renumeracao completa</td>
+<td>Estrutural</td>
+</tr>
+<tr>
+<td>Duracao</td>
+<td>90 min –&gt; 105 min</td>
+<td>+15 min</td>
+</tr>
+<tr>
+<td>“Especialista em Seguranca Moderna”</td>
+<td>Removido como personagem separado — falas absorvidas pela
+Andreza</td>
+<td>Coerencia. Andreza E a especialista</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><em>Fase 11 — Roteiro Final Consolidado v2 | <span class="citation"
+data-cites="roteirista">@roteirista</span> (squad doc-safety) |
+2026-03-06 | FINAL DRAFT v2</em> <em>Apresentadora: Andreza Araujo
+(squad andreza-araujo) | Squad Creator: <span class="citation"
+data-cites="oalanicolas">@oalanicolas</span>, <span class="citation"
+data-cites="thiago-finch">@thiago-finch</span>, <span class="citation"
+data-cites="pedro-valerio">@pedro-valerio</span></em> <em>Consolidacao:
+Fases 6-10 + melhorias v2 (SOS Morse, historias de passageiros, locacoes
+Pigeon Forge/NYC, marcacao de erros)</em></p>
+<blockquote>
+<p>“O Titanic nao foi destruido por um iceberg. Foi destruido por 18
+anos de decisoes razoaveis. A pergunta nao e se voce esta num navio —
+voce esta. A pergunta e: quem esta falando, e quem esta ouvindo?”</p>
+</blockquote>
+</body>
+</html>

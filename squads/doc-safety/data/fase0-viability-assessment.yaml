@@ -1,0 +1,96 @@
+# Fase 0: Viability Assessment — doc-safety
+# Agent: @thiago-finch
+# Date: 2026-02-24
+# Status: GO
+
+assessment:
+  verdict: GO
+  total_score: 29
+  max_score: 40
+  percentage: 72.5
+
+  dimensions:
+    diferenciacao:
+      score: 9
+      max: 10
+      justificativa: "NAO existe no Brasil serie documental de qualidade cinematografica sobre acidentes de trabalho cotidianos"
+    demanda:
+      score: 7
+      max: 10
+      justificativa: "Safety training market USD 9.3B global, R$ 21B EPIs Brasil, crescimento 6.6% a.a."
+    executabilidade:
+      score: 7
+      max: 10
+      justificativa: "Pipeline completo coberto por 6 mentes elite com frameworks documentados e verificaveis"
+    monetizacao:
+      score: 6
+      max: 10
+      justificativa: "Dupla monetizacao recomendada: roteiro documentario + modulo treinamento NR. Score menor por depender de validacao de mercado."
+
+  loss_aversion_check:
+    downside_if_create: "Tempo de desenvolvimento do squad (~20h), custo de manutencao, risco de escopo excessivo se incluir todas as 10 mentes"
+    downside_if_not_create: "Gap de mercado permanece aberto. Nenhuma serie documental de qualidade sobre SST no Brasil. Oportunidade de first-mover perdida em mercado de R$ 21B."
+    ratio: "Upside (first-mover + dupla monetizacao) >> Downside (tempo). Ratio estimado 4:1."
+    verdict: CREATE
+
+  mentes_priorizadas:
+    obrigatorias:
+      - name: McKee
+        papel: "Macro estrutura narrativa (arco dramatico)"
+        justificativa: "Story Structure e o framework mais influente de roteiro. Sem McKee, a historia nao tem esqueleto."
+      - name: Bernard
+        papel: "Meso processo documentario (escaleta, paper edit)"
+        justificativa: "Unica referencia que traduz estrutura dramatica para processo documental especificamente."
+      - name: Morris
+        papel: "Micro tecnica de entrevista (Interrotron, silencio)"
+        justificativa: "Tecnicas de entrevista verificaveis que geram material revelador. Anti-verite e essencial para doc investigativo."
+      - name: Dekker
+        papel: "Analise de acidentes (New View, Local Rationality)"
+        justificativa: "Framework que redefine erro humano como sintoma, nao causa. Sem Dekker, o doc repete a narrativa da culpa individual."
+      - name: Reason
+        papel: "Modelo de falhas sistemicas (Swiss Cheese, defesas em profundidade)"
+        justificativa: "Modelo visual iconico que explica como acidentes atravessam multiplas barreiras. Complementa Dekker."
+      - name: Storaro
+        papel: "Cinematografia e linguagem visual (Writing with Light)"
+        justificativa: "Cinematografo com sistema documentado de cor como narrativa. Sem Storaro, o doc e visualmente generico."
+
+    nice_to_have:
+      - name: Hollnagel
+        papel: "Safety-II / Resilience Engineering"
+        justificativa: "Complementa Dekker com foco no que da CERTO (nao so no que falha)"
+      - name: Lanzmann
+        papel: "Documentario longo / testemunho"
+        justificativa: "Tecnicas para documentarios de duracao extendida"
+      - name: Oppenheimer
+        papel: "Reenactment como confronto"
+        justificativa: "Reconstituicao como ferramenta de confronto com perpetradores"
+      - name: Larson
+        papel: "Narrative nonfiction / pesquisa"
+        justificativa: "Tecnicas de pesquisa e narrativa para non-fiction"
+
+  agent_tiers:
+    tier_0:
+      agents: [doc-chief]
+      funcao: "Orquestrador — diagnostica briefing, roteia para especialistas, valida output"
+    tier_1:
+      agents: [roteirista, perito-sst]
+      funcao: "Especialistas primarios — produzem os outputs core (roteiro + analise SST)"
+    tier_2:
+      agents: [entrevistador, fotografo]
+      funcao: "Especialistas de execucao — entrevistas e direcao visual"
+    tier_3:
+      agents: [cenografo]
+      funcao: "Especialista de formato — cenografia e reconstituicao"
+
+  principio_unificador: "O documentario MOSTRA (Storaro) o que o sistema ESCONDE (Reason) e o que a investigacao tradicional IGNORA (Dekker)"
+
+  recomendacoes:
+    - "Dupla monetizacao: roteiro documentario + modulo treinamento NR"
+    - "Considerar agente juridico em fase futura (nao incluir agora)"
+    - "Mentes nice-to-have podem ser adicionadas incrementalmente apos squad funcional"
+
+  mercado:
+    global: "Safety training market USD 9.3B"
+    brasil: "R$ 21B EPIs"
+    crescimento: "6.6% a.a."
+    gap: "Nao existe serie documental de qualidade cinematografica sobre acidentes de trabalho cotidianos no Brasil"

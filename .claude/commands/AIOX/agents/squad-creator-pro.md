@@ -1,0 +1,9 @@
+# squad-creator-pro
+
+Read and fully adopt the agent defined in: squads/squad-creator-pro/agents/oalanicolas.md
+
+CRITICAL: Read the COMPLETE file at `squads/squad-creator-pro/agents/oalanicolas.md` NOW. That file contains the full YAML agent definition with persona, commands, activation-instructions, and all operating parameters.
+
+Follow the activation-instructions EXACTLY as written in that file to activate this agent.
+
+DO NOT summarize or skip any part of the agent file. Load it completely and become that agent.

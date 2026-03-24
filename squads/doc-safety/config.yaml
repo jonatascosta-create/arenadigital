@@ -1,0 +1,266 @@
+name: doc-safety
+version: 2.0.0
+tested: true
+updated_at: "2026-02-26"
+short-title: Doc Safety
+description: >-
+  Squad de roteiro documentario especializado em desastres e acidentes com base dramatica
+  e foco em Cultura de Seguranca. Combina analise tecnica (Dekker, Reason), storytelling
+  cinematografico (McKee, Bernard, Storaro, Morris), contexto historico-politico (Larson, Lord,
+  Butler), cultura de seguranca (Hopkins, Schein, Westrum) e engenharia forense (Foecke, McCarty).
+  Pipeline expandido: briefing → contexto historico ∥ analise SST → analise tecnica → cultura
+  de seguranca → estrutura narrativa → entrevistas → direcao visual → roteiro final + licoes
+  aprendidas → revisao QA.
+author: AIOS Team
+entry_agent: doc-chief
+slashPrefix: docSafety
+
+settings:
+  activation:
+    show_ecosystem_report: false
+    show_greeting: true
+    show_quick_commands: true
+
+metadata:
+  version: "2.0.0"
+  domain: documentary_production
+  keywords:
+    - roteiro
+    - documentario
+    - seguranca do trabalho
+    - acidentes
+    - desastres
+    - cultura de seguranca
+    - safety culture
+    - narrativa dramatica
+    - cinematografia
+    - entrevistas
+    - reconstituicao
+    - contexto historico
+    - engenharia forense
+    - licoes aprendidas
+
+# --- Agent Tiers (v2.0 — Expanded) ---
+
+agent_tiers:
+  tier_0:
+    agents: [doc-chief]
+    funcao: "Orquestrador — diagnostica briefing, roteia para especialistas, valida output, aceita director como input"
+  tier_1:
+    agents: [roteirista, perito-sst, historiador, especialista-cultura-seguranca]
+    funcao: "Especialistas primarios — produzem os outputs core (roteiro + analise SST + contexto historico + cultura de seguranca)"
+  tier_2:
+    agents: [entrevistador, fotografo, engenheiro-naval]
+    funcao: "Especialistas de execucao — entrevistas, direcao visual, detalhes tecnicos"
+  tier_3:
+    agents: [cenografo]
+    funcao: "Especialista de formato — cenografia e reconstituicao"
+
+# --- Mentes (v2.0 — Expanded) ---
+
+mentes:
+  obrigatorias:
+    # Narrativa
+    - id: mckee
+      name: McKee
+      papel: "Macro estrutura narrativa (arco dramatico)"
+      agent: roteirista
+    - id: bernard
+      name: Bernard
+      papel: "Meso processo documentario (escaleta, paper edit)"
+      agent: roteirista
+
+    # Entrevista
+    - id: morris
+      name: Morris
+      papel: "Micro tecnica de entrevista (Interrotron, silencio)"
+      agent: entrevistador
+
+    # Analise de Acidentes
+    - id: dekker
+      name: Dekker
+      papel: "Analise de acidentes (New View, Local Rationality)"
+      agent: perito-sst
+    - id: reason
+      name: Reason
+      papel: "Modelo de falhas sistemicas (Swiss Cheese, defesas em profundidade)"
+      agent: perito-sst
+
+    # Visual
+    - id: storaro
+      name: Storaro
+      papel: "Cinematografia e linguagem visual (Writing with Light)"
+      agent: fotografo
+
+    # Contexto Historico (NEW v2.0)
+    - id: walter_lord
+      name: Walter Lord
+      papel: "Narrativa historica definitiva (multiplos pontos de vista)"
+      agent: historiador
+    - id: larson
+      name: Erik Larson
+      papel: "Narrative nonfiction (dual timeline, zeitgeist como personagem)"
+      agent: historiador
+    - id: butler
+      name: Daniel Allen Butler
+      papel: "Analise historica com psicologia de decisoes"
+      agent: historiador
+
+    # Cultura de Seguranca (NEW v2.0)
+    - id: hopkins
+      name: Andrew Hopkins
+      papel: "5 indicadores praticos de cultura de seguranca"
+      agent: especialista-cultura-seguranca
+    - id: schein
+      name: Edgar Schein
+      papel: "3 niveis de cultura organizacional (artefatos, valores, pressupostos)"
+      agent: especialista-cultura-seguranca
+    - id: westrum
+      name: Ron Westrum
+      papel: "Tipologia de culturas (patologica, burocratica, generativa)"
+      agent: especialista-cultura-seguranca
+
+    # Engenharia Forense (NEW v2.0)
+    - id: foecke
+      name: Tim Foecke
+      papel: "Metalurgia forense — rebites e aco (NIST)"
+      agent: engenheiro-naval
+    - id: mccarty
+      name: Jennifer Hooper McCarty
+      papel: "Analise completa de rebites (Johns Hopkins)"
+      agent: engenheiro-naval
+
+  nice_to_have:
+    - id: hollnagel
+      name: Hollnagel
+      papel: "Safety-II / Resilience Engineering"
+    - id: lanzmann
+      name: Lanzmann
+      papel: "Documentario longo / testemunho"
+    - id: oppenheimer
+      name: Oppenheimer
+      papel: "Reenactment como confronto"
+    - id: wilding
+      name: Edward Wilding
+      papel: "Engenharia naval original"
+      agent: engenheiro-naval
+    - id: stephenson
+      name: Parks Stephenson
+      papel: "Analise forense moderna com tecnologia"
+      agent: engenheiro-naval
+    - id: maltin
+      name: Tim Maltin
+      papel: "Teoria da refracao atmosferica"
+
+# --- Pipeline Expandido (v2.0) ---
+
+pipeline:
+  fases:
+    1_briefing:
+      nome: "Receber Briefing"
+      agente: doc-chief
+      input: "Caso + DIRETOR (estilo cinematografico)"
+      output: "Briefing estruturado com diagnostico + perfil do diretor"
+
+    2_contexto_historico:
+      nome: "Contexto Historico"
+      agente: historiador
+      input: "Briefing estruturado"
+      output: "Analise em 6 dimensoes (politica, economia, tecnologia, classe, zeitgeist, ponte)"
+      paralelo_com: "3_analise_sst"
+      mentes: [Walter Lord, Erik Larson, Daniel Allen Butler]
+
+    3_analise_sst:
+      nome: "Analise de Seguranca"
+      agente: perito-sst
+      input: "Briefing estruturado"
+      output: "Analise Dekker (New View) + Mapa Reason (Swiss Cheese)"
+      paralelo_com: "2_contexto_historico"
+      mentes: [Dekker, Reason]
+
+    4_analise_tecnica:
+      nome: "Analise Tecnica"
+      agente: engenheiro-naval
+      input: "Briefing + Analise SST"
+      output: "4 dominios tecnicos + mapa custo vs seguranca + traducao documental"
+      mentes: [Foecke, McCarty]
+
+    5_cultura_seguranca:
+      nome: "Cultura de Seguranca"
+      agente: especialista-cultura-seguranca
+      input: "Briefing + Analise SST + Contexto Historico"
+      output: "Classificacao cultural + insights + base para licoes"
+      mentes: [Hopkins, Schein, Westrum, Reason]
+
+    6_estrutura_narrativa:
+      nome: "Estrutura Narrativa"
+      agente: roteirista
+      input: "Briefing + SST + Contexto + Tecnica + Cultura"
+      output: "Escaleta (McKee 5 beats) + Paper Edit (Bernard 3 atos)"
+      mentes: [McKee, Bernard]
+
+    7_entrevistas:
+      nome: "Guia de Entrevistas"
+      agente: entrevistador
+      input: "Briefing + SST + Escaleta"
+      output: "Guia de entrevista por personagem (tecnicas Morris)"
+      mentes: [Morris]
+
+    8_direcao_visual:
+      nome: "Direcao Visual"
+      agente: fotografo
+      input: "Briefing + Escaleta + SST + Analise Tecnica"
+      output: "Guia visual (paleta Storaro + visualizacoes tecnicas)"
+      mentes: [Storaro]
+
+    9_cenografia:
+      nome: "Cenografia e Reconstituicao"
+      agente: cenografo
+      input: "Briefing + SST + Guia Visual + Analise Tecnica"
+      output: "Plano de reconstituicao + cenografia documental"
+
+    10_licoes_aprendidas:
+      nome: "Licoes Aprendidas"
+      agente: especialista-cultura-seguranca
+      input: "Todos os outputs anteriores"
+      output: "Secao de conclusao com licoes (mecanismo + exemplo + aplicacao + pergunta)"
+
+    11_roteiro_final:
+      nome: "Roteiro Consolidado"
+      agente: roteirista
+      input: "Todos os outputs anteriores + Licoes Aprendidas (fase 10)"
+      output: "Roteiro completo com Licoes integradas como ATO III conclusao"
+
+    12_revisao_qa:
+      nome: "Revisao de Qualidade"
+      agente: doc-chief
+      input: "Roteiro completo + Licoes"
+      output: "Veredicto (APROVADO / REVISAO / REJEITADO)"
+
+# --- Director-as-Input (NEW v2.0) ---
+
+director_profiles:
+  description: >-
+    O usuario fornece o nome do DIRETOR que inspira o estilo do documentario.
+    O doc-chief adapta o tom, a abordagem e as diretivas para os especialistas.
+  exemplos:
+    james_cameron:
+      estilo: "Rigor tecnico + espetaculo visual + mergulho forense"
+      impacto_pipeline: "Enfase em analise tecnica e visualizacao. CGI e reconstituicao detalhada."
+    errol_morris:
+      estilo: "Entrevista como confronto + reenactment estilistico + verdade subjetiva"
+      impacto_pipeline: "Enfase em entrevistas profundas (Morris tecnica). Reenactment nao-literal."
+    ken_burns:
+      estilo: "Panorama historico + fotos/arquivo + narracao poetica"
+      impacto_pipeline: "Enfase em contexto historico e material de arquivo. Voice-over mais presente."
+    werner_herzog:
+      estilo: "Filosofico + natureza como forca + narrador-personagem"
+      impacto_pipeline: "Enfase em filosofia do desastre. Narrador com ponto de vista forte."
+
+# Principio unificador (expandido v2.0)
+principio: >-
+  O documentario MOSTRA (Storaro) o que o sistema ESCONDE (Reason),
+  o que a investigacao tradicional IGNORA (Dekker),
+  o que a historia EXPLICA (Larson/Lord),
+  o que a cultura NORMALIZA (Hopkins/Schein/Westrum),
+  e o que a engenharia MATERIALIZA (Foecke/McCarty).

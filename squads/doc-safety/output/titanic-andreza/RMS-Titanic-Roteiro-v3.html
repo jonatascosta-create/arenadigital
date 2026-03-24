@@ -1,0 +1,810 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>RMS Titanic - Roteiro v3</title>
+  <style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+  <link rel="stylesheet" href="-" />
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">RMS Titanic - Roteiro v3</h1>
+</header>
+<h1 id="roteiro-v3-rms-titanic-a-arquitetura-do-desastre">ROTEIRO v3 —
+RMS Titanic: A Arquitetura do Desastre</h1>
+<blockquote>
+<p>Versao v3 — Adaptado para gravacao em Pigeon Forge + Manhattan
+(adicional) Apresentadora: Andreza Araujo | Engenheiro: [NOME] |
+Historiador: [NOME] Data: 2026-03-08</p>
+</blockquote>
+<hr />
+<h2 id="metadados-do-projeto">METADADOS DO PROJETO</h2>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr>
+<th>Campo</th>
+<th>Valor</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Titulo</strong></td>
+<td>RMS Titanic: A Arquitetura do Desastre</td>
+</tr>
+<tr>
+<td><strong>Formato</strong></td>
+<td>Documentario / Conteudo digital (episodio unico)</td>
+</tr>
+<tr>
+<td><strong>Duracao estimada</strong></td>
+<td>45-60 minutos</td>
+</tr>
+<tr>
+<td><strong>Elenco</strong></td>
+<td>Andreza Araujo (Apresentadora, Especialista em Cultura de
+Seguranca), Engenheiro Mecanico, Historiador</td>
+</tr>
+<tr>
+<td><strong>Locacao principal</strong></td>
+<td>Titanic Museum — Pigeon Forge, TN</td>
+</tr>
+<tr>
+<td><strong>Locacao adicional</strong></td>
+<td>Manhattan, NYC (se disponivel)</td>
+</tr>
+<tr>
+<td><strong>Abertura</strong></td>
+<td>Codigo Morse — CQD CQD SOS SOS de MGY</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="elenco">ELENCO</h2>
+<table>
+<colgroup>
+<col style="width: 9%" />
+<col style="width: 19%" />
+<col style="width: 48%" />
+<col style="width: 22%" />
+</colgroup>
+<thead>
+<tr>
+<th>#</th>
+<th>Nome</th>
+<th>Funcao no doc</th>
+<th>Papel</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><strong>Andreza Araujo</strong></td>
+<td>Apresentadora e Especialista</td>
+<td>Conduz a narrativa, conecta o acidente com cultura de seguranca.
+Ponte passado-presente.</td>
+</tr>
+<tr>
+<td>2</td>
+<td><strong>Engenheiro</strong></td>
+<td>Engenheiro Mecanico</td>
+<td>Analisa a engenharia do navio: rebites, anteparas, portas estanques,
+estrutura do casco. Explica por que o navio falhou mecanicamente.</td>
+</tr>
+<tr>
+<td>3</td>
+<td><strong>Historiador</strong></td>
+<td>Conhecedor das historias das pessoas</td>
+<td>Traz as historias humanas, o contexto social da epoca, as vidas dos
+passageiros, a romantizacao, o pos-acidente.</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="estrutura-geral">ESTRUTURA GERAL</h2>
+<table>
+<colgroup>
+<col style="width: 24%" />
+<col style="width: 20%" />
+<col style="width: 55%" />
+</colgroup>
+<thead>
+<tr>
+<th>Bloco</th>
+<th>Tema</th>
+<th>Duracao aprox.</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>ABERTURA: Codigo Morse + Crime Scene</td>
+<td>3 min</td>
+</tr>
+<tr>
+<td>2</td>
+<td>O NAVIO E A ERA: White Star, tecnologia, o Capitao Smith</td>
+<td>7 min</td>
+</tr>
+<tr>
+<td>3</td>
+<td>AS PESSOAS: Famosos a bordo + 2 historias dramaticas fortes</td>
+<td>8 min</td>
+</tr>
+<tr>
+<td>4</td>
+<td>O DESCASO: Problemas de seguranca (coletes, botes, portas, avisos
+ignorados)</td>
+<td>10 min</td>
+</tr>
+<tr>
+<td>5</td>
+<td>A NOITE: A colisao, os navios que nao responderam, o caos</td>
+<td>8 min</td>
+</tr>
+<tr>
+<td>6</td>
+<td>A ROMANTIZACAO: Como Hollywood e a cultura transformaram tragedia em
+entretenimento</td>
+<td>5 min</td>
+</tr>
+<tr>
+<td>7</td>
+<td>O POS-ACIDENTE: O que mudou no mundo naval</td>
+<td>5 min</td>
+</tr>
+<tr>
+<td>8</td>
+<td>ENCERRAMENTO: Licoes e reflexao</td>
+<td>4 min</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<hr />
+<h1 id="bloco-1-abertura-codigo-morse-crime-scene">BLOCO 1 — ABERTURA:
+CODIGO MORSE + CRIME SCENE</h1>
+<p><strong>Duracao:</strong> ~3 minutos <strong>Locacao:</strong>
+Titanic Museum, Pigeon Forge (interior, proximo a exposicao do
+Morse/radio)</p>
+<hr />
+<p><strong>IMAGEM:</strong> Tela preta. Silencio total — 3 segundos.</p>
+<p>Um clique. Metalico, seco. O manipulador Morse.</p>
+<p>··· ——— ···</p>
+<p>SOS.</p>
+<p><strong>TEXTO NA TELA (letra por letra, branco sobre preto):</strong>
+“CQD CQD SOS SOS de MGY”</p>
+<p>Pausa. O Morse retorna — mais rapido. Mais urgente.</p>
+<p><strong>TEXTO NA TELA:</strong> “We are sinking fast. Passengers
+being put into boats.” — Jack Phillips, operador Marconi do RMS Titanic
+15 de abril de 1912, 00:45</p>
+<p>O som do Morse se deforma. O clique metalico se mistura com pressao
+de agua. O codigo vira eco. O eco vira abismo.</p>
+<p><strong>ANDREZA (em campo, Pigeon Forge):</strong> “Esse som que voce
+acabou de ouvir e o ultimo pedido de socorro do Titanic. CQD — Come
+Quickly, Danger. Depois SOS — o novo codigo universal. Jack Phillips, o
+operador de radio, mandou os dois. Porque naquela noite, ninguem sabia
+qual codigo os outros navios iam reconhecer. Ele mandou tudo. E quase
+ninguem respondeu.”</p>
+<p><em>[Pausa — 3 segundos]</em></p>
+<p><strong>ANDREZA:</strong> “Eu trabalho com seguranca ha mais de 25
+anos. Ja entrei em fabricas, plataformas, canteiros de obra em 19
+paises. E em cada lugar, encontrei a mesma coisa: nao um defeito, nao
+uma negligencia — uma pergunta. A mesma pergunta: como foi
+possivel?”</p>
+<p><strong>ANDREZA:</strong> “Este nao e um navio naufragado. E uma cena
+de crime. E como toda investigacao, a gente nao procura culpados —
+procura causas.”</p>
+<hr />
+<hr />
+<h1 id="bloco-2-o-navio-e-a-era">BLOCO 2 — O NAVIO E A ERA</h1>
+<p><strong>Duracao:</strong> ~7 minutos <strong>Locacao:</strong>
+Titanic Museum, Pigeon Forge (replicas do navio, maquetes, exposicao
+White Star)</p>
+<hr />
+<h2 id="a-white-star-line">A WHITE STAR LINE</h2>
+<p><strong>HISTORIADOR:</strong> “A White Star Line nao era qualquer
+companhia. Era a rival direta da Cunard — as duas maiores empresas de
+navegacao transatlantica do mundo. A Cunard tinha os navios mais
+rapidos: o Lusitania e o Mauretania. A White Star decidiu competir de
+outro jeito: nao seria a mais rapida, seria a MAIOR. A mais luxuosa. A
+que faria voce sentir que estava num hotel flutuante, nao num
+navio.”</p>
+<p><strong>HISTORIADOR:</strong> “E aqui entra um detalhe que pouca
+gente sabe. A White Star vendia tickets para todas as classes. A
+primeira classe pagava o equivalente a 100 mil dolares de hoje por uma
+suite. A terceira classe pagava o equivalente a mil dolares — e a
+maioria desses passageiros eram imigrantes. Irlandeses, italianos,
+suecos, libaneses. Gente que vendia tudo o que tinha pra comprar aquele
+ticket. Pra eles, o Titanic nao era luxo — era a porta pra uma vida nova
+na America.”</p>
+<p><strong>ANDREZA:</strong> “A White Star vendia uma promessa:
+progresso, seguranca, grandeza. O slogan nao era oficial, mas todo mundo
+sabia: o navio que Deus nao podia afundar. Quando a seguranca vira
+slogan de marketing em vez de engenharia, o desastre e questao de
+tempo.”</p>
+<hr />
+<h2 id="a-tecnologia-da-epoca">A TECNOLOGIA DA EPOCA</h2>
+<p><strong>ENGENHEIRO:</strong> “Pra epoca, o Titanic era uma obra-prima
+de engenharia. 269 metros de comprimento. 46 mil toneladas. Casco duplo
+no fundo. Anteparas transversais que dividiam o navio em 16
+compartimentos. Dois motores a vapor de triplice expansao e uma turbina
+de baixa pressao. Velocidade maxima de 23 nos. Tinha ate telegrafo sem
+fio Marconi — tecnologia de ponta.”</p>
+<p><strong>ENGENHEIRO:</strong> “O problema e que toda essa tecnologia
+criou uma ilusao. As anteparas, por exemplo — o navio podia flutuar com
+ate 4 compartimentos alagados. Impressionante, certo? So que as
+anteparas nao iam ate o topo. Paravam no conves E. Quando a agua enchia
+um compartimento, ela TRANSBORDAVA por cima da antepara pro
+compartimento seguinte. Como uma forma de gelo — voce enche um cubinho,
+a agua passa pro seguinte.”</p>
+<p><strong>ANDREZA:</strong> “A tecnologia estava la. A engenharia
+estava la. O que nao estava la era a humildade de perguntar: e se nao
+for suficiente?”</p>
+<hr />
+<h2 id="o-capitao-edward-smith">O CAPITAO EDWARD SMITH</h2>
+<p><strong>HISTORIADOR:</strong> “Edward John Smith. 62 anos. Talvez o
+capitao mais respeitado do Atlantico Norte. Quarenta anos de carreira na
+marinha mercante. Chamavam ele de ‘o capitao dos milionarios’ — porque
+sempre comandava os navios mais importantes da White Star. Era quem os
+passageiros de primeira classe pediam pelo nome.”</p>
+<p><strong>HISTORIADOR:</strong> “Smith era um homem serio, meticuloso,
+respeitado pela tripulacao. Viuvo? Nao — casado com Eleanor, pai de uma
+filha, Helen. Vivia em Southampton. Era tao querido que quando chegou ao
+porto pra comandar o Titanic na viagem inaugural, a tripulacao aplaudiu.
+Era pra ser a ultima viagem dele — ia se aposentar depois. A ironia e
+brutal: o capitao mais experiente do mundo, no navio mais seguro do
+mundo, na ultima viagem. E nada disso bastou.”</p>
+<p><strong>ANDREZA:</strong> “Smith tinha 40 anos de experiencia. E
+nesses 40 anos, NUNCA tinha enfrentado um desastre maritimo serio. A
+experiencia dele era toda de sucesso. E experiencia de sucesso pode ser
+a coisa mais perigosa do mundo — porque ensina que ‘sempre funcionou
+assim.’ Na linguagem de Dekker, isso se chama ‘drift into failure.’ Voce
+nao percebe que esta se aproximando do desastre porque cada dia parece
+normal.”</p>
+<hr />
+<hr />
+<h1 id="bloco-3-as-pessoas-famosos-a-bordo-2-historias-dramaticas">BLOCO
+3 — AS PESSOAS: FAMOSOS A BORDO + 2 HISTORIAS DRAMATICAS</h1>
+<p><strong>Duracao:</strong> ~8 minutos <strong>Locacao:</strong>
+Titanic Museum, Pigeon Forge (paineis de passageiros, replicas de
+cabines)</p>
+<hr />
+<h2 id="os-famosos-a-bordo">OS FAMOSOS A BORDO</h2>
+<p><strong>HISTORIADOR:</strong> “O Titanic era como um who’s who da
+elite mundial. Tinha gente que, sozinha, tinha mais dinheiro que paises
+inteiros.”</p>
+<p><strong>HISTORIADOR:</strong> “John Jacob Astor IV — o homem mais
+rico a bordo. Fortuna equivalente a 2 bilhoes e meio de dolares de hoje.
+Estava voltando da lua-de-mel com a segunda esposa, Madeleine, que
+estava gravida de 5 meses.”</p>
+<p>“Benjamin Guggenheim — magnata do minerio. Um dos Guggenheims, a
+familia que depois fundaria o museu.”</p>
+<p>“Isidor Straus — co-fundador da Macy’s, a maior loja de departamentos
+dos Estados Unidos. Estava com a esposa Ida. Casados ha 41 anos.”</p>
+<p>“Margaret Brown — a ‘Molly Brown.’ Herdeira de mineracao, mulher
+determinada, que nao aceitava nao como resposta.”</p>
+<p>“Os Widener, os Thayer, a Condessa de Rothes. Era um navio de
+milionarios. Mas tambem de 710 imigrantes na terceira classe que ninguem
+conhecia pelo nome.”</p>
+<hr />
+<h2
+id="historia-dramatica-1-isidor-e-ida-straus-nao-vou-deixa-lo-agora">HISTORIA
+DRAMATICA 1 — ISIDOR E IDA STRAUS: “Nao vou deixa-lo agora”</h2>
+<p><strong>HISTORIADOR (em frente ao painel dos Straus no
+museu):</strong> “Isidor e Ida Straus. Ele tinha 67 anos, ela 63.
+Casados ha 41 anos. Quando os botes comecaram a ser baixados, um oficial
+ofereceu lugar a Ida no bote 8. Ela comecou a entrar…”</p>
+<p><em>[Pausa — 3 segundos]</em></p>
+<p>“…e parou. Voltou. Tirou o casaco de pele e entregou pra empregada,
+Ellen Bird. Disse: ‘Voce vai precisar mais do que eu.’ Depois se virou,
+tomou o braco do marido e disse:”</p>
+<p><strong>TEXTO NA TELA:</strong> “Vivi com meu marido por 40 anos. Nao
+vou deixa-lo agora.” — Ida Straus</p>
+<p><strong>HISTORIADOR:</strong> “Isidor tambem recusou. Disse que nao
+entraria em bote nenhum enquanto houvesse mulheres e criancas esperando.
+Um oficial insistiu — Smith tinha dado ordens de que homens mais velhos
+poderiam embarcar. Isidor recusou de novo.”</p>
+<p>“Foram vistos pela ultima vez sentados juntos em cadeiras de deck, de
+maos dadas, enquanto a agua subia ao redor deles.”</p>
+<p><em>[SILENCIO — 5 segundos]</em></p>
+<p><strong>ANDREZA:</strong> “Quando a gente fala de seguranca, a gente
+fala de sistemas, de processos, de normas. Mas no final, seguranca e
+sobre isso: gente. Gente que ama, gente que escolhe, gente que fica.
+Isidor e Ida nao sao um numero. Sao um casamento de 41 anos que terminou
+junto porque o sistema falhou.”</p>
+<hr />
+<h2
+id="historia-dramatica-2-as-criancas-da-terceira-classe-os-que-ninguem-conhecia">HISTORIA
+DRAMATICA 2 — AS CRIANCAS DA TERCEIRA CLASSE: Os que ninguem
+conhecia</h2>
+<p><strong>HISTORIADOR:</strong> “Agora eu quero contar uma historia que
+ninguem conta. Que nenhum filme mostra. As criancas da terceira
+classe.”</p>
+<p>“Na primeira classe, TODAS as criancas sobreviveram. Todas. Na
+segunda classe, quase todas. Na terceira classe, das 79 criancas a
+bordo, 27 morreram. Mais de um terco.”</p>
+<p><strong>HISTORIADOR:</strong> “Tinha a familia Goodwin, de Londres.
+Frederick e Augusta Goodwin, com seis filhos — o mais velho tinha 16
+anos, o mais novo, Sidney, tinha 19 meses. Estavam emigrando para
+Niagara Falls, onde Frederick ia trabalhar numa usina eletrica. Todos os
+oito morreram. Nenhum sobreviveu.”</p>
+<p>“Quando encontraram o corpo de um bebe no oceano dias depois, nao
+conseguiram identificar. Por quase um seculo, acreditou-se que era o
+pequeno Sidney Goodwin. So em 2007, com DNA, confirmaram.”</p>
+<p><em>[SILENCIO — 5 segundos]</em></p>
+<p><strong>HISTORIADOR:</strong> “A familia Sage — de Peterborough,
+Inglaterra. John e Annie Sage com nove filhos. Onze pessoas. A maior
+familia a bordo. Estavam indo pra Jacksonville, Florida. Todos os onze
+morreram. Nenhum corpo foi recuperado.”</p>
+<p><strong>ANDREZA:</strong> “75% dos passageiros de terceira classe
+morreram. Na primeira classe, a taxa de morte foi 37%. Quando voce olha
+esses numeros, voce entende que nao foi um acidente democratico. Foi um
+desastre com endereco. Morreu mais quem tinha menos.”</p>
+<hr />
+<hr />
+<h1 id="bloco-4-o-descaso-problemas-de-seguranca">BLOCO 4 — O DESCASO:
+PROBLEMAS DE SEGURANCA</h1>
+<p><strong>Duracao:</strong> ~10 minutos <strong>Locacao:</strong>
+Titanic Museum, Pigeon Forge (exposicao de botes, coletes, replicas de
+corredores)</p>
+<hr />
+<h2 id="os-coletes-salva-vidas">OS COLETES SALVA-VIDAS</h2>
+<p><strong>ENGENHEIRO:</strong> “Os coletes salva-vidas de 1912 nao eram
+como os de hoje. Eram blocos de cortica — ou em alguns casos, lona
+preenchida com fibra vegetal. Pesados, volumosos, e com uma limitacao
+critica: nao viravam a pessoa de barriga pra cima na agua. Se voce
+desmaiasse de hipotermia — e a agua estava a menos 2 graus, entao isso
+acontecia em minutos — o colete te mantinha na agua, mas com o rosto pra
+baixo. Voce afogava USANDO o colete.”</p>
+<p><strong>ANDREZA:</strong> “Tinha colete pra todo mundo a bordo. 3.560
+coletes. Mas um colete que nao te mantem de barriga pra cima na agua a
+menos 2 graus… ele da a ilusao de seguranca, nao seguranca de verdade. E
+esse e um dos padroes que eu vejo ate hoje nas empresas: o EPI existe,
+esta la, marca no check — mas quando voce precisa dele, ele nao funciona
+como deveria.”</p>
+<hr />
+<h2 id="os-botes-salva-vidas-a-matematica-da-morte">OS BOTES SALVA-VIDAS
+— A MATEMATICA DA MORTE</h2>
+<p><strong>ENGENHEIRO:</strong> “O Titanic tinha capacidade para 2.224
+pessoas. Tinha 20 botes salva-vidas com capacidade total para 1.178
+pessoas. Faz a conta: 1.046 pessoas NAO TINHAM lugar em bote nenhum. Nem
+se todos os botes fossem preenchidos completamente. E nao foram — muitos
+saiam pela metade.”</p>
+<p><strong>HISTORIADOR:</strong> “E o mais revoltante: o navio FOI
+projetado para ter 48 botes. Os davits — os guinchos que baixam os botes
+— tinham capacidade pra 48. Alexander Carlisle, o projetista anterior a
+Thomas Andrews, propôs 48 botes em 1907. A reuniao durou cinco minutos.
+A White Star decidiu que 48 botes iam atrapalhar a vista do deck de
+passeio dos passageiros de primeira classe.”</p>
+<p><strong>ANDREZA:</strong> “A legislacao da epoca — o Merchant
+Shipping Act de 1894 — exigia botes apenas para navios de ate 10 mil
+toneladas. O Titanic tinha 46 mil toneladas. A lei tinha 18 anos e nunca
+foi atualizada. O Board of Trade aprovou. Legal? Sim. Seguro? Nao. E
+esse e o conceito que eu chamo de Indicador Melancia: verde por fora —
+certificado, legal, conforme. Vermelho por dentro — desatualizado,
+capturado, letal.”</p>
+<hr />
+<h2 id="as-portas-estanques-e-as-anteparas">AS PORTAS ESTANQUES E AS
+ANTEPARAS</h2>
+<p><strong>ENGENHEIRO:</strong> “Vamos falar das famosas portas
+estanques. O Titanic tinha 15 anteparas transversais que dividiam o
+casco em 16 compartimentos. Cada antepara tinha uma porta estanque que
+podia ser fechada da ponte de comando com um sistema eletrico —
+tecnologia avancadissima pra epoca. O Capitao Smith acionou as portas 30
+segundos apos a colisao. Funcionaram perfeitamente.”</p>
+<p><strong>ENGENHEIRO:</strong> “O problema nao eram as portas. O
+problema eram as anteparas em si. Elas nao iam ate o topo do navio.
+Paravam no conves E — ou em alguns casos, ainda mais baixo. Quando os
+primeiros 5 compartimentos comecaram a alagar, a agua subia e PASSAVA
+POR CIMA da antepara pro compartimento seguinte. O efeito domino. O
+navio alagou de proa a popa, compartimento por compartimento. As portas
+seguraram. As paredes, nao.”</p>
+<p><strong>ANDREZA:</strong> “As portas funcionaram. As anteparas
+falharam. E esse e um padrao classico: voce investe no que e visivel — a
+porta, o botao, o sistema automatico — e esquece do estrutural. A
+antepara que nao chega ao teto e como a politica de seguranca que nao
+chega ao chao de fabrica. Existe no papel. Na pratica, a agua passa por
+cima.”</p>
+<hr />
+<h2 id="os-rebites-o-dna-do-desastre">OS REBITES — O DNA DO
+DESASTRE</h2>
+<p><strong>ENGENHEIRO:</strong> “Em 1998, pesquisadores do NIST
+analisaram rebites recuperados do Titanic. O que encontraram foi
+assustador: os rebites da proa e da popa eram de FERRO FORJADO, nao de
+aco. E pior — tinham teores de escoria de ate 9%. Isso torna o rebite
+fragil, quebradico. Quando o iceberg empurrou as placas do casco, esses
+rebites nao resistiram. As costuras se abriram. A agua entrou.”</p>
+<p><strong>ENGENHEIRO:</strong> “E quanto custaria ter usado aco em
+todos os rebites? Menos de 0.3% do custo total do navio. Centavos por
+passageiro. Centavos.”</p>
+<p><em>[SILENCIO — 5 segundos]</em></p>
+<p><strong>ANDREZA:</strong> “Eles SABIAM. Harland and Wolff — o
+estaleiro — reclamou ao fornecedor sobre a qualidade dos rebites. O
+fornecedor respondeu. E nada mudou. Os rebites foram instalados. Isso
+nao e um acidente. Isso e uma decisao.”</p>
+<hr />
+<hr />
+<h1 id="bloco-5-a-noite-a-colisao-os-navios-o-caos">BLOCO 5 — A NOITE: A
+COLISAO, OS NAVIOS, O CAOS</h1>
+<p><strong>Duracao:</strong> ~8 minutos <strong>Locacao:</strong>
+Titanic Museum, Pigeon Forge (exposicao da noite do naufragio, replica
+do ninho-de-corvo)</p>
+<hr />
+<h2 id="a-colisao-37-segundos">A COLISAO — 37 SEGUNDOS</h2>
+<p><strong>HISTORIADOR:</strong> “14 de abril de 1912. 23:39. Noite sem
+lua. Mar liso como espelho — o que e PIOR, porque sem ondas quebrando na
+base do iceberg, voce nao ve ele se aproximar.”</p>
+<p>“Frederick Fleet, no ninho-de-corvo, avista algo. Sem binoculos —
+estavam trancados num armario e a chave tinha ficado com um oficial que
+saiu do navio em Southampton. Fleet toca o sino tres vezes. Liga pro
+telefone da ponte: ‘Iceberg, right ahead!’ Da ponte, o primeiro oficial
+Murdoch ordena: ‘Hard-a-starboard!’ O leme vira. O navio comeca a virar.
+37 segundos entre o avistamento e a colisao.”</p>
+<p>“Nao foi suficiente.”</p>
+<hr />
+<h2 id="o-titanic-pede-socorro-e-quase-ninguem-responde">O TITANIC PEDE
+SOCORRO — E QUASE NINGUEM RESPONDE</h2>
+<p><strong>HISTORIADOR:</strong> “Aqui e onde a historia fica
+revoltante. Apos a colisao, o Capitao Smith ordena que Jack Phillips, o
+operador de radio, comece a transmitir pedidos de socorro. Phillips
+manda o CQD — o codigo antigo — e depois o SOS, o codigo novo que quase
+ninguem usava ainda.”</p>
+<p>“O primeiro navio a responder foi o Carpathia, a 58 milhas nauticas
+de distancia. O capitao Arthur Rostron fez o impossivel — virou o navio,
+mandou preparar tudo: botes, cobertores, cafe, medicos nos postos.
+Correu a velocidade maxima no meio de um campo de gelo. Chegou em 3
+horas e meia. Tarde demais pra maioria.”</p>
+<hr />
+<h2 id="o-californian-o-navio-que-viu-e-nao-fez-nada">O CALIFORNIAN — O
+NAVIO QUE VIU E NAO FEZ NADA</h2>
+<p><strong>HISTORIADOR:</strong> “Mas havia outro navio. O Californian.
+Estava a no maximo 20 milhas do Titanic. Talvez 10. Seu operador de
+radio, Cyril Evans, tinha tentado avisar o Titanic sobre gelo mais cedo
+naquela noite. Phillips respondeu: ‘Shut up, I’m working Cape Race’ —
+cala a boca, estou transmitindo telegramas de passageiros. Evans
+desligou o radio e foi dormir. Estava autorizado a isso.”</p>
+<p>“O oficial de quarto do Californian VIU foguetes de sinalizacao do
+Titanic. Foguetes brancos — o sinal universal de emergencia. Reportou ao
+Capitao Stanley Lord. Lord mandou tentar contato com lampada de sinais.
+Ninguem respondeu — porque o Titanic nao estava sinalizando com lampada,
+estava afundando.”</p>
+<p>“Lord nao ligou o radio. Nao mudou de rumo. O Californian ficou
+parado a menos de 20 milhas enquanto 1.517 pessoas morriam.”</p>
+<p><em>[SILENCIO — 5 segundos]</em></p>
+<p><strong>ANDREZA:</strong> “Stanley Lord nao era mau. Evans nao era
+negligente. O sistema e que era desenhado de um jeito que o operador de
+radio podia dormir, que foguetes podiam ser ignorados, que ninguem tinha
+obrigacao de fazer nada. O sistema permitia que voce VISSE gente
+morrendo e nao agisse. Isso nao e falha humana. Isso e falha de
+sistema.”</p>
+<hr />
+<h2 id="os-botes-saem-pela-metade">OS BOTES SAEM PELA METADE</h2>
+<p><strong>ENGENHEIRO:</strong> “Dos 20 botes, muitos sairam com metade
+da capacidade. O bote 1 tinha capacidade pra 40 pessoas. Saiu com 12. O
+bote 6, com 28 pra 65 vagas. Por que? Ninguem tinha treinado. Nunca
+houve um simulacro de evacuacao. Os marinheiros nao sabiam quantas
+pessoas cabia em cada bote. Os passageiros nao sabiam onde ficavam os
+botes.”</p>
+<p><strong>ANDREZA:</strong> “Se todos os botes tivessem saido cheios,
+pelo menos 500 pessoas a mais teriam sobrevivido. 500 pessoas morreram
+nao porque nao havia espaco — porque ninguem treinou. E isso eu vejo
+TODA semana nas empresas que audito: o plano de emergencia existe no
+papel. O treinamento, nunca.”</p>
+<hr />
+<hr />
+<h1 id="bloco-6-a-romantizacao-do-acidente">BLOCO 6 — A ROMANTIZACAO DO
+ACIDENTE</h1>
+<p><strong>Duracao:</strong> ~5 minutos <strong>Locacao:</strong>
+Titanic Museum, Pigeon Forge (area de memorabilia, posters)</p>
+<hr />
+<p><strong>HISTORIADOR:</strong> “O naufragio do Titanic e provavelmente
+o desastre mais romantizado da historia. E comecou cedo — em 1912 mesmo,
+os jornais ja transformavam a tragedia em narrativa heroica. ‘Os homens
+morreram como cavalheiros.’ ‘A banda tocou ate o fim.’ ‘As mulheres
+foram salvas primeiro.’ A historia virou mito antes dos corpos
+esfriarem.”</p>
+<p><strong>HISTORIADOR:</strong> “Depois veio Hollywood. Filmes em 1943,
+1953, 1958, 1997. O filme do James Cameron — que e brilhante
+cinematograficamente — criou uma geracao inteira que associa o Titanic a
+uma historia de amor. Jack e Rose. ‘I’m the king of the world.’ A cena
+do colar. A porta que flutuava ou nao flutuava. As pessoas DISCUTEM se a
+porta era grande o suficiente pra dois. E esquecem que 1.517 pessoas
+REAIS morreram. Nao personagens — pessoas.”</p>
+<p><strong>ANDREZA:</strong> “A romantizacao faz uma coisa perigosa:
+transforma negligencia em destino. ‘Foi tragico mas inevitavel.’ ‘Era o
+destino.’ ‘Deus quis assim.’ Nao. Nao foi destino. Foram decisoes.
+Decisoes de reduzir botes, de nao atualizar a lei, de manter a
+velocidade, de ignorar avisos. Quando voce romantiza, voce tira a
+responsabilidade. E quando tira a responsabilidade, ninguem aprende. E
+quando ninguem aprende, acontece de novo.”</p>
+<p><strong>HISTORIADOR:</strong> “Benjamin Guggenheim vestiu o smoking e
+disse ‘vamos morrer como cavalheiros.’ E bonito? E dramatico? E
+cinematografico? Com certeza. Mas tambem e um homem de 46 anos que ia
+morrer porque o sistema de botes nao tinha lugar pra ele. A elegancia da
+morte esconde a brutalidade da causa.”</p>
+<p><strong>ANDREZA:</strong> “Eu nao sou contra lembrar. Eu sou contra
+lembrar errado. Lembrar o Titanic como romance e esquecer como
+crime.”</p>
+<hr />
+<hr />
+<h1 id="bloco-7-o-pos-acidente-o-que-mudou-no-mundo-naval">BLOCO 7 — O
+POS-ACIDENTE: O QUE MUDOU NO MUNDO NAVAL</h1>
+<p><strong>Duracao:</strong> ~5 minutos <strong>Locacao:</strong>
+Titanic Museum, Pigeon Forge (area de consequencias/legado) ou Manhattan
+como adicional</p>
+<hr />
+<p><strong>HISTORIADOR:</strong> “O naufragio do Titanic mudou o mundo
+naval de uma forma que poucos desastres mudaram qualquer industria. As
+consequencias foram enormes e imediatas.”</p>
+<p><strong>HISTORIADOR:</strong> “Primeiro, em 1913, foi criada a
+International Ice Patrol — uma patrulha permanente do Atlantico Norte
+pra monitorar icebergs. Existe ate hoje. Financiada por 13 paises. Desde
+sua criacao, NENHUM navio que seguiu suas orientacoes colidiu com um
+iceberg.”</p>
+<p>“Segundo, em 1914, foi assinado o SOLAS — Safety of Life at Sea. O
+tratado internacional de seguranca maritima mais importante da historia.
+Pela primeira vez, exigiu: botes salva-vidas pra TODOS os passageiros e
+tripulantes. Exercicios de evacuacao obrigatorios. Radio operando 24
+horas — nunca mais um operador podia dormir. Foguetes de sinalizacao
+vermelhos como sinal exclusivo de emergencia.”</p>
+<p>“Terceiro, anteparas foram redesenhadas em toda a industria. Passaram
+a ir ate o topo do navio. Portas estanques foram padronizadas. Cascos
+duplos se tornaram norma.”</p>
+<p><strong>ENGENHEIRO:</strong> “Do ponto de vista de engenharia, o
+Titanic reescreveu o manual. A classificacao de navios mudou. Os testes
+de estanqueidade ficaram mais rigorosos. Os materiais passaram a ser
+especificados com muito mais cuidado — inclusive os rebites. Tudo o que
+Thomas Andrews e Alexander Carlisle propuseram e foram ignorados virou
+lei depois que 1.517 pessoas morreram.”</p>
+<p><strong>ANDREZA:</strong> “E aqui esta a ironia mais dolorosa de toda
+essa historia. TUDO o que foi implementado depois do desastre JA TINHA
+SIDO PROPOSTO ANTES. Carlisle propôs 48 botes — depois do desastre,
+ficou obrigatorio ter botes pra todos. Andrews propôs anteparas mais
+altas — depois do desastre, anteparas foram redesenhadas. Evans avisou
+sobre o gelo — depois do desastre, radio 24 horas. Tres homens. Tres
+alarmes. Tres vezes o sistema silenciou. E so depois de 1.517 mortos o
+mundo ouviu.”</p>
+<p><em>[SILENCIO — 5 segundos]</em></p>
+<p><strong>ANDREZA:</strong> “Na minha profissao, a gente chama isso de
+‘aprender pelo sangue.’ E o tipo de aprendizado mais caro que existe.
+Porque o custo nao e dinheiro — sao vidas. E a pergunta que eu faco pra
+toda empresa: quantas vidas voce precisa perder antes de ouvir o seu
+Carlisle?”</p>
+<hr />
+<hr />
+<h1 id="bloco-8-encerramento-licoes-e-reflexao">BLOCO 8 — ENCERRAMENTO:
+LICOES E REFLEXAO</h1>
+<p><strong>Duracao:</strong> ~4 minutos <strong>Locacao:</strong>
+Titanic Museum, Pigeon Forge (area externa ou area final do museu)</p>
+<hr />
+<p><strong>ANDREZA:</strong> “Este navio conta uma historia. Nao a
+historia de um iceberg. A historia de um sistema. De decisoes que
+pareciam razoaveis. De vozes que foram silenciadas. De uma civilizacao
+tao apaixonada pelo seu progresso que esqueceu de perguntar: ‘e se
+estivermos errados?’”</p>
+<p><em>[Pausa — 3 segundos]</em></p>
+<p><strong>ANDREZA:</strong> “O Capitao Smith tinha 40 anos de
+experiencia. A White Star era a companhia mais prestigiosa do mundo. O
+Board of Trade era o regulador oficial. Os rebites eram os mesmos de
+sempre. O radio funcionava — dentro do horario comercial. Cada peca do
+sistema estava ‘certa.’ E o sistema inteiro estava errado.”</p>
+<p><strong>TEXTO NA TELA:</strong> “1.517 mortos.” “Alexander Carlisle
+propôs 48 botes em 1907.” “Foram instalados 20.” “A regra que permitiu
+tinha 18 anos.”</p>
+<p><em>[PAUSA — 5 segundos]</em></p>
+<p><strong>ANDREZA:</strong> “Voce nao e capitao de navio. Provavelmente
+nao esta projetando transatlanticos. Mas voce ESTA dentro de um sistema.
+E dentro desse sistema, todo dia alguem levanta a mao e diz: ‘acho que
+isso pode dar errado.’ Observe o que acontece. Observe os rostos.
+Observe o silencio.”</p>
+<p><strong>ANDREZA:</strong> “Celebre o vermelho. Valorize quem reporta
+o problema. Pergunte todo dia: o que pode me matar hoje? Seguranca nao e
+uma prioridade — prioridades mudam. Seguranca e um valor. Valores nao
+mudam.”</p>
+<p><em>[SILENCIO — 3 segundos]</em></p>
+<p><strong>TEXTO NA TELA:</strong> “Na sua industria, quantas regras
+estao esperando seu iceberg?”</p>
+<p><strong>ANDREZA:</strong> “O mar nao mudou. A pergunta e: e
+voce?”</p>
+<p><strong>FIM.</strong></p>
+<hr />
+<hr />
+<h1 id="bloco-adicional-manhattan-se-disponivel">BLOCO ADICIONAL —
+MANHATTAN (SE DISPONIVEL)</h1>
+<p><strong>Locacao:</strong> Pier 54 / Chelsea Piers area, Manhattan,
+NYC <strong>Nota:</strong> Este bloco e um ADICIONAL. Pode ser gravado e
+inserido no Bloco 7 ou como sequencia pos-creditos.</p>
+<hr />
+<p><strong>ANDREZA (em campo — Pier area, NYC):</strong> “Aqui. Nesta
+area de Manhattan. Na madrugada de 18 de abril de 1912, o RMS Carpathia
+atracou com 710 sobreviventes. Trinta mil pessoas esperavam no cais.
+Familias com cartazes. Nomes escritos em papel. E a cada passageiro que
+descia, um nome era chamado. E para cada nome chamado, dezenas nao
+eram.”</p>
+<p><em>[Pausa — olha ao redor]</em></p>
+<p><strong>ANDREZA:</strong> “Os sobreviventes desciam em silencio.
+Muitos ainda em roupas de dormir. Alguns enrolados em cobertores do
+Carpathia. As mulheres procuravam maridos. As criancas procuravam pais.
+E 1.517 familias comecaram a entender que ninguem mais ia descer.”</p>
+<p><strong>ANDREZA:</strong> “Eu comeco todo diagnostico de cultura de
+seguranca com uma pergunta: quem pagou o preco? Nao o preco financeiro —
+o preco humano. Porque quando a gente esquece quem pagou, a gente comeca
+a normalizar de novo.”</p>
+<hr />
+<hr />
+<h1 id="notas-de-producao">NOTAS DE PRODUCAO</h1>
+<h2 id="gravacao-em-pigeon-forge-dia-1-amanha">Gravacao em Pigeon Forge
+(Dia 1 — amanha)</h2>
+<table>
+<colgroup>
+<col style="width: 37%" />
+<col style="width: 21%" />
+<col style="width: 40%" />
+</colgroup>
+<thead>
+<tr>
+<th>Prioridade</th>
+<th>Bloco</th>
+<th>O que gravar</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ALTA</td>
+<td>Bloco 1</td>
+<td>Andreza na abertura — “cena de crime”</td>
+</tr>
+<tr>
+<td>ALTA</td>
+<td>Bloco 3</td>
+<td>Andreza + Historiador nas historias dramaticas (Straus,
+criancas)</td>
+</tr>
+<tr>
+<td>ALTA</td>
+<td>Bloco 4</td>
+<td>Engenheiro explicando coletes, botes, portas, rebites</td>
+</tr>
+<tr>
+<td>ALTA</td>
+<td>Bloco 8</td>
+<td>Andreza no encerramento — “o mar nao mudou”</td>
+</tr>
+<tr>
+<td>MEDIA</td>
+<td>Bloco 2</td>
+<td>Historiador sobre White Star, Smith</td>
+</tr>
+<tr>
+<td>MEDIA</td>
+<td>Bloco 5</td>
+<td>Historiador sobre a noite, o Californian</td>
+</tr>
+<tr>
+<td>MEDIA</td>
+<td>Bloco 6</td>
+<td>Historiador + Andreza sobre romantizacao</td>
+</tr>
+<tr>
+<td>MEDIA</td>
+<td>Bloco 7</td>
+<td>Andreza + Engenheiro sobre pos-acidente</td>
+</tr>
+</tbody>
+</table>
+<h2 id="gravacao-em-manhattan-dia-2-adicional">Gravacao em Manhattan
+(Dia 2 — adicional)</h2>
+<table>
+<colgroup>
+<col style="width: 37%" />
+<col style="width: 21%" />
+<col style="width: 40%" />
+</colgroup>
+<thead>
+<tr>
+<th>Prioridade</th>
+<th>Bloco</th>
+<th>O que gravar</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>DESEJAVEL</td>
+<td>Adicional</td>
+<td>Andreza no Pier area — chegada dos sobreviventes</td>
+</tr>
+</tbody>
+</table>
+<h2 id="dinamica-do-elenco">Dinamica do Elenco</h2>
+<table>
+<colgroup>
+<col style="width: 30%" />
+<col style="width: 50%" />
+<col style="width: 19%" />
+</colgroup>
+<thead>
+<tr>
+<th>Pessoa</th>
+<th>Quando fala</th>
+<th>Tom</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Andreza</strong></td>
+<td>Abertura, fechamento, conexoes com seguranca moderna, reflexoes</td>
+<td>Autoridade calma, emocao contida, ponte passado-presente</td>
+</tr>
+<tr>
+<td><strong>Engenheiro</strong></td>
+<td>Tecnologia do navio, falhas mecanicas, rebites, anteparas,
+botes</td>
+<td>Tecnico, preciso, didatico, indignado com os numeros</td>
+</tr>
+<tr>
+<td><strong>Historiador</strong></td>
+<td>Historias das pessoas, contexto social, White Star, Smith,
+romantizacao</td>
+<td>Narrativo, envolvente, dramatico, humano</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="resumo-estatistico">RESUMO ESTATISTICO</h2>
+<table>
+<thead>
+<tr>
+<th>Tipo</th>
+<th>Qtd de blocos de fala</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Falas Andreza (apresentadora)</td>
+<td>~22</td>
+</tr>
+<tr>
+<td>Falas Historiador</td>
+<td>~18</td>
+</tr>
+<tr>
+<td>Falas Engenheiro</td>
+<td>~10</td>
+</tr>
+<tr>
+<td>Textos na tela</td>
+<td>5</td>
+</tr>
+<tr>
+<td>Momentos de silencio marcados</td>
+<td>8</td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>
